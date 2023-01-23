@@ -1,4 +1,4 @@
-module changeme
+module vgtracker
 
 go 1.19
 
