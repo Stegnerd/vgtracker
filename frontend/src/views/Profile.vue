@@ -1,5 +1,9 @@
-<template>Profile Works</template>
+<template>
+	<ProfileForm></ProfileForm>
+</template>
 
-<script lang="ts" setup></script>
+<script setup lang="ts">
+	import ProfileForm from '../components/profile/ProfileForm.vue';
+</script>
 
 <style scoped></style>
