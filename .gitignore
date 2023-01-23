@@ -2,3 +2,6 @@ build/bin
 frontend/dist
 frontend/node_modules
 .idea
+
+# sqlite db file for backend
+vgtracker.db
