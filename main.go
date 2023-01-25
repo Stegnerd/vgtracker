@@ -4,6 +4,7 @@ import (
 	"embed"
 
 	"vgtracker/backend"
+	"vgtracker/backend/api"
 
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
@@ -17,6 +18,9 @@ func main() {
 	// Create an instance of the app structure
 	app := backend.NewApp()
 
+	// Instantiate binding structs
+	// https://wails.io/docs/howdoesitwork/#method-binding
+
 	// Create application with options
 	err := wails.Run(&options.App{
 		Title:  "vgtracker",
@@ -29,6 +33,7 @@ func main() {
 		OnStartup:        app.Startup,
 		Bind: []interface{}{
 			app,
+			&api.ProfileBackend{},
 		},
 	})
 

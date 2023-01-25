@@ -11,6 +11,7 @@ import (
 	"github.com/golang-migrate/migrate/v4/database/sqlite"
 	_ "github.com/golang-migrate/migrate/v4/database/sqlite"
 	"github.com/golang-migrate/migrate/v4/source/iofs"
+	"github.com/jmoiron/sqlx"
 	_ "modernc.org/sqlite"
 )
 
@@ -19,10 +20,12 @@ var fs embed.FS
 
 var db *sql.DB
 
+const DB_NAME = "vgtracker.db"
+
 func InitDB() *sql.DB {
 	ensureDBExists()
 
-	db, err := sql.Open("sqlite", "vgtracker.db")
+	db, err := sql.Open("sqlite", DB_NAME)
 	if err != nil {
 		fmt.Println("db open err")
 		log.Fatalln(err)
@@ -33,6 +36,15 @@ func InitDB() *sql.DB {
 	}
 
 	return db
+}
+
+func Connect() (*sqlx.DB, error) {
+	db, err := sqlx.Connect("sqlite", DB_NAME)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to connect to db")
+	}
+
+	return db, nil
 }
 
 func ensureDBExists() {
