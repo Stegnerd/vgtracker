@@ -8,18 +8,47 @@
 		</v-row>
 		<v-row>
 			<v-col cols="10">
-				<v-btn>SAVE</v-btn>
+				<v-btn @click="save">SAVE</v-btn>
 			</v-col>
 		</v-row>
 	</v-form>
 </template>
 
 <script lang="ts" setup>
-	import { ref } from 'vue';
+	import { ref, onBeforeMount } from 'vue';
+	import { ReadProfile, UpdateProfile } from '../../../wailsjs/go/api/ProfileBackend';
+	import { models } from '../../../wailsjs/go/models';
+	import UpdateProfileInput = models.UpdateProfileInput;
+	import * as Wails from '../../../wailsjs/runtime';
+	import ReadProfileOutput = models.ReadProfileOutput;
 
 	const formValid = ref(null);
 	const twitchKey = ref('');
 	const psnConnection = ref('');
+
+	onBeforeMount(() => {
+		ReadProfile().then((result: ReadProfileOutput) => {
+			twitchKey.value = result.userProfile.twitchKey;
+			psnConnection.value = result.userProfile.psnNpsso;
+		});
+	});
+
+	function save() {
+		const input = {
+			twitchKey: twitchKey.value,
+			psnNpsso: psnConnection.value
+		} as UpdateProfileInput;
+
+		UpdateProfile(input)
+			.then((result) => {
+				console.warn('success result', result);
+				Wails.LogDebug(`result: ${result}`);
+			})
+			.catch((err) => {
+				console.warn('error', err);
+				Wails.LogDebug(`result: ${err}`);
+			});
+	}
 </script>
 
 <style scoped>
