@@ -22,6 +22,7 @@ func main() {
 	// https://wails.io/docs/howdoesitwork/#method-binding
 
 	// Create application with options
+	//https://wails.io/docs/reference/options
 	err := wails.Run(&options.App{
 		Title:  "vgtracker",
 		Width:  1024,
@@ -34,6 +35,10 @@ func main() {
 		Bind: []interface{}{
 			app,
 			&api.ProfileBackend{},
+		},
+		Debug: options.Debug{
+			// enables debugging ui
+			OpenInspectorOnStartup: false,
 		},
 	})
 
