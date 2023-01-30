@@ -6,11 +6,6 @@
 				<v-text-field v-model="profile.psnNpsso" variant="outlined" label="PSN Connection" required></v-text-field>
 			</v-col>
 		</v-row>
-		<v-row>
-			<v-col cols="10">
-				<v-btn @click="updateProfile">SAVE</v-btn>
-			</v-col>
-		</v-row>
 	</v-form>
 </template>
 
@@ -21,8 +16,7 @@
 
 	const store = useProfileStore();
 
-	const { readProfile, updateProfile } = useProfileStore();
-
+	const { readProfile } = useProfileStore();
 	onBeforeMount(() => {
 		readProfile();
 	});
