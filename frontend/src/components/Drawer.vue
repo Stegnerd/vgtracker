@@ -15,7 +15,12 @@
 
 		<v-divider></v-divider>
 
-		<v-list-item prepend-icon="mdi-controller" title="Game List" value="gallery" @click="route('')"></v-list-item>
+		<v-list-item
+			prepend-icon="mdi-controller"
+			title="Game List"
+			value="gallery"
+			@click="route('gallery')"
+		></v-list-item>
 		<v-list-item
 			prepend-icon="mdi-format-list-bulleted-square"
 			title="My Games"

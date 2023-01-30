@@ -5,6 +5,7 @@ import MyGames from './views/MyGames.vue';
 
 const routes: RouteRecordRaw[] = [
 	{ path: '/', component: Gallery },
+	{ path: '/gallery', component: Gallery },
 	{ path: '/profile', component: Profile },
 	{ path: '/my-games', component: MyGames }
 ];
