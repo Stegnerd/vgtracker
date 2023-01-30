@@ -1,54 +1,33 @@
 <template>
-	<v-form ref="form" v-model="formValid" lazy-validation class="profile-form">
+	<v-form ref="form" class="profile-form">
 		<v-row>
 			<v-col cols="10" offset="1">
-				<v-text-field v-model="twitchKey" variant="outlined" label="Twitch Key" required></v-text-field>
-				<v-text-field v-model="psnConnection" variant="outlined" label="PSN Connection" required></v-text-field>
+				<v-text-field v-model="profile.twitchKey" variant="outlined" label="Twitch Key" required></v-text-field>
+				<v-text-field v-model="profile.psnNpsso" variant="outlined" label="PSN Connection" required></v-text-field>
 			</v-col>
 		</v-row>
 		<v-row>
 			<v-col cols="10">
-				<v-btn @click="save">SAVE</v-btn>
+				<v-btn @click="updateProfile">SAVE</v-btn>
 			</v-col>
 		</v-row>
 	</v-form>
 </template>
 
 <script lang="ts" setup>
-	import { ref, onBeforeMount } from 'vue';
-	import { ReadProfile, UpdateProfile } from '../../../wailsjs/go/api/ProfileBackend';
-	import { models } from '../../../wailsjs/go/models';
-	import UpdateProfileInput = models.UpdateProfileInput;
-	import * as Wails from '../../../wailsjs/runtime';
-	import ReadProfileOutput = models.ReadProfileOutput;
+	import { onBeforeMount } from 'vue';
+	import { useProfileStore } from '../../stores/profile';
+	import { storeToRefs } from 'pinia';
 
-	const formValid = ref(null);
-	const twitchKey = ref('');
-	const psnConnection = ref('');
+	const store = useProfileStore();
+
+	const { readProfile, updateProfile } = useProfileStore();
 
 	onBeforeMount(() => {
-		ReadProfile().then((result: ReadProfileOutput) => {
-			twitchKey.value = result.userProfile.twitchKey;
-			psnConnection.value = result.userProfile.psnNpsso;
-		});
+		readProfile();
 	});
 
-	function save() {
-		const input = {
-			twitchKey: twitchKey.value,
-			psnNpsso: psnConnection.value
-		} as UpdateProfileInput;
-
-		UpdateProfile(input)
-			.then((result) => {
-				console.warn('success result', result);
-				Wails.LogDebug(`result: ${result}`);
-			})
-			.catch((err) => {
-				console.warn('error', err);
-				Wails.LogDebug(`result: ${err}`);
-			});
-	}
+	const { profile } = storeToRefs(store);
 </script>
 
 <style scoped>
