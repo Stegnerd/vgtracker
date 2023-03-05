@@ -2,6 +2,7 @@ export namespace models {
 	
 	export class Profile {
 	    twitchKey: string;
+	    twitchSecret: string;
 	    psnNpsso: string;
 	
 	    static createFrom(source: any = {}) {
@@ -11,6 +12,7 @@ export namespace models {
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.twitchKey = source["twitchKey"];
+	        this.twitchSecret = source["twitchSecret"];
 	        this.psnNpsso = source["psnNpsso"];
 	    }
 	}
@@ -46,6 +48,7 @@ export namespace models {
 	}
 	export class UpdateProfileInput {
 	    twitchKey: string;
+	    twitchSecret: string;
 	    psnNpsso: string;
 	
 	    static createFrom(source: any = {}) {
@@ -55,6 +58,7 @@ export namespace models {
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.twitchKey = source["twitchKey"];
+	        this.twitchSecret = source["twitchSecret"];
 	        this.psnNpsso = source["psnNpsso"];
 	    }
 	}

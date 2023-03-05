@@ -26,6 +26,7 @@ export const useProfileStore = defineStore('profile', () => {
 	const updateProfile = async () => {
 		const input = {
 			twitchKey: profile.value.twitchKey,
+			twitchSecret: profile.value.twitchSecret,
 			psnNpsso: profile.value.psnNpsso
 		} as UpdateProfileInput;
 
