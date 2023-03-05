@@ -4,14 +4,16 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-
+	"vgtracker/backend/api"
 	"vgtracker/backend/db"
+	"vgtracker/backend/igdbwrapper"
 )
 
 // App struct
 type App struct {
-	ctx context.Context
-	db  *sql.DB
+	ctx        context.Context
+	db         *sql.DB
+	igdbClient *igdbwrapper.IGDBWrapper
 }
 
 // NewApp creates a new App application struct
@@ -24,6 +26,22 @@ func NewApp() *App {
 func (a *App) Startup(ctx context.Context) {
 	a.ctx = ctx
 	a.db = db.InitDB()
+
+	igdbClient := igdbwrapper.NewIGDBWrapperService()
+	profileService := api.NewProfileBackendService()
+	profile, err := profileService.ReadProfile()
+	if err != nil {
+		panic("Failed to start to up db was not in a good state")
+	}
+	fmt.Printf("\n\n starting the get call \n\n")
+	if profile.UserProfile.TwitchKey != "" && profile.UserProfile.TwitchSecret != "" {
+		// get access token
+		igdbClient.GetTwitchAccessToken(profile.UserProfile.TwitchKey, profile.UserProfile.TwitchSecret)
+		igdbClient.NewClient()
+	}
+	igdbClient.Test()
+
+	a.igdbClient = igdbClient
 }
 
 // Greet returns a greeting for the given name

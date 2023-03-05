@@ -3,6 +3,7 @@
 		<v-row>
 			<v-col cols="10" offset="1">
 				<v-text-field v-model="profile.twitchKey" variant="outlined" label="Twitch Key" required></v-text-field>
+				<v-text-field v-model="profile.twitchSecret" variant="outlined" label="Twitch Secret" required></v-text-field>
 				<v-text-field v-model="profile.psnNpsso" variant="outlined" label="PSN Connection" required></v-text-field>
 			</v-col>
 		</v-row>
