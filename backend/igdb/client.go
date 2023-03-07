@@ -1,23 +1,23 @@
 package igdb
 
 type IGDBService struct {
-	WrapperService *IGDBWrapper
+	igdbWrapperService *IGDBWrapperService
 }
 
 type IGDBClient interface {
 	Test()
 }
 
-func NewIGDBClient(
-	igdbWrapperService *IGDBWrapper,
+func NewIGDBService(
+	igdbWrapperService *IGDBWrapperService,
 ) *IGDBService {
 	return &IGDBService{
-		WrapperService: igdbWrapperService,
+		igdbWrapperService: igdbWrapperService,
 	}
 }
 
 func (w *IGDBService) Test() {
-	w.WrapperService.Test()
+	w.igdbWrapperService.Test()
 }
 
 func isTokenExpired() bool {

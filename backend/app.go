@@ -11,9 +11,9 @@ import (
 
 // App struct
 type App struct {
-	ctx        context.Context
-	db         *sql.DB
-	igdbClient *igdb.IGDBService
+	ctx         context.Context
+	db          *sql.DB
+	igdbService *igdb.IGDBService
 }
 
 // NewApp creates a new App application struct
@@ -28,7 +28,7 @@ func (a *App) Startup(ctx context.Context) {
 	a.db = db.InitDB()
 
 	wrapperService := igdb.NewIGDBWrapperService()
-	igdbClient := igdb.NewIGDBClient(wrapperService)
+	igdbService := igdb.NewIGDBService(wrapperService)
 	profileService := api.NewProfileBackendService()
 	profile, err := profileService.ReadProfile()
 	if err != nil {
@@ -40,9 +40,9 @@ func (a *App) Startup(ctx context.Context) {
 		wrapperService.GetTwitchAccessToken(profile.UserProfile.TwitchKey, profile.UserProfile.TwitchSecret)
 		wrapperService.NewClient()
 	}
-	igdbClient.Test()
+	igdbService.Test()
 
-	a.igdbClient = igdbClient
+	a.igdbService = igdbService
 }
 
 // Greet returns a greeting for the given name

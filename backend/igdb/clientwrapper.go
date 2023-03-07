@@ -15,19 +15,19 @@ const TWITCH_URL = "https://id.twitch.tv/oauth2/token"
 var clientID *string
 var token *models.TwitchApiResult
 
-type IGDBWrapper struct {
+type IGDBWrapperService struct {
 	Client *igdb.Client
 }
 
-type IGDBWrapperService interface {
+type IGDBWrapperClient interface {
 	NewClient() *igdb.Client
 }
 
-func NewIGDBWrapperService() *IGDBWrapper {
-	return &IGDBWrapper{}
+func NewIGDBWrapperService() *IGDBWrapperService {
+	return &IGDBWrapperService{}
 }
 
-func (w *IGDBWrapper) GetTwitchAccessToken(id, secret string) {
+func (w *IGDBWrapperService) GetTwitchAccessToken(id, secret string) {
 	if token != nil && token.AccessToken != "" {
 		// check expiration
 		// if not expired return it
@@ -54,7 +54,7 @@ func (w *IGDBWrapper) GetTwitchAccessToken(id, secret string) {
 	token = twitchResponse
 }
 
-func (w *IGDBWrapper) NewClient() *igdb.Client {
+func (w *IGDBWrapperService) NewClient() *igdb.Client {
 	client := igdb.NewClient(*clientID, token.AccessToken, nil)
 	fmt.Printf("\n\n got the new client \n\n")
 
@@ -62,7 +62,7 @@ func (w *IGDBWrapper) NewClient() *igdb.Client {
 	return client
 }
 
-func (w *IGDBWrapper) Test() {
+func (w *IGDBWrapperService) Test() {
 	//tester, err := w.Client.Games.Search("megaman")
 	//byPop := igdb.ComposeOptions(
 	//	igdb.SetLimit(5),
