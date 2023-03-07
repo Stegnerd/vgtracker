@@ -1,4 +1,4 @@
-package igdbwrapper
+package igdb
 
 import (
 	"bytes"
@@ -12,10 +12,11 @@ import (
 
 const TWITCH_URL = "https://id.twitch.tv/oauth2/token"
 
+var clientID *string
+var token *models.TwitchApiResult
+
 type IGDBWrapper struct {
-	ClientID *string
-	Client   *igdb.Client
-	Token    *models.TwitchApiResult
+	Client *igdb.Client
 }
 
 type IGDBWrapperService interface {
@@ -27,7 +28,7 @@ func NewIGDBWrapperService() *IGDBWrapper {
 }
 
 func (w *IGDBWrapper) GetTwitchAccessToken(id, secret string) {
-	if w.Token != nil && w.Token.AccessToken != "" {
+	if token != nil && token.AccessToken != "" {
 		// check expiration
 		// if not expired return it
 		// return w.Token
@@ -49,12 +50,12 @@ func (w *IGDBWrapper) GetTwitchAccessToken(id, secret string) {
 
 	fmt.Printf("Here is the twitchResponse: %+v", twitchResponse)
 
-	w.ClientID = &id
-	w.Token = twitchResponse
+	clientID = &id
+	token = twitchResponse
 }
 
 func (w *IGDBWrapper) NewClient() *igdb.Client {
-	client := igdb.NewClient(*w.ClientID, w.Token.AccessToken, nil)
+	client := igdb.NewClient(*clientID, token.AccessToken, nil)
 	fmt.Printf("\n\n got the new client \n\n")
 
 	w.Client = client
@@ -63,26 +64,24 @@ func (w *IGDBWrapper) NewClient() *igdb.Client {
 
 func (w *IGDBWrapper) Test() {
 	//tester, err := w.Client.Games.Search("megaman")
-	byPop := igdb.ComposeOptions(
-		igdb.SetLimit(5),
-		igdb.SetFields("name", "cover"),
-		igdb.SetOrder("hypes", igdb.OrderDescending),
-		igdb.SetFilter("category", igdb.OpEquals, "0"),
-		igdb.SetFilter("cover", igdb.OpNotEquals, "null"),
-	)
+	//byPop := igdb.ComposeOptions(
+	//	igdb.SetLimit(5),
+	//	//igdb.SetFields("name", "cover"),
+	//	//igdb.SetOrder("hypes", igdb.OrderDescending),
+	//	//igdb.SetFilter("category", igdb.OpEquals, "0"),
+	//	//igdb.SetFilter("cover", igdb.OpNotEquals, "null"),
+	//)
 
 	// Retrieve PS4 inter-console exclusives
-	PS4, err := w.Client.Games.Index(
-		byPop, // top 5 popular results
-	)
+	//PS4, err := w.Client.Games.Index(
+	//	byPop, // top 5 popular results
+	//)
+
+	PS4, err := w.Client.Games.Get(1025)
 	if err != nil {
 		fmt.Printf("Here is the error: %s", err.Error())
 	}
 
-	test := PS4[0]
+	test := PS4
 	fmt.Printf("\n\n Here is the response for the call %+v \n\n", test)
-}
-
-func isTokenExpired() bool {
-	return false
 }

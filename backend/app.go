@@ -6,14 +6,14 @@ import (
 	"fmt"
 	"vgtracker/backend/api"
 	"vgtracker/backend/db"
-	"vgtracker/backend/igdbwrapper"
+	"vgtracker/backend/igdb"
 )
 
 // App struct
 type App struct {
 	ctx        context.Context
 	db         *sql.DB
-	igdbClient *igdbwrapper.IGDBWrapper
+	igdbClient *igdb.IGDBService
 }
 
 // NewApp creates a new App application struct
@@ -27,7 +27,8 @@ func (a *App) Startup(ctx context.Context) {
 	a.ctx = ctx
 	a.db = db.InitDB()
 
-	igdbClient := igdbwrapper.NewIGDBWrapperService()
+	wrapperService := igdb.NewIGDBWrapperService()
+	igdbClient := igdb.NewIGDBClient(wrapperService)
 	profileService := api.NewProfileBackendService()
 	profile, err := profileService.ReadProfile()
 	if err != nil {
@@ -36,8 +37,8 @@ func (a *App) Startup(ctx context.Context) {
 	fmt.Printf("\n\n starting the get call \n\n")
 	if profile.UserProfile.TwitchKey != "" && profile.UserProfile.TwitchSecret != "" {
 		// get access token
-		igdbClient.GetTwitchAccessToken(profile.UserProfile.TwitchKey, profile.UserProfile.TwitchSecret)
-		igdbClient.NewClient()
+		wrapperService.GetTwitchAccessToken(profile.UserProfile.TwitchKey, profile.UserProfile.TwitchSecret)
+		wrapperService.NewClient()
 	}
 	igdbClient.Test()
 
