@@ -22,7 +22,8 @@ app.component("Panel", Panel);
 
 app.use(PrimeVue, {
   unstyled: true,
-  pt: Lara
+  pt: Lara,
+  ripple: true
 });
 app.use(router);
 app.mount("#app");
