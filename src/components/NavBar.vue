@@ -5,14 +5,16 @@ const items = ref([
   {
     items: [
       {
-        label: 'Settings',
-        icon: 'pi pi-cog',
+        label: 'Search',
+        icon: 'pi pi-search',
+        link: 'search',
         shortcut: '⌘+O'
       },
       {
-        label: 'Messages',
-        icon: 'pi pi-inbox',
-        badge: 2
+        label: 'Settings',
+        icon: 'pi pi-cog',
+        link: 'setting',
+        shortcut: '⌘+O'
       },
       {
         label: 'Logout',
@@ -20,9 +22,6 @@ const items = ref([
         shortcut: '⌘+Q'
       }
     ]
-  },
-  {
-    separator: true
   }
 ]);
 </script>

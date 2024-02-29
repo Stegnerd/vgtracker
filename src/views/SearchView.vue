@@ -1,2 +1,4 @@
 <script setup="ts"></script>
-<template></template>
+<template>
+  <p>search view</p>
+</template>
