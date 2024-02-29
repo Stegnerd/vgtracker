@@ -7,18 +7,19 @@ const items = ref([
       {
         label: 'Search',
         icon: 'pi pi-search',
-        link: 'search',
+        link: '/search',
         shortcut: '⌘+O'
       },
       {
         label: 'Settings',
         icon: 'pi pi-cog',
-        link: 'setting',
+        link: '/settings',
         shortcut: '⌘+O'
       },
       {
         label: 'Logout',
         icon: 'pi pi-sign-out',
+        link: '/',
         shortcut: '⌘+Q'
       }
     ]
@@ -30,13 +31,13 @@ const items = ref([
   <div class="card ">
     <Menu :model="items" class="min-h-full">
       <template #item="{ item, props }">
-        <a v-ripple class="flex align-items-center" v-bind="props.action">
+        <RouterLink :to="item.link" v-ripple class="flex align-items-center" v-bind="props.action">
           <span :class="item.icon" />
           <span class="ml-2">{{ item.label }}</span>
           <!-- <Badge v-if="item.badge" class="ml-auto" :value="item.badge" /> -->
           <!-- <span v-if="item.shortcut" class="ml-auto border-1 surface-border border-round surface-100 text-xs p-1">{{
           item.shortcut }}</span> -->
-        </a>
+        </RouterLink>
       </template>
     </Menu>
   </div>
