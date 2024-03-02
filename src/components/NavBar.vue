@@ -25,7 +25,8 @@ const items = ref([
   <div class="card ">
     <Menu :model="items" class="min-h-full">
       <template #item="{ item, props }">
-        <RouterLink :to="item.link" v-ripple class="flex align-items-center" v-bind="props.action">
+        <RouterLink :to="item.link" v-ripple class="flex align-items-center" active-class="active-menu"
+          v-bind="props.action">
           <span :class="item.icon" />
           <span class="ml-2">{{ item.label }}</span>
           <!-- <Badge v-if="item.badge" class="ml-auto" :value="item.badge" /> -->
@@ -39,8 +40,11 @@ const items = ref([
 
 <style scoped>
 .card {
-  background: var(--surface-card);
   padding: 2rem;
   border-radius: 10px;
+}
+
+.active-menu {
+  /* background-color: theme('colors.primary-500'); */
 }
 </style>
