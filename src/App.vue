@@ -3,10 +3,9 @@ import LayoutDefault from '@/layouts/LayoutDefault.vue';
 </script>
 
 <template>
-  <LayoutDefault>
+  <LayoutDefault class="dark">
 
   </LayoutDefault>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

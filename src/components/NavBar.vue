@@ -15,12 +15,6 @@ const items = ref([
         icon: 'pi pi-cog',
         link: '/settings',
         shortcut: '⌘+O'
-      },
-      {
-        label: 'Logout',
-        icon: 'pi pi-sign-out',
-        link: '/',
-        shortcut: '⌘+Q'
       }
     ]
   }
