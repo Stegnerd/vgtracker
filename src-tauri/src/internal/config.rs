@@ -1,5 +1,5 @@
-use std::path::PathBuf;
 use std::{fs, path};
+use std::path::PathBuf;
 
 use serde::{Deserialize, Serialize};
 
@@ -42,24 +42,26 @@ pub fn get_user_config_path() -> PathBuf {
     user_config
 }
 
-pub fn get_user_config() -> Option<Config> {
-    let user_config_path = get_user_config_path();
-
-    if !user_config_path.exists() {
-        fs::File::create(&user_config_path).expect("create user config failed");
-    }
-
-    let content = fs::read_to_string(&user_config_path).unwrap_or_else(|_| "".to_string());
-
-    let data: Option<Config> = toml::from_str(&content).unwrap_or_else(|_| None);
-
-    data
-}
+// pub fn get_user_config() -> Option<Config> {
+//     let user_config_path = get_user_config_path();
+//
+//     if !user_config_path.exists() {
+//         fs::File::create(&user_config_path).expect("create user config failed");
+//     }
+//
+//     let content = fs::read_to_string(&user_config_path).unwrap_or_else(|_| "".to_string());
+//
+//     let data: Option<Config> = toml::from_str(&content).unwrap_or_else(|_| None);
+//
+//     data
+// }
 
 pub fn load_or_initial() -> Option<Config> {
     let user_config_path = get_user_config_path();
 
+    let mut write_file = false;
     if !user_config_path.exists() {
+        write_file = true;
         fs::File::create(&user_config_path).expect("create user config failed");
     }
 
@@ -94,5 +96,17 @@ pub fn load_or_initial() -> Option<Config> {
         );
     }
 
-    Some(data.try_into::<Config>().expect("config data error"))
+    let cfg = data.try_into::<Config>().expect("config data error");
+
+    if write_file {
+        update_user_config(&cfg)
+    }
+
+    Some(cfg)
+}
+
+pub fn update_user_config(cfg: &Config) {
+    let user_config_path = get_user_config_path();
+    let content = toml::to_string(&cfg).unwrap();
+    fs::write(user_config_path, &content).expect("update config error")
 }
