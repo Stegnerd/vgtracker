@@ -1,5 +1,5 @@
-use std::{fs, path};
 use std::path::PathBuf;
+use std::{fs, path};
 
 use serde::{Deserialize, Serialize};
 
@@ -42,19 +42,19 @@ pub fn get_user_config_path() -> PathBuf {
     user_config
 }
 
-// pub fn get_user_config() -> Option<Config> {
-//     let user_config_path = get_user_config_path();
-//
-//     if !user_config_path.exists() {
-//         fs::File::create(&user_config_path).expect("create user config failed");
-//     }
-//
-//     let content = fs::read_to_string(&user_config_path).unwrap_or_else(|_| "".to_string());
-//
-//     let data: Option<Config> = toml::from_str(&content).unwrap_or_else(|_| None);
-//
-//     data
-// }
+pub fn get_user_config() -> Config {
+    let user_config_path = get_user_config_path();
+
+    if !user_config_path.exists() {
+        fs::File::create(&user_config_path).expect("create user config failed");
+    }
+
+    let content = fs::read_to_string(&user_config_path).unwrap_or_else(|_| "".to_string());
+
+    let data: Option<Config> = toml::from_str(&content).unwrap_or_else(|_| None);
+
+    data.expect("failed to get config")
+}
 
 pub fn load_or_initial() -> Option<Config> {
     let user_config_path = get_user_config_path();

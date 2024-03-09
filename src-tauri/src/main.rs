@@ -3,6 +3,7 @@
 
 use tokio;
 
+mod cmd;
 mod internal;
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
@@ -13,11 +14,16 @@ fn greet(name: &str) -> String {
 
 #[tokio::main]
 async fn main() {
-    internal::config::load_or_initial();
-
     tauri::Builder::default()
-        //.setup(move |app| Ok(()))
-        .invoke_handler(tauri::generate_handler![greet])
+        .setup(move |app| {
+            internal::config::load_or_initial();
+
+            Ok(())
+        })
+        .invoke_handler(tauri::generate_handler![
+            greet,
+            cmd::config::get_user_config
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
