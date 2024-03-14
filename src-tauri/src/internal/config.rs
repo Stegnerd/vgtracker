@@ -1,18 +1,22 @@
-use std::path::PathBuf;
 use std::{fs, path};
+use std::path::PathBuf;
 
 use serde::{Deserialize, Serialize};
+use ts_rs::TS;
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[ts(export, export_to = "./frontend_models/config.ts")]
 pub enum Theme {
     Light,
     Dark,
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Debug, Deserialize, Serialize, TS)]
+#[ts(export, export_to = "./frontend_models/config.ts")]
 pub struct Config {
     pub twitch_client_id: String,
     pub twitch_client_secret: String,
+    #[ts(inline)]
     pub theme: Theme,
 }
 
