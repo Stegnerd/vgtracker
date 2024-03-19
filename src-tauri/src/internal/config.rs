@@ -5,18 +5,19 @@ use serde::{Deserialize, Serialize};
 use ts_rs::TS;
 
 #[derive(Debug, Serialize, Deserialize, TS)]
-#[ts(export, export_to = "./frontend_models/config.ts")]
+#[ts(export, export_to = "./config/")]
 pub enum Theme {
     Light,
     Dark,
 }
 
 #[derive(Debug, Deserialize, Serialize, TS)]
-#[ts(export, export_to = "./frontend_models/config.ts")]
+#[serde(rename_all = "camelCase")]
+#[ts(export, export_to = "./config/")]
 pub struct Config {
     pub twitch_client_id: String,
     pub twitch_client_secret: String,
-    #[ts(inline)]
+    // #[ts(inline)]
     pub theme: Theme,
 }
 

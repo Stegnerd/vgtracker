@@ -6,13 +6,18 @@ import Menu from "primevue/menu";
 import Panel from "primevue/panel";
 import PrimeVue from "primevue/config";
 import Lara from "../presets/lara"
+import InputText from "primevue/inputtext";
+import Dropdown from "primevue/dropdown";
 
 
 export function addPrimeVue(app: App<Element>) {
     app.directive("badge", BadgeDirective);
     app.directive("ripple", Ripple);
 
+    // components
     app.component("Badge", Badge);
+    app.component("Dropdown", Dropdown);
+    app.component('InputText', InputText)
     app.component("Menu", Menu);
     app.component("Panel", Panel);
 

@@ -1,6 +1,6 @@
 import {defineStore} from "pinia";
 import {invoke} from "@tauri-apps/api/tauri";
-import {Config} from '../../src-tauri/frontend_models/config.ts'
+import {Config} from '../../src-tauri/bindings/config/config.ts'
 import {ref} from "vue";
 
 export const useConfigStore = defineStore('config', () => {
