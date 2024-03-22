@@ -11,13 +11,19 @@ pub enum Theme {
     Dark,
 }
 
-#[derive(Debug, Deserialize, Serialize, TS)]
-#[serde(rename_all = "camelCase")]
-#[ts(export, export_to = "./config/")]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct Config {
     pub twitch_client_id: String,
     pub twitch_client_secret: String,
-    // #[ts(inline)]
+    pub theme: Theme,
+}
+
+#[derive(Debug, Deserialize, Serialize, TS)]
+#[serde(rename_all = "camelCase")]
+#[ts(export, export_to = "./config/")]
+pub struct ReadConfigOutput {
+    pub twitch_client_id: String,
+    pub twitch_client_secret: String,
     pub theme: Theme,
 }
 
@@ -27,6 +33,16 @@ impl Default for Config {
             twitch_client_id: String::new(),
             twitch_client_secret: String::new(),
             theme: Theme::Dark,
+        }
+    }
+}
+
+impl From<Config> for ReadConfigOutput {
+    fn from(c: Config) -> Self {
+        Self {
+            twitch_client_id: c.twitch_client_id,
+            twitch_client_secret: c.twitch_client_secret,
+            theme: c.theme,
         }
     }
 }
@@ -47,7 +63,7 @@ pub fn get_user_config_path() -> PathBuf {
     user_config
 }
 
-pub fn get_user_config() -> Config {
+pub fn get_user_config() -> ReadConfigOutput {
     let user_config_path = get_user_config_path();
 
     if !user_config_path.exists() {
@@ -58,7 +74,7 @@ pub fn get_user_config() -> Config {
 
     let data: Option<Config> = toml::from_str(&content).unwrap_or_else(|_| None);
 
-    data.expect("failed to get config")
+    data.expect("failed to get config").into()
 }
 
 pub fn load_or_initial() -> Option<Config> {
@@ -101,6 +117,7 @@ pub fn load_or_initial() -> Option<Config> {
         );
     }
 
+    // fix issue with ts wanting camelCase but toml wanting snake case
     let cfg = data.try_into::<Config>().expect("config data error");
 
     if write_file {

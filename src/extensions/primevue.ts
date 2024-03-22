@@ -8,6 +8,8 @@ import PrimeVue from "primevue/config";
 import Lara from "../presets/lara"
 import InputText from "primevue/inputtext";
 import Dropdown from "primevue/dropdown";
+import Button from "primevue/button";
+import FloatLabel from "primevue/floatlabel";
 
 
 export function addPrimeVue(app: App<Element>) {
@@ -16,7 +18,9 @@ export function addPrimeVue(app: App<Element>) {
 
     // components
     app.component("Badge", Badge);
+    app.component('Button', Button)
     app.component("Dropdown", Dropdown);
+    app.component('FloatLabel', FloatLabel)
     app.component('InputText', InputText)
     app.component("Menu", Menu);
     app.component("Panel", Panel);
