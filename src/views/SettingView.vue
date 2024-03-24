@@ -22,7 +22,7 @@ const schema = yup.object({
   twitchClientSecret: yup.string().required(),
   theme: yup.string().required()
 })
-
+// TODO: https://tailwind.primevue.org/dropdown/#basic here for theme swutcher
 const {defineField, handleSubmit, errors,} = useForm({
   initialValues: {
     twitchClientId: cfg?.twitchClientId,
