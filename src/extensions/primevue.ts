@@ -11,8 +11,9 @@ import Dropdown from "primevue/dropdown";
 import Button from "primevue/button";
 import FloatLabel from "primevue/floatlabel";
 
-
 export function addPrimeVue(app: App<Element>) {
+
+    app.use(PrimeVue, {ripple: true, unstyled: true, pt: Lara});
     app.directive("badge", BadgeDirective);
     app.directive("ripple", Ripple);
 
@@ -25,9 +26,5 @@ export function addPrimeVue(app: App<Element>) {
     app.component("Menu", Menu);
     app.component("Panel", Panel);
 
-    app.use(PrimeVue, {
-        unstyled: true,
-        pt: Lara,
-        ripple: true
-    });
+
 }

@@ -7,7 +7,7 @@ import NavBar from '../components/NavBar.vue';
     <div class='relative flex flex-grow'>
       <NavBar class='p-6 space-y-6 w-64'></NavBar>
       <Suspense>
-        <main class='bg-white dark:bg-gray-700 text-surface-700 flex-1 p-6 main-card dark:text-white/80'>
+        <main class='bg-white dark:bg-surface-700 text-surface-700 flex-1 p-6 main-card dark:text-white/80'>
           <RouterView></RouterView>
         </main>
       </Suspense>

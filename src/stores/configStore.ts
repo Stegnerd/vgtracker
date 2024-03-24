@@ -1,14 +1,22 @@
 import {defineStore} from "pinia";
 import {invoke} from "@tauri-apps/api/tauri";
-import {Config} from '../../src-tauri/bindings/config/config.ts'
 import {ref} from "vue";
+import {UpdateConfigInput} from "../../src-tauri/bindings/config/UpdateConfigInput.ts";
+import {ReadConfigOutput} from "../../src-tauri/bindings/config/ReadConfigOutput.ts";
 
 export const useConfigStore = defineStore('config', () => {
-    const configuration = ref<Config | undefined>();
+    const configuration = ref<ReadConfigOutput | undefined>();
 
-    async function getConfig() {
-        return await invoke<Config>('get_user_config').then((cfg: Config) => {
+    async function getConfig(): Promise<void> {
+        return await invoke<ReadConfigOutput>('get_user_config').then((cfg: ReadConfigOutput) => {
+            console.warn('in store', cfg)
             configuration.value = cfg;
+        })
+    }
+
+    async function updateConfig(input: UpdateConfigInput) {
+        return await invoke<ReadConfigOutput>('update_user_config', {input: input}).then((cfg: ReadConfigOutput) => {
+            configuration.value = cfg
         })
     }
 

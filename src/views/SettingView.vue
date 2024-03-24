@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {useConfigStore} from "@/stores/configStore.ts";
-import {Theme} from '../../src-tauri/bindings/config/theme.ts'
 import * as yup from 'yup';
 import {useForm} from "vee-validate";
 
@@ -12,24 +11,23 @@ interface ThemeOption {
   value: string;
 }
 
-const themeOptions: ThemeOption[] = [
-  {name: 'Dark', value: 'Dark'},
-  {name: 'Light', value: 'Light'}
-]
-
+const themeOptions = ['Dark', 'Light'].map((o) => ({
+  name: o,
+  value: o
+}));
 
 // https://vee-validate.logaretm.com/v4/examples/ui-libraries/
 const schema = yup.object({
   twitchClientId: yup.string().required(),
   twitchClientSecret: yup.string().required(),
-  theme: yup.string<Theme>().required()
+  theme: yup.string().required()
 })
 
 const {defineField, handleSubmit, errors,} = useForm({
   initialValues: {
     twitchClientId: cfg?.twitchClientId,
     twitchClientSecret: cfg?.twitchClientSecret,
-    theme: themeOptions[themeOptions.findIndex((f: ThemeOption) => f.name === cfg?.theme)]
+    theme: themeOptions[themeOptions.findIndex((f: ThemeOption) => f.name === cfg?.theme)].value
   },
   validationSchema: schema
 })
@@ -48,14 +46,14 @@ const onSubmit = handleSubmit((values) => {
   <form @submit="onSubmit">
     <div class="flex flex-col">
       <div class="flex flex-col gap-2  pt-6 w-full">
-        <FloatLabel pt="w-1/2">
+        <FloatLabel>
           <InputText id="twitchClientId" v-model="twitchClientId" aria-describedby="twitchClientId-help" class="w-1/2"/>
           <label for="twitchClientId">Twitch Client ID</label>
         </FloatLabel>
         <small id="twitchClientId-help">{{ errors.twitchClientId }}</small>
       </div>
       <div class="flex flex-col gap-2  pt-6 w-full">
-        <FloatLabel pt="w-1/2">
+        <FloatLabel>
           <InputText id="twitchClientSecret" v-model="twitchClientSecret" aria-describedby="twitchClientSecret-help"
                      class="w-1/2"/>
           <label for="twitchClientSecret">Twitch Client Secret</label>
@@ -68,7 +66,8 @@ const onSubmit = handleSubmit((values) => {
         <FloatLabel>
         -->
         <Dropdown input-id="theme" v-model="theme" :options="themeOptions" aria-describedby="theme-help"
-                  option-label="name"/>
+                  optionLabel="name" optionValue="value"/>
+        <small id="theme-help">{{ errors.theme }}</small>
       </div>
     </div>
 

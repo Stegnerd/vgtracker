@@ -27,3 +27,32 @@
     --surface-900: 15 23 42;
     --surface-950: 3 6 23;
 }
+
+/*:root {*/
+/*    --body-bg: rgb(var(--surface-50));*/
+/*    --body-text-color: rgb(var(--surface-900));*/
+/*    --card-border: 1px solid var(--border-color);*/
+/*    --card-bg: rgb(var(--surface-0));*/
+/*    --border-color: rgb(var(--surface-200));*/
+/*}*/
+
+/*:root[class='dark'] {*/
+/*    --body-bg: rgb(var(--surface-900));*/
+/*    --body-text-color: rgb(var(--surface-50));*/
+/*    --card-border: 1px solid transparent;*/
+/*    --card-bg: rgb(var(--surface-800));*/
+/*    --border-color: rgba(255, 255, 255, 0.1);*/
+/*}*/
+
+body {
+    /*margin: 0px;*/
+    /*min-height: 100%;*/
+    /*overflow-x: hidden;*/
+    /*overflow-y: auto;*/
+    /*background-color: var(--body-bg);*/
+    /*font-weight: normal;*/
+    /*color: var(--body-text-color);*/
+    /*-webkit-font-smoothing: antialiased;*/
+    /*-moz-osx-font-smoothing: grayscale;*/
+    /*padding: 1rem;*/
+}

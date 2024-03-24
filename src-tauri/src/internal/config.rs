@@ -27,6 +27,15 @@ pub struct ReadConfigOutput {
     pub theme: Theme,
 }
 
+#[derive(Debug, Deserialize, Serialize, TS)]
+#[serde(rename_all = "camelCase")]
+#[ts(export, export_to = "./config/")]
+pub struct UpdateConfigInput {
+    pub twitch_client_id: String,
+    pub twitch_client_secret: String,
+    pub theme: Theme,
+}
+
 impl Default for Config {
     fn default() -> Self {
         Self {
@@ -47,7 +56,7 @@ impl From<Config> for ReadConfigOutput {
     }
 }
 
-pub fn get_user_config_path() -> PathBuf {
+fn get_user_config_path() -> PathBuf {
     let home_dir = &tauri::api::path::home_dir().unwrap();
     let user_config = path::Path::new(home_dir);
     let user_config = user_config.join(".vgtracker");
@@ -63,7 +72,7 @@ pub fn get_user_config_path() -> PathBuf {
     user_config
 }
 
-pub fn get_user_config() -> ReadConfigOutput {
+fn get_user_config() -> Config {
     let user_config_path = get_user_config_path();
 
     if !user_config_path.exists() {
@@ -74,7 +83,13 @@ pub fn get_user_config() -> ReadConfigOutput {
 
     let data: Option<Config> = toml::from_str(&content).unwrap_or_else(|_| None);
 
-    data.expect("failed to get config").into()
+    data.expect("failed to get config")
+}
+
+pub fn read_user_config() -> ReadConfigOutput {
+    let base_config = get_user_config();
+
+    base_config.into()
 }
 
 pub fn load_or_initial() -> Option<Config> {
@@ -121,13 +136,24 @@ pub fn load_or_initial() -> Option<Config> {
     let cfg = data.try_into::<Config>().expect("config data error");
 
     if write_file {
-        update_user_config(&cfg)
+        update_user_config_internal(&cfg)
     }
 
     Some(cfg)
 }
 
-pub fn update_user_config(cfg: &Config) {
+pub fn update_user_config(update_input: UpdateConfigInput) -> ReadConfigOutput {
+    let mut current_config = get_user_config();
+    current_config.twitch_client_id = update_input.twitch_client_id.to_string();
+    current_config.twitch_client_secret = update_input.twitch_client_secret.to_string();
+    current_config.theme = update_input.theme;
+
+    update_user_config_internal(&current_config);
+
+    current_config.into()
+}
+
+fn update_user_config_internal(cfg: &Config) {
     let user_config_path = get_user_config_path();
     let content = toml::to_string(&cfg).unwrap();
     fs::write(user_config_path, &content).expect("update config error")
