@@ -20,7 +20,8 @@ async fn main() {
         })
         .invoke_handler(tauri::generate_handler![
             greet,
-            cmd::config::get_user_config
+            cmd::config::get_user_config,
+            cmd::config::update_user_config,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

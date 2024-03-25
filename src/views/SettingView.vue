@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import {useConfigStore} from "@/stores/configStore.ts";
+import {useConfigStore,} from "@/stores/configStore.ts";
 import * as yup from 'yup';
 import {useForm} from "vee-validate";
+import {storeToRefs} from "pinia";
+import {UpdateConfigInput} from "../../src-tauri/bindings/config/UpdateConfigInput.ts";
 
 const store = useConfigStore();
-const cfg = store.configuration;
+const {configuration} = storeToRefs(store);
 
 interface ThemeOption {
   name: string;
@@ -23,11 +25,11 @@ const schema = yup.object({
   theme: yup.string().required()
 })
 // TODO: https://tailwind.primevue.org/dropdown/#basic here for theme swutcher
-const {defineField, handleSubmit, errors,} = useForm({
+const {defineField, errors,} = useForm({
   initialValues: {
-    twitchClientId: cfg?.twitchClientId,
-    twitchClientSecret: cfg?.twitchClientSecret,
-    theme: themeOptions[themeOptions.findIndex((f: ThemeOption) => f.name === cfg?.theme)].value
+    twitchClientId: configuration.value?.twitchClientId,
+    twitchClientSecret: configuration.value?.twitchClientSecret,
+    theme: themeOptions[themeOptions.findIndex((f: ThemeOption) => f.name === configuration.value?.theme)].value
   },
   validationSchema: schema
 })
@@ -36,9 +38,17 @@ const [twitchClientId] = defineField('twitchClientId')
 const [twitchClientSecret] = defineField('twitchClientSecret')
 const [theme] = defineField('theme')
 
-const onSubmit = handleSubmit((values) => {
-  console.warn('submitted values', values)
-})
+async function onSubmit() {
+  const input = {
+    twitchClientId: twitchClientId.value,
+    twitchClientSecret: twitchClientSecret.value,
+    theme: theme.value
+  } as UpdateConfigInput
+
+  await store.updateConfig(input).then(() => {
+    console.warn('actually updated')
+  })
+}
 
 </script>
 

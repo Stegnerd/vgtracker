@@ -15,13 +15,14 @@ export const useConfigStore = defineStore('config', () => {
     }
 
     async function updateConfig(input: UpdateConfigInput) {
-        return await invoke<ReadConfigOutput>('update_user_config', {input: input}).then((cfg: ReadConfigOutput) => {
+        return await invoke<ReadConfigOutput>('update_user_config', {input}).then((cfg: ReadConfigOutput) => {
             configuration.value = cfg
         })
     }
 
     return {
         configuration,
-        getConfig
+        getConfig,
+        updateConfig
     }
 })
