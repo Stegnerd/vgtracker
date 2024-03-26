@@ -22,6 +22,7 @@ async fn main() {
             greet,
             cmd::config::get_user_config,
             cmd::config::update_user_config,
+            cmd::config::update_theme,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

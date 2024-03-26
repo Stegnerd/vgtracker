@@ -3,6 +3,7 @@ import {invoke} from "@tauri-apps/api/tauri";
 import {ref} from "vue";
 import {UpdateConfigInput} from "../../src-tauri/bindings/config/UpdateConfigInput.ts";
 import {ReadConfigOutput} from "../../src-tauri/bindings/config/ReadConfigOutput.ts";
+import {Theme} from "../../src-tauri/bindings/config/Theme.ts";
 
 export const useConfigStore = defineStore('config', () => {
     const configuration = ref<ReadConfigOutput | undefined>();
@@ -20,9 +21,17 @@ export const useConfigStore = defineStore('config', () => {
         })
     }
 
+    async function updateTheme(theme: Theme) {
+        if (configuration.value !== undefined) {
+            configuration.value.theme = theme;
+        }
+        return await invoke('update_theme', {themeChange: theme})
+    }
+
     return {
         configuration,
         getConfig,
-        updateConfig
+        updateConfig,
+        updateTheme
     }
 })

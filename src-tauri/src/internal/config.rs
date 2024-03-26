@@ -153,6 +153,12 @@ pub fn update_user_config(update_input: UpdateConfigInput) -> ReadConfigOutput {
     current_config.into()
 }
 
+pub fn update_theme(theme_change: Theme) {
+    let mut current_config = get_user_config();
+    current_config.theme = theme_change;
+    update_user_config_internal(&current_config);
+}
+
 fn update_user_config_internal(cfg: &Config) {
     let user_config_path = get_user_config_path();
     let content = toml::to_string(&cfg).unwrap();

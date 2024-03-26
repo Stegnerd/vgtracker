@@ -46,7 +46,7 @@ async function onSubmit() {
   } as UpdateConfigInput
 
   await store.updateConfig(input).then(() => {
-    console.warn('actually updated')
+    console.warn('component await')
   })
 }
 
