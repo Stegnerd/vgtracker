@@ -22,10 +22,11 @@ export const useConfigStore = defineStore('config', () => {
     }
 
     async function updateTheme(theme: Theme) {
-        if (configuration.value !== undefined) {
-            configuration.value.theme = theme;
-        }
-        return await invoke('update_theme', {themeChange: theme})
+        return await invoke('update_theme', {themeChange: theme}).then(() => {
+            if (configuration.value !== undefined) {
+                configuration.value.theme = theme;
+            }
+        })
     }
 
     return {

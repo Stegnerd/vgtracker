@@ -20,7 +20,7 @@ async function onThemeToggle() {
   await configStore.updateTheme(input).then(() => {
     console.warn('component await', configuration.value)
 
-    iconClass.value = configuration.value?.theme === 'Light' ? 'pi-moon' : 'pi-sun';
+    iconClass.value = configuration.value?.theme === 'Light' ? 'pi-sun' : 'pi-moon';
     console.warn('iconClass.value', iconClass.value)
   })
 }
