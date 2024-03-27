@@ -1,29 +1,24 @@
-import { createApp } from "vue";
-import PrimeVue from "primevue/config";
+import {createApp} from "vue";
 import "./styles.css";
 import App from "./App.vue";
-import Panel from "primevue/panel";
-import Lara from "./presets/lara";
 import router from "./routes";
-import Menu from "primevue/menu";
-import Badge from "primevue/badge";
-import BadgeDirective from "primevue/badgedirective";
-import Ripple from "primevue/ripple";
 import "primeicons/primeicons.css";
+import {addPrimeVue} from "./extensions/primevue.ts";
+import {createPinia} from "pinia";
+import {useConfigStore} from "./stores/configStore.ts";
 
 const app = createApp(App);
 
-app.directive("badge", BadgeDirective);
-app.directive("ripple", Ripple);
+// setup ui library
+addPrimeVue(app)
 
-app.component("Badge", Badge);
-app.component("Menu", Menu);
-app.component("Panel", Panel);
+// setup stores
+const pinia = createPinia()
+app.use(pinia)
 
-app.use(PrimeVue, {
-  unstyled: true,
-  pt: Lara,
-  ripple: true
-});
 app.use(router);
 app.mount("#app");
+
+// populate data before load
+const configStore = useConfigStore();
+await configStore.getConfig()
