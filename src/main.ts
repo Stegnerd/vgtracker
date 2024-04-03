@@ -14,11 +14,16 @@ addPrimeVue(app)
 
 // setup stores
 const pinia = createPinia()
-app.use(pinia)
+const configStore = useConfigStore(pinia);
 
-app.use(router);
-app.mount("#app");
+configStore.getConfig().then(() => {
+    const conf = configStore.configuration;
+    const root = document.getElementsByTagName('html')[0];
+    if (conf?.theme === 'Dark') {
+        root.classList.toggle('dark');
+    }
 
-// populate data before load
-const configStore = useConfigStore();
-await configStore.getConfig()
+    app.use(pinia)
+        .use(router)
+        .mount("#app");
+})

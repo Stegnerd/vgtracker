@@ -33,7 +33,6 @@ pub struct ReadConfigOutput {
 pub struct UpdateConfigInput {
     pub twitch_client_id: String,
     pub twitch_client_secret: String,
-    pub theme: Theme,
 }
 
 impl Default for Config {
@@ -146,7 +145,6 @@ pub fn update_user_config(update_input: UpdateConfigInput) -> ReadConfigOutput {
     let mut current_config = get_user_config();
     current_config.twitch_client_id = update_input.twitch_client_id.to_string();
     current_config.twitch_client_secret = update_input.twitch_client_secret.to_string();
-    current_config.theme = update_input.theme;
 
     update_user_config_internal(&current_config);
 
