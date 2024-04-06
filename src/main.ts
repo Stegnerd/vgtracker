@@ -1,16 +1,16 @@
-import {createApp} from "vue";
+import { createPinia } from "pinia";
+import { createApp } from "vue";
 import "./styles.css";
 import App from "./App.vue";
+import { addPrimeVue } from "./extensions/primevue.ts";
 import router from "./routes";
 import "primeicons/primeicons.css";
-import {addPrimeVue} from "./extensions/primevue.ts";
-import {createPinia} from "pinia";
-import {useConfigStore} from "./stores/configStore.ts";
+import { useConfigStore } from "./stores/configStore.ts";
 
 const app = createApp(App);
 
 // setup ui library
-addPrimeVue(app)
+addPrimeVue(app);
 
 // setup stores
 const pinia = createPinia()
@@ -26,4 +26,5 @@ configStore.getConfig().then(() => {
     app.use(pinia)
         .use(router)
         .mount("#app");
-})
+});
+

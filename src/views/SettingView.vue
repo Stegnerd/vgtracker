@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import {useConfigStore,} from "@/stores/configStore.ts";
+import { useConfigStore, } from "@/stores/configStore.ts";
+import { storeToRefs } from "pinia";
+import { useForm } from "vee-validate";
 import * as yup from 'yup';
-import {useForm} from "vee-validate";
-import {storeToRefs} from "pinia";
-import {UpdateConfigInput} from "../../src-tauri/bindings/config/UpdateConfigInput.ts";
+import { UpdateConfigInput } from "../../src-tauri/bindings/config/UpdateConfigInput.ts";
 
 const store = useConfigStore();
-const {configuration} = storeToRefs(store);
+const { configuration } = storeToRefs(store);
 
 // https://vee-validate.logaretm.com/v4/examples/ui-libraries/
 const schema = yup.object({
@@ -14,7 +14,7 @@ const schema = yup.object({
   twitchClientSecret: yup.string().required(),
 })
 
-const {defineField, errors,} = useForm({
+const { defineField, errors, } = useForm({
   initialValues: {
     twitchClientId: configuration.value?.twitchClientId,
     twitchClientSecret: configuration.value?.twitchClientSecret,
