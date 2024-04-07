@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { useConfigStore } from "@/stores/configStore.ts";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
+
+import { useConfigStore } from "@/stores/configStore.ts";
 
 const configStore = useConfigStore();
 const { configuration } = storeToRefs(configStore);
@@ -34,6 +35,4 @@ async function onThemeToggle() {
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

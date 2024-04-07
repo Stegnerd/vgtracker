@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import ThemeSwitcher from "@/components/ThemeSwitcher.vue";
 import { ref } from "vue";
+
+import ThemeSwitcher from "@/components/ThemeSwitcher.vue";
 
 const items = ref([
   {
@@ -52,5 +53,4 @@ const items = ref([
   </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
