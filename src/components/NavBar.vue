@@ -1,34 +1,31 @@
 <script setup lang="ts">
-import { ref } from "vue";
+  import { ref } from "vue";
 
-import ThemeSwitcher from "@/components/ThemeSwitcher.vue";
+  import ThemeSwitcher from "@/components/ThemeSwitcher.vue";
 
-const items = ref([
-  {
-    items: [
-      {
-        label: 'Search',
-        icon: 'pi pi-search',
-        link: '/search',
-        shortcut: '⌘+O'
-      },
-      {
-        label: 'Settings',
-        icon: 'pi pi-cog',
-        link: '/settings',
-        shortcut: '⌘+O'
-      }
-    ]
-  }
-]);
+  const items = ref([
+    {
+      items: [
+        {
+          label: "Search",
+          icon: "pi pi-search",
+          link: "/search",
+          shortcut: "⌘+O"
+        },
+        {
+          label: "Settings",
+          icon: "pi pi-cog",
+          link: "/settings",
+          shortcut: "⌘+O"
+        }
+      ]
+    }
+  ]);
 </script>
 
 <template>
   <div class="p-8 rounded-[10px]">
-    <Menu
-      :model="items"
-      class="min-h-full pb-0"
-    >
+    <Menu :model="items" class="min-h-full pb-0">
       <template #item="{ item, props }">
         <RouterLink
           v-ripple

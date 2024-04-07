@@ -1,4 +1,5 @@
 import typescriptParser from "@typescript-eslint/parser";
+import eslintConfigPrettier from "eslint-config-prettier";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 import pluginVue from "eslint-plugin-vue";
 import parser from "vue-eslint-parser";
@@ -18,15 +19,6 @@ export default [
             // override/add rules settings here, such as:
             // 'vue/no-unused-vars': 'error'
             "semi": ["error", "always"],
-            //"sort-imports": ["error", {
-                    //   "ignoreCase": true, 
-                    //     "ignoreDeclarationSort": true 
-                // "ignoreCase": false,
-                // "ignoreDeclarationSort": false,
-                // "ignoreMemberSort": false,
-                // "memberSyntaxSortOrder": ["none", "all", "multiple", "single"],
-                // "allowSeparatedGroups": false
-            //}],
             "simple-import-sort/imports": "error",
             "simple-import-sort/exports": "error",
 
@@ -38,5 +30,6 @@ export default [
                 sourceType: "module"
             }
         }
-    }
+    },
+    eslintConfigPrettier
 ];
