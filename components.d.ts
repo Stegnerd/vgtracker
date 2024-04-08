@@ -6,13 +6,13 @@
 export {}
 
 declare module 'vue' {
-    export interface GlobalComponents {
-        Button: typeof import('primevue/button')['default']
-        InputText: typeof import('primevue/inputtext')['default']
-        Menu: typeof import('primevue/menu')['default']
-        NavBar: typeof import('./src/components/NavBar.vue')['default']
-        RouterLink: typeof import('vue-router')['RouterLink']
-        RouterView: typeof import('vue-router')['RouterView']
-        ThemeSwitcher: typeof import('./src/components/ThemeSwitcher.vue')['default']
-    }
+  export interface GlobalComponents {
+    Button: typeof import('primevue/button')['default']
+    InputText: typeof import('primevue/inputtext')['default']
+    Menu: typeof import('primevue/menu')['default']
+    NavBar: typeof import('./src/components/NavBar.vue')['default']
+    RouterLink: typeof import('vue-router')['RouterLink']
+    RouterView: typeof import('vue-router')['RouterView']
+    ThemeSwitcher: typeof import('./src/components/ThemeSwitcher.vue')['default']
+  }
 }

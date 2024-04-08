@@ -5,6 +5,8 @@
     "rust-lang.rust-analyzer",
     // formatting
     "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode"
+    "esbenp.prettier-vscode",
+    //debugging
+    "vadimcn.vscode-lldb"
   ]
 }
