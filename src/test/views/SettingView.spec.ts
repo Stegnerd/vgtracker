@@ -1,0 +1,106 @@
+import { createTestingPinia } from "@pinia/testing";
+import { fireEvent, render, screen } from "@testing-library/vue";
+import Button from "primevue/button";
+import PrimeVue from "primevue/config";
+import FloatLabel from "primevue/floatlabel";
+import InputText from "primevue/inputtext";
+import { Field, Form } from "vee-validate";
+
+import { ReadConfigOutput } from "../../../src-tauri/bindings/config/ReadConfigOutput";
+import SettingView from "../../views/SettingView.vue";
+
+describe("SettingView Tests", () => {
+  const emptyMountOptions = {
+    global: {
+      plugins: [
+        createTestingPinia({
+          initialState: {
+            config: {
+              configuration: {
+                twitchClientId: "",
+                twitchClientSecret: "",
+                theme: "Dark"
+              } as ReadConfigOutput
+            }
+          }
+        }),
+        PrimeVue
+      ],
+      components: {
+        Form,
+        Field,
+        InputText,
+        Button,
+        FloatLabel
+      }
+    }
+  };
+
+  const filledMountOptions = {
+    global: {
+      plugins: [
+        createTestingPinia({
+          initialState: {
+            config: {
+              configuration: {
+                twitchClientId: "myClientID",
+                twitchClientSecret: "myClientSecret",
+                theme: "Dark"
+              } as ReadConfigOutput
+            }
+          }
+        }),
+        // TODO: figure out how to set primevue globally
+        PrimeVue
+      ],
+      components: {
+        Form,
+        Field,
+        InputText,
+        Button,
+        FloatLabel
+      }
+    }
+  };
+
+  test("should load data from store", async () => {
+    render(SettingView, filledMountOptions);
+
+    const twitchClientIDInput = screen.getByTestId(
+      "twitchClientIDInput"
+    ) as HTMLInputElement;
+    expect(twitchClientIDInput.value).toBe("myClientID");
+
+    const twitchClientSecret = screen.getByTestId(
+      "twitchClientSecretInput"
+    ) as HTMLInputElement;
+    expect(twitchClientSecret.value).toBe("myClientSecret");
+
+    const submitButton = screen.getByTestId("submit-button");
+    // expect button to be disabled
+    expect(submitButton).toHaveProperty("disabled", false);
+  });
+
+  test("validates twitchClientId input", async () => {
+    render(SettingView, emptyMountOptions);
+
+    const twitchClientInput = screen.getByTestId("twitchClientIDInput");
+    await fireEvent.update(twitchClientInput, "");
+    expect(
+      await screen.findByText("twitchClientId is a required field")
+    ).toBeTruthy();
+
+    const twitchSecretInput = screen.getByTestId("twitchClientSecretInput");
+    await fireEvent.update(twitchSecretInput, "");
+    expect(
+      await screen.findByText("twitchClientSecret is a required field")
+    ).toBeTruthy();
+
+    const submitButton = screen.getByTestId("submit-button");
+    console.warn("submitbutton", submitButton.attributes);
+    // expect button to be disabled
+    expect(submitButton).toHaveProperty("disabled", true);
+  });
+
+  test("should save data", () => {});
+});

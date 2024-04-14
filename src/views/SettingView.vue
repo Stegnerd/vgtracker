@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { storeToRefs } from "pinia";
+  import FloatLabel from "primevue/floatlabel";
   import { useForm } from "vee-validate";
   import * as yup from "yup";
 
@@ -9,14 +10,13 @@
 
   const store = useConfigStore();
   const { configuration } = storeToRefs(store);
-
   // https://vee-validate.logaretm.com/v4/examples/ui-libraries/
   const schema = yup.object({
     twitchClientId: yup.string().required(),
     twitchClientSecret: yup.string().required()
   });
 
-  const { defineField, errors } = useForm({
+  const { defineField, errors, meta } = useForm({
     initialValues: {
       twitchClientId: configuration.value?.twitchClientId,
       twitchClientSecret: configuration.value?.twitchClientSecret
@@ -37,6 +37,8 @@
       console.warn("component await");
     });
   }
+
+  defineExpose({ twitchClientId, twitchClientSecret, errors });
 </script>
 
 <template>
@@ -48,11 +50,18 @@
             id="twitchClientId"
             v-model="twitchClientId"
             aria-describedby="twitchClientId-help"
+            data-testid="twitchClientIDInput"
             class="w-1/2"
           />
           <label for="twitchClientId">Twitch Client ID</label>
         </FloatLabel>
-        <small id="twitchClientId-help">{{ errors.twitchClientId }}</small>
+        <small
+          id="twitchClientId-help"
+          class="twitch-client-id-error"
+          data-testid="twitchClientId-error"
+        >
+          {{ errors.twitchClientId }}
+        </small>
       </div>
       <div class="flex flex-col gap-2 pt-6 w-full">
         <FloatLabel>
@@ -60,18 +69,26 @@
             id="twitchClientSecret"
             v-model="twitchClientSecret"
             aria-describedby="twitchClientSecret-help"
+            data-testid="twitchClientSecretInput"
             class="w-1/2"
           />
           <label for="twitchClientSecret">Twitch Client Secret</label>
         </FloatLabel>
-        <small id="twitchClientSecret-help">{{
-          errors.twitchClientSecret
-        }}</small>
+        <small
+          id="twitchClientSecret-help"
+          data-testid="twitchClientSecret-error"
+          >{{ errors.twitchClientSecret }}</small
+        >
       </div>
     </div>
 
     <div class="pt-12">
-      <Button label="Submit" type="submit" />
+      <Button
+        :disabled="!meta.valid"
+        label="Submit"
+        type="submit"
+        data-testid="submit-button"
+      />
     </div>
   </form>
 </template>
