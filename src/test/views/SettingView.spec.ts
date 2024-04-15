@@ -116,8 +116,6 @@ describe("SettingView Tests", () => {
     const store = useConfigStore(filledPinaia);
     vi.mocked(store.updateConfig).mockImplementation(() => Promise.resolve());
 
-    //await fireEvent.click(screen.getByTestId("submit-button"));
-
     await fireEvent.submit(screen.getByTestId("submit-button"));
 
     expect(store.updateConfig).toHaveBeenCalledWith({
