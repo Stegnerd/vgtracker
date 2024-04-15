@@ -25,7 +25,7 @@
 
 <template>
   <div class="p-8 rounded-[10px]">
-    <Menu :model="items" class="min-h-full pb-0">
+    <PrimeMenu :model="items" class="min-h-full pb-0">
       <template #item="{ item, props }">
         <RouterLink
           v-ripple
@@ -46,7 +46,7 @@
           <ThemeSwitcher />
         </div>
       </template>
-    </Menu>
+    </PrimeMenu>
   </div>
 </template>
 

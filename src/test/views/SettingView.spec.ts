@@ -1,5 +1,7 @@
 import { createTestingPinia } from "@pinia/testing";
 import { fireEvent, render, screen } from "@testing-library/vue";
+import { fn } from "@vitest/spy";
+import { setActivePinia } from "pinia";
 import Button from "primevue/button";
 import PrimeVue from "primevue/config";
 import FloatLabel from "primevue/floatlabel";
@@ -7,6 +9,8 @@ import InputText from "primevue/inputtext";
 import { Field, Form } from "vee-validate";
 
 import { ReadConfigOutput } from "../../../src-tauri/bindings/config/ReadConfigOutput";
+import { UpdateConfigInput } from "../../../src-tauri/bindings/config/UpdateConfigInput";
+import { useConfigStore } from "../../stores/configStore";
 import SettingView from "../../views/SettingView.vue";
 
 describe("SettingView Tests", () => {
@@ -22,43 +26,47 @@ describe("SettingView Tests", () => {
                 theme: "Dark"
               } as ReadConfigOutput
             }
-          }
+          },
+          stubActions: true
         }),
         PrimeVue
       ],
       components: {
+        PrimeInputText: InputText,
+        PrimeButton: Button,
+        PrimeFloatLabel: FloatLabel,
         Form,
-        Field,
-        InputText,
-        Button,
-        FloatLabel
+        Field
       }
     }
   };
 
+  const filledPinaia = createTestingPinia({
+    initialState: {
+      config: {
+        configuration: {
+          twitchClientId: "myClientID",
+          twitchClientSecret: "myClientSecret",
+          theme: "Dark"
+        } as ReadConfigOutput
+      }
+    },
+    stubActions: true,
+    createSpy: fn
+  });
   const filledMountOptions = {
     global: {
       plugins: [
-        createTestingPinia({
-          initialState: {
-            config: {
-              configuration: {
-                twitchClientId: "myClientID",
-                twitchClientSecret: "myClientSecret",
-                theme: "Dark"
-              } as ReadConfigOutput
-            }
-          }
-        }),
+        filledPinaia,
         // TODO: figure out how to set primevue globally
         PrimeVue
       ],
       components: {
+        PrimeInputText: InputText,
+        PrimeButton: Button,
+        PrimeFloatLabel: FloatLabel,
         Form,
-        Field,
-        InputText,
-        Button,
-        FloatLabel
+        Field
       }
     }
   };
@@ -77,7 +85,7 @@ describe("SettingView Tests", () => {
     expect(twitchClientSecret.value).toBe("myClientSecret");
 
     const submitButton = screen.getByTestId("submit-button");
-    // expect button to be disabled
+    // expect button to be enabled
     expect(submitButton).toHaveProperty("disabled", false);
   });
 
@@ -97,10 +105,24 @@ describe("SettingView Tests", () => {
     ).toBeTruthy();
 
     const submitButton = screen.getByTestId("submit-button");
-    console.warn("submitbutton", submitButton.attributes);
     // expect button to be disabled
     expect(submitButton).toHaveProperty("disabled", true);
   });
 
-  test("should save data", () => {});
+  test("should save data", async () => {
+    render(SettingView, filledMountOptions);
+
+    setActivePinia(filledPinaia);
+    const store = useConfigStore(filledPinaia);
+    vi.mocked(store.updateConfig).mockImplementation(() => Promise.resolve());
+
+    //await fireEvent.click(screen.getByTestId("submit-button"));
+
+    await fireEvent.submit(screen.getByTestId("submit-button"));
+
+    expect(store.updateConfig).toHaveBeenCalledWith({
+      twitchClientId: "myClientID",
+      twitchClientSecret: "myClientSecret"
+    } as UpdateConfigInput);
+  });
 });

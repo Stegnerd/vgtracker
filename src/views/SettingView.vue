@@ -1,6 +1,5 @@
 <script setup lang="ts">
   import { storeToRefs } from "pinia";
-  import FloatLabel from "primevue/floatlabel";
   import { useForm } from "vee-validate";
   import * as yup from "yup";
 
@@ -45,8 +44,8 @@
   <form @submit="onSubmit">
     <div class="flex flex-col">
       <div class="flex flex-col gap-2 pt-6 w-full">
-        <FloatLabel>
-          <InputText
+        <PrimeFloatLabel>
+          <PrimeInputText
             id="twitchClientId"
             v-model="twitchClientId"
             aria-describedby="twitchClientId-help"
@@ -54,7 +53,7 @@
             class="w-1/2"
           />
           <label for="twitchClientId">Twitch Client ID</label>
-        </FloatLabel>
+        </PrimeFloatLabel>
         <small
           id="twitchClientId-help"
           class="twitch-client-id-error"
@@ -64,8 +63,8 @@
         </small>
       </div>
       <div class="flex flex-col gap-2 pt-6 w-full">
-        <FloatLabel>
-          <InputText
+        <PrimeFloatLabel>
+          <PrimeInputText
             id="twitchClientSecret"
             v-model="twitchClientSecret"
             aria-describedby="twitchClientSecret-help"
@@ -73,7 +72,7 @@
             class="w-1/2"
           />
           <label for="twitchClientSecret">Twitch Client Secret</label>
-        </FloatLabel>
+        </PrimeFloatLabel>
         <small
           id="twitchClientSecret-help"
           data-testid="twitchClientSecret-error"
@@ -83,7 +82,7 @@
     </div>
 
     <div class="pt-12">
-      <Button
+      <PrimeButton
         :disabled="!meta.valid"
         label="Submit"
         type="submit"
