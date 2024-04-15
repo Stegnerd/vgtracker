@@ -32,9 +32,7 @@
       twitchClientSecret: twitchClientSecret.value
     } as UpdateConfigInput;
 
-    await store.updateConfig(input).then(() => {
-      console.warn("component await");
-    });
+    await store.updateConfig(input);
   }
 
   defineExpose({ twitchClientId, twitchClientSecret, errors });

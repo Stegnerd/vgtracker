@@ -1,5 +1,6 @@
 import typescriptParser from "@typescript-eslint/parser";
 import eslintConfigPrettier from "eslint-config-prettier";
+import importPlugin from "eslint-plugin-import";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 import pluginVue from "eslint-plugin-vue";
 import parser from "vue-eslint-parser";
@@ -13,6 +14,7 @@ export default [
     {
         plugins: {
             "simple-import-sort": simpleImportSort,
+            "import": importPlugin
         },
         files: ["src/**/*.ts", "src/**/*.vue"],
         rules: {
@@ -21,7 +23,9 @@ export default [
             "semi": ["error", "always"],
             "simple-import-sort/imports": "error",
             "simple-import-sort/exports": "error",
-
+            "import/first": "error",
+            "import/newline-after-import": "error",
+            "import/no-duplicates": "error"
         },
         languageOptions: {
             parser: parser,

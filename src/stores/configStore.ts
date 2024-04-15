@@ -12,7 +12,6 @@ export const useConfigStore = defineStore("config", () => {
   async function getConfig(): Promise<void> {
     return await invoke<ReadConfigOutput>("get_user_config").then(
       (cfg: ReadConfigOutput) => {
-        console.warn("in store", cfg);
         configuration.value = cfg;
       }
     );

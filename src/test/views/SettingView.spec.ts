@@ -1,7 +1,7 @@
 import { createTestingPinia } from "@pinia/testing";
 import { fireEvent, render, screen } from "@testing-library/vue";
 import { fn } from "@vitest/spy";
-import { setActivePinia } from "pinia";
+import { setActivePinia, StateTree as stateTree } from "pinia";
 import Button from "primevue/button";
 import PrimeVue from "primevue/config";
 import FloatLabel from "primevue/floatlabel";
@@ -14,65 +14,53 @@ import { useConfigStore } from "../../stores/configStore";
 import SettingView from "../../views/SettingView.vue";
 
 describe("SettingView Tests", () => {
-  const emptyMountOptions = {
-    global: {
-      plugins: [
-        createTestingPinia({
-          initialState: {
-            config: {
-              configuration: {
-                twitchClientId: "",
-                twitchClientSecret: "",
-                theme: "Dark"
-              } as ReadConfigOutput
-            }
-          },
-          stubActions: true
-        }),
-        PrimeVue
-      ],
-      components: {
-        PrimeInputText: InputText,
-        PrimeButton: Button,
-        PrimeFloatLabel: FloatLabel,
-        Form,
-        Field
-      }
+  const filledState: stateTree = {
+    config: {
+      configuration: {
+        twitchClientId: "myClientID",
+        twitchClientSecret: "myClientSecret",
+        theme: "Dark"
+      } as ReadConfigOutput
+    }
+  };
+  const emptyState: stateTree = {
+    config: {
+      configuration: {
+        twitchClientId: "",
+        twitchClientSecret: "",
+        theme: "Dark"
+      } as ReadConfigOutput
     }
   };
 
-  const filledPinaia = createTestingPinia({
-    initialState: {
-      config: {
-        configuration: {
-          twitchClientId: "myClientID",
-          twitchClientSecret: "myClientSecret",
-          theme: "Dark"
-        } as ReadConfigOutput
+  const createTestPinia = (piniaState: stateTree | undefined) => {
+    const testPinia = createTestingPinia({
+      initialState: piniaState,
+      stubActions: true,
+      createSpy: fn
+    });
+    const mountOptions = {
+      global: {
+        plugins: [testPinia, PrimeVue],
+        components: {
+          PrimeInputText: InputText,
+          PrimeButton: Button,
+          PrimeFloatLabel: FloatLabel,
+          Form,
+          Field
+        }
       }
-    },
-    stubActions: true,
-    createSpy: fn
-  });
-  const filledMountOptions = {
-    global: {
-      plugins: [
-        filledPinaia,
-        // TODO: figure out how to set primevue globally
-        PrimeVue
-      ],
-      components: {
-        PrimeInputText: InputText,
-        PrimeButton: Button,
-        PrimeFloatLabel: FloatLabel,
-        Form,
-        Field
-      }
-    }
+    };
+    render(SettingView, mountOptions);
+
+    setActivePinia(testPinia);
+    const store = useConfigStore(testPinia);
+
+    return store;
   };
 
   test("should load data from store", async () => {
-    render(SettingView, filledMountOptions);
+    createTestPinia(filledState);
 
     const twitchClientIDInput = screen.getByTestId(
       "twitchClientIDInput"
@@ -90,7 +78,7 @@ describe("SettingView Tests", () => {
   });
 
   test("validates twitchClientId input", async () => {
-    render(SettingView, emptyMountOptions);
+    createTestPinia(emptyState);
 
     const twitchClientInput = screen.getByTestId("twitchClientIDInput");
     await fireEvent.update(twitchClientInput, "");
@@ -110,10 +98,7 @@ describe("SettingView Tests", () => {
   });
 
   test("should save data", async () => {
-    render(SettingView, filledMountOptions);
-
-    setActivePinia(filledPinaia);
-    const store = useConfigStore(filledPinaia);
+    const store = createTestPinia(filledState);
     vi.mocked(store.updateConfig).mockImplementation(() => Promise.resolve());
 
     await fireEvent.submit(screen.getByTestId("submit-button"));
