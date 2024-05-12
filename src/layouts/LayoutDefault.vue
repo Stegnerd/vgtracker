@@ -9,6 +9,7 @@
       <Suspense>
         <main class="bg-white dark:bg-surface-700 flex-1 p-6 main-card">
           <RouterView />
+          <PrimeToast />
         </main>
       </Suspense>
     </div>

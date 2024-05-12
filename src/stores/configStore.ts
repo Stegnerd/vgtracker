@@ -5,6 +5,7 @@ import { ref } from "vue";
 import { ReadConfigOutput } from "../../src-tauri/bindings/config/ReadConfigOutput.ts";
 import { Theme } from "../../src-tauri/bindings/config/Theme.ts";
 import { UpdateConfigInput } from "../../src-tauri/bindings/config/UpdateConfigInput.ts";
+import { toastSuccess } from "../composables/useToast.ts";
 
 export const useConfigStore = defineStore("config", () => {
   const configuration = ref<ReadConfigOutput | undefined>();
@@ -21,6 +22,7 @@ export const useConfigStore = defineStore("config", () => {
     return await invoke<ReadConfigOutput>("update_user_config", { input }).then(
       (cfg: ReadConfigOutput) => {
         configuration.value = cfg;
+        toastSuccess("Configration Updated", "");
       }
     );
   }

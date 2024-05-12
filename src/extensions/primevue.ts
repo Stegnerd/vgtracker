@@ -8,6 +8,8 @@ import InputText from "primevue/inputtext";
 import Menu from "primevue/menu";
 import Panel from "primevue/panel";
 import Ripple from "primevue/ripple";
+import Toast from "primevue/toast";
+import ToastService from "primevue/toastservice";
 import { App } from "vue";
 
 import Lara from "../presets/lara";
@@ -27,4 +29,8 @@ export function addPrimeVue(app: App<Element>) {
   app.component("PrimeInputText", InputText);
   app.component("PrimeMenu", Menu);
   app.component("PrimePanel", Panel);
+  app.component("PrimeToast", Toast);
+
+  // services
+  app.use(ToastService);
 }
