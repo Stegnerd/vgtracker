@@ -1,0 +1,12 @@
+{
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit" ,
+      "source.fixAll.eslint": "explicit" 
+    },
+    "eslint.experimental.useFlatConfig": true,
+    "eslint.validate": ["typescript","vue"],
+    "[vue]": {
+      "editor.formatOnSave": true,
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+  }

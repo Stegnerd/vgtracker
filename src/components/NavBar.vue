@@ -1,32 +1,45 @@
 <script setup lang="ts">
-import { ref } from "vue";
+  import { ref } from "vue";
 
-const items = ref([
-  {
-    items: [
-      {
-        label: 'Search',
-        icon: 'pi pi-search',
-        link: '/search',
-        shortcut: '⌘+O'
-      },
-      {
-        label: 'Settings',
-        icon: 'pi pi-cog',
-        link: '/settings',
-        shortcut: '⌘+O'
-      }
-    ]
-  }
-]);
+  import ThemeSwitcher from "@/components/ThemeSwitcher.vue";
+
+  const items = ref([
+    {
+      items: [
+        {
+          label: "Search",
+          icon: "pi pi-search",
+          link: "/search",
+          shortcut: "⌘+O"
+        },
+        {
+          label: "Profile",
+          icon: "pi pi-user",
+          link: "/profile",
+          shortcut: "⌘+O"
+        },
+        {
+          label: "Settings",
+          icon: "pi pi-cog",
+          link: "/settings",
+          shortcut: "⌘+O"
+        }
+      ]
+    }
+  ]);
 </script>
 
 <template>
-  <div class="card ">
-    <Menu :model="items" class="min-h-full">
+  <div class="p-8 rounded-[10px]">
+    <PrimeMenu :model="items" class="min-h-full pb-0">
       <template #item="{ item, props }">
-        <RouterLink :to="item.link" v-ripple class="flex align-items-center" active-class="active-menu"
-          v-bind="props.action">
+        <RouterLink
+          v-ripple
+          :to="item.link"
+          class="flex align-items-center"
+          active-class="active-menu"
+          v-bind="props.action"
+        >
           <span :class="item.icon" />
           <span class="ml-2">{{ item.label }}</span>
           <!-- <Badge v-if="item.badge" class="ml-auto" :value="item.badge" /> -->
@@ -34,17 +47,13 @@ const items = ref([
           item.shortcut }}</span> -->
         </RouterLink>
       </template>
-    </Menu>
+      <template #end>
+        <div class="flex flex-col justify-end h-[calc(100vh-242px)]">
+          <ThemeSwitcher />
+        </div>
+      </template>
+    </PrimeMenu>
   </div>
 </template>
 
-<style scoped>
-.card {
-  padding: 2rem;
-  border-radius: 10px;
-}
-
-.active-menu {
-  /* background-color: theme('colors.primary-500'); */
-}
-</style>
+<style scoped></style>

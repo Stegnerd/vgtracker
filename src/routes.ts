@@ -1,4 +1,4 @@
-import { RouteRecordRaw, createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -12,6 +12,14 @@ const routes: RouteRecordRaw[] = [
     path: "/search",
     name: "search",
     component: () => import("@/views/SearchView.vue")
+  },
+  {
+    meta: {
+      title: "Profile"
+    },
+    path: "/profile",
+    name: "profile",
+    component: () => import("@/views/ProfileView.vue")
   },
   {
     meta: {
