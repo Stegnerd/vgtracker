@@ -1,5 +1,15 @@
-<script setup="ts"></script>
+<script setup lang="ts">
+  function onSubmit() {
+    console.warn("here1");
+  }
+</script>
 
 <template>
-  <p>search view</p>
+  SearchView
+  <PrimeButton
+    label="Submit"
+    type="submit"
+    data-testid="submit-button"
+    @click="onSubmit()"
+  />
 </template>

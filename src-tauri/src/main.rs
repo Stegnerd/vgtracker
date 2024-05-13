@@ -1,5 +1,6 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+use tauri::Manager;
 
 mod cmd;
 mod internal;
@@ -15,6 +16,12 @@ async fn main() {
     tauri::Builder::default()
         .setup(move |app| {
             internal::config::load_or_initial();
+
+            #[cfg(debug_assertions)] // only include this code on debug builds
+            {
+                let window = app.get_window("main").unwrap();
+                window.open_devtools();
+            }
 
             Ok(())
         })

@@ -1,5 +1,5 @@
-use std::{fs, path};
 use std::path::PathBuf;
+use std::{fs, path};
 
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;

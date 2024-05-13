@@ -13,6 +13,12 @@
           shortcut: "⌘+O"
         },
         {
+          label: "Profile",
+          icon: "pi pi-user",
+          link: "/profile",
+          shortcut: "⌘+O"
+        },
+        {
           label: "Settings",
           icon: "pi pi-cog",
           link: "/settings",
@@ -42,7 +48,7 @@
         </RouterLink>
       </template>
       <template #end>
-        <div class="flex flex-col justify-end h-[calc(100vh-194px)]">
+        <div class="flex flex-col justify-end h-[calc(100vh-242px)]">
           <ThemeSwitcher />
         </div>
       </template>
