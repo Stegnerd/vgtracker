@@ -1,7 +1,8 @@
 # run this action when a pull request is pushed to or main
-pull_request:
-push:
-  branches: main
+on:
+  pull_request:
+  push:
+    branches: main
 
 # the name of our workflow
 name: Tests
@@ -44,12 +45,12 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: test
-      
+
       # install our Node.js dependencies with Bun
       - name: Bun install
         run: bun install
 
-      # run ui unit test 
+      # run ui unit test
       - name: UI Unit tests
         run: bun run test:ui
 
@@ -69,9 +70,9 @@ jobs:
       # # install our Node.js dependencies with Bun
       # - name: Bun install
       #   run: bun install
-        # working-directory: webdriver/webdriverio
+      # working-directory: webdriver/webdriverio
 
-      # run ui unit test 
+      # run ui unit test
       - name: UI Unit tests
         run: bun run test:ui
 
