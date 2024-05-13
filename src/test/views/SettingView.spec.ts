@@ -101,7 +101,7 @@ describe("SettingView Tests", () => {
     const store = createTestPinia(filledState);
     vi.mocked(store.updateConfig).mockImplementation(() => Promise.resolve());
 
-    await fireEvent.submit(screen.getByTestId("submit-button"));
+    await fireEvent.click(screen.getByTestId("submit-button"));
 
     expect(store.updateConfig).toHaveBeenCalledWith({
       twitchClientId: "myClientID",
