@@ -2,7 +2,8 @@
 on:
   pull_request:
   push:
-    branches: main
+    branches-ignore:
+      - main
 
 # the name of our workflow
 name: Tests
@@ -20,6 +21,13 @@ jobs:
     steps:
       # checkout the code on the workflow runner
       - uses: actions/checkout@v2
+
+      # install the latest stable node version at the time of writing
+      - name: Node v18
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18.x
+
       - uses: oven-sh/setup-bun@v1
 
       # install system dependencies that Tauri needs to compile on Linux.
@@ -35,10 +43,8 @@ jobs:
           xvfb
 
       # install the latest Rust stable
-      - name: Rust stable
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
+      - name: install Rust stable
+        uses: dtolnay/rust-toolchain@stable
 
       # we run our rust tests before the webdriver tests to avoid testing a broken application
       # - name: Cargo test
@@ -47,30 +53,37 @@ jobs:
       #     command: test
       #     working-directory: ./src-tauri
 
-      - name: Rust Unit Tests
-        run: cargo test
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          cache-on-failure: true
+          workspaces: "./src-tauri -> target"
+          key: ${{ runner.os }}
+
+      - name: Backend Lint
+        run: cargo clippy -- -W clippy::pedantic
         working-directory: ./src-tauri
 
-      # install the latest stable node version at the time of writing
-      - name: Node v18
-        uses: actions/setup-node@v2
-        with:
-          node-version: 18.x
+      - name: Backend Unit Tests
+        run: cargo test
+        working-directory: ./src-tauri
 
       # install our Node.js dependencies with Bun
       - name: Bun install
         run: bun install
 
       # run ui unit test
+      - name: UI Lint
+        run: bun run lint:ui
+
+      # run ui unit test
       - name: UI Unit tests
         run: bun run test:ui
 
       # build a release build of our application to be used during our WebdriverIO tests
-      - name: Cargo build
-        uses: actions-rs/cargo@v1
-        with:
-          command: build
-          args: --release
+      - name: App build
+        run: Cargo build --release
+        working-directory: ./src-tauri
 
       # # install our Node.js dependencies with Bun
       # - name: Bun install

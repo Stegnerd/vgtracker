@@ -6,11 +6,6 @@ mod cmd;
 mod internal;
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-#[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
-}
-
 #[tokio::main]
 async fn main() {
     tauri::Builder::default()
@@ -26,9 +21,8 @@ async fn main() {
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
-            greet,
-            cmd::config::get_user_config,
-            cmd::config::update_user_config,
+            cmd::config::get_user_configuration,
+            cmd::config::update_user_configuration,
             cmd::config::update_theme,
         ])
         .run(tauri::generate_context!())

@@ -64,34 +64,30 @@ fn get_user_config_path() -> PathBuf {
         fs::create_dir_all(&user_config).unwrap();
     }
 
-    let user_config = user_config.join("config.toml");
-
-    println!("-2->{:?}", user_config);
-
-    user_config
+    user_config.join("config.toml")
 }
 
-fn get_user_config() -> Config {
+fn get_user_configuration() -> Config {
     let user_config_path = get_user_config_path();
 
     if !user_config_path.exists() {
         fs::File::create(&user_config_path).expect("create user config failed");
     }
 
-    let content = fs::read_to_string(&user_config_path).unwrap_or_else(|_| "".to_string());
+    let content = fs::read_to_string(&user_config_path).unwrap_or_else(|_| String::new());
 
-    let data: Option<Config> = toml::from_str(&content).unwrap_or_else(|_| None);
+    let data: Option<Config> = toml::from_str(&content).unwrap_or(None);
 
     data.expect("failed to get config")
 }
 
-pub fn read_user_config() -> ReadConfigOutput {
-    let base_config = get_user_config();
+pub fn read_user_configuration() -> ReadConfigOutput {
+    let base_config = get_user_configuration();
 
     base_config.into()
 }
 
-pub fn load_or_initial() -> Option<Config> {
+pub fn load_or_initial() -> Config {
     let user_config_path = get_user_config_path();
 
     let mut write_file = false;
@@ -100,12 +96,12 @@ pub fn load_or_initial() -> Option<Config> {
         fs::File::create(&user_config_path).expect("create user config failed");
     }
 
-    let content = fs::read_to_string(&user_config_path).unwrap_or_else(|_| "".to_string());
+    let content = fs::read_to_string(&user_config_path).unwrap_or_else(|_| String::new());
 
     let mut data = match content.parse::<toml::Table>() {
         Ok(data) => data,
         Err(err) => {
-            println!("error ==> {:?}", err);
+            println!("error ==> {err:?}");
             toml::map::Map::new()
         }
     };
@@ -135,14 +131,15 @@ pub fn load_or_initial() -> Option<Config> {
     let cfg = data.try_into::<Config>().expect("config data error");
 
     if write_file {
-        update_user_config_internal(&cfg)
+        update_user_config_internal(&cfg);
     }
 
-    Some(cfg)
+    cfg
 }
 
-pub fn update_user_config(update_input: UpdateConfigInput) -> ReadConfigOutput {
-    let mut current_config = get_user_config();
+#[allow(clippy::needless_pass_by_value)]
+pub fn update_user_configuration(update_input: UpdateConfigInput) -> ReadConfigOutput {
+    let mut current_config = get_user_configuration();
     current_config.twitch_client_id = update_input.twitch_client_id.to_string();
     current_config.twitch_client_secret = update_input.twitch_client_secret.to_string();
 
@@ -152,7 +149,7 @@ pub fn update_user_config(update_input: UpdateConfigInput) -> ReadConfigOutput {
 }
 
 pub fn update_theme(theme_change: Theme) {
-    let mut current_config = get_user_config();
+    let mut current_config = get_user_configuration();
     current_config.theme = theme_change;
     update_user_config_internal(&current_config);
 }
@@ -160,5 +157,5 @@ pub fn update_theme(theme_change: Theme) {
 fn update_user_config_internal(cfg: &Config) {
     let user_config_path = get_user_config_path();
     let content = toml::to_string(&cfg).unwrap();
-    fs::write(user_config_path, &content).expect("update config error")
+    fs::write(user_config_path, content).expect("update config error");
 }
