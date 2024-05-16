@@ -137,7 +137,7 @@ pub fn load_or_initial() -> Config {
     cfg
 }
 
-#[allow(clippy::needless_pass_by_value)]
+//#[allow(clippy::needless_pass_by_value)]
 pub fn update_user_configuration(update_input: UpdateConfigInput) -> ReadConfigOutput {
     let mut current_config = get_user_configuration();
     current_config.twitch_client_id = update_input.twitch_client_id.to_string();

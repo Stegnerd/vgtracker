@@ -1,9 +1,7 @@
 # run this action when a pull request is pushed to or main
 on:
+  workflow_dispatch:
   pull_request:
-  push:
-    branches-ignore:
-      - main
 
 # the name of our workflow
 name: Tests
@@ -82,7 +80,7 @@ jobs:
 
       # build a release build of our application to be used during our WebdriverIO tests
       - name: App build
-        run: Cargo build --release
+        run: cargo build --release
         working-directory: ./src-tauri
 
       # # install our Node.js dependencies with Bun
