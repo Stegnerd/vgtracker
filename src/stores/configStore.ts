@@ -11,7 +11,7 @@ export const useConfigStore = defineStore("config", () => {
   const configuration = ref<ReadConfigOutput | undefined>();
 
   async function getConfig(): Promise<void> {
-    return await invoke<ReadConfigOutput>("get_user_config").then(
+    return await invoke<ReadConfigOutput>("get_user_configuration").then(
       (cfg: ReadConfigOutput) => {
         configuration.value = cfg;
       }
@@ -19,12 +19,12 @@ export const useConfigStore = defineStore("config", () => {
   }
 
   async function updateConfig(input: UpdateConfigInput) {
-    return await invoke<ReadConfigOutput>("update_user_config", { input }).then(
-      (cfg: ReadConfigOutput) => {
-        configuration.value = cfg;
-        toastSuccess("Configration Updated", "");
-      }
-    );
+    return await invoke<ReadConfigOutput>("update_user_configuration", {
+      input
+    }).then((cfg: ReadConfigOutput) => {
+      configuration.value = cfg;
+      toastSuccess("Configration Updated", "");
+    });
   }
 
   async function updateTheme(theme: Theme) {
