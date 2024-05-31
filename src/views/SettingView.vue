@@ -3,9 +3,8 @@
   import { useForm } from "vee-validate";
   import * as yup from "yup";
 
-  import { useConfigStore } from "@/stores/configStore.ts";
-
   import { UpdateConfigInput } from "../../src-tauri/bindings/config/UpdateConfigInput.ts";
+  import { useConfigStore } from "../stores/configStore.ts";
 
   const store = useConfigStore();
   const { configuration } = storeToRefs(store);

@@ -12,6 +12,7 @@ import Toast from "primevue/toast";
 import ToastService from "primevue/toastservice";
 import { App } from "vue";
 
+// @ts-ignore
 import Lara from "../presets/lara";
 
 export function addPrimeVue(app: App<Element>) {

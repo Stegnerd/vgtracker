@@ -9,26 +9,26 @@ on:
     #   - "*" # Push events to matching any tag format, i.e. 1.0, 20.15.10
 
 jobs:
-  create-release:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Set output
-        id: vars
-        run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+  # create-release:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0
+  #     - name: Set output
+  #       id: vars
+  #       run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
 
-      - name: Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
+  #     - name: Setup node
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 20
 
-      - name: Generate changelog
-        id: create_release
-        run: npx changelogithub --draft --name ${{ steps.vars.outputs.tag }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: Generate changelog
+  #       id: create_release
+  #       run: npx changelogithub --draft --name ${{ steps.vars.outputs.tag }}
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   publish:
     permissions:
@@ -91,3 +91,9 @@ jobs:
           releaseDraft: true
           prerelease: false
           releaseId: ${{ needs.create-release.outputs.release_id }}
+
+      - name: Generate changelog
+        id: create_release
+        run: npx changelogithub --draft --name ${{ steps.vars.outputs.tag }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

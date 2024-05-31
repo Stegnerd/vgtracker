@@ -1,7 +1,6 @@
 <script setup lang="ts">
-  import { useConfigStore } from "@/stores/configStore.ts";
-
   import { UpdateConfigInput } from "../../src-tauri/bindings/config/UpdateConfigInput.ts";
+  import { useConfigStore } from "../stores/configStore.ts";
 
   const store = useConfigStore();
   async function clicker() {

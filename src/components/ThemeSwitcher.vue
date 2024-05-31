@@ -2,7 +2,8 @@
   import { storeToRefs } from "pinia";
   import { ref } from "vue";
 
-  import { useConfigStore } from "@/stores/configStore.ts";
+  //import { useConfigStore } from "@/stores/configStore.ts";
+  import { useConfigStore } from "../stores/configStore";
 
   const configStore = useConfigStore();
   const { configuration } = storeToRefs(configStore);
