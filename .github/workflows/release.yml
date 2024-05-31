@@ -80,6 +80,7 @@ jobs:
           sudo apt-get install -y webkit2gtk-4.1 libayatana-appindicator3-dev librsvg2-dev patchelf
 
       - uses: tauri-apps/tauri-action@v0
+        id: tauri
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
@@ -90,10 +91,11 @@ jobs:
           releaseBody: "See the assets to download this version and install."
           releaseDraft: true
           prerelease: false
-          releaseId: ${{ needs.create-release.outputs.release_id }}
+          tauriScript: "bun run"
+          # releaseId: ${{ needs.create-release.outputs.release_id }}
 
       - name: Generate changelog
         id: create_release
-        run: npx changelogithub --draft --name ${{ steps.vars.outputs.tag }}
+        run: npx changelogithub --draft --name ${{ steps.tauri.outputs.releaseId }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
