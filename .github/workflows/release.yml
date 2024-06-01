@@ -97,9 +97,3 @@ jobs:
           prerelease: false
           tauriScript: "bun run tauri"
           # releaseId: ${{ needs.create-release.outputs.release_id }}
-
-      - name: Generate changelog
-        id: create_release
-        run: npx changelogithub --draft --name ${{ github.ref_name }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
