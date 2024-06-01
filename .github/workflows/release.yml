@@ -44,7 +44,7 @@ jobs:
             args: "--target aarch64-apple-darwin"
           - platform: "macos-latest" # for Intel based macs.
             args: "--target x86_64-apple-darwin"
-          - platform: "ubuntu-22.04"
+          - platform: "ubuntu-20.04" # for v2 use 22.04
             args: ""
           - platform: "windows-latest"
             args: ""
@@ -100,6 +100,6 @@ jobs:
 
       - name: Generate changelog
         id: create_release
-        run: npx changelogithub --draft --name ${{ github.event.release.tag_name }}
+        run: npx changelogithub --draft --name ${{ github.ref_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
