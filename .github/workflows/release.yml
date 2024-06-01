@@ -1,9 +1,12 @@
 name: "Release"
 on:
   # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+  # workflow_dispatch:
+  # push:
+  #   branches: main
   push:
-    branches: main
+    tags:
+      - "v*"
     # Sequence of patterns matched against refs/tags
     # tags:
     #   - "*" # Push events to matching any tag format, i.e. 1.0, 20.15.10
@@ -82,7 +85,6 @@ jobs:
           sudo apt-get install -y webkit2gtk-4.1 libayatana-appindicator3-dev librsvg2-dev patchelf
 
       - uses: tauri-apps/tauri-action@v0.5.4
-        id: tauri
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
@@ -98,6 +100,6 @@ jobs:
 
       - name: Generate changelog
         id: create_release
-        run: npx changelogithub --draft --name ${{ steps.tauri.outputs.releaseId }}
+        run: npx changelogithub --draft --name ${{ github.event.release.tag_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
