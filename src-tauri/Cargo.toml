@@ -1,6 +1,6 @@
 [package]
 name = "vgtracker"
-version = "0.0.0"
+version = "0.0.1"
 description = "A Tauri App"
 authors = ["you"]
 edition = "2021"
@@ -17,6 +17,9 @@ serde_json = "1.0.114"
 toml = "0.8.10"
 tokio = { version = "1.36.0", features = ["rt", "rt-multi-thread", "macros"] }
 ts-rs = "8.0.0"
+igdb-api-rust = "0.1.1"
+microjson = "=0.1.2" # used for igdb-api-rust
+
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem
