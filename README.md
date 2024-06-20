@@ -33,10 +33,13 @@
 </div>
 
 ## Table of Contents
+- [Table of Contents](#table-of-contents)
 - [Introduction](#introduction)
 - [Features](#features)
+    - [Wishlist Features](#wishlist-features)
 - [Getting Started](#getting-started)
-- [Recommended Dev Setup](#recommended-dev-setup)
+  - [Running Application (Non Development)](#running-application-non-development)
+  - [Recommended Dev Setup](#recommended-dev-setup)
 - [Resources](#resources)
 
 ## Introduction
@@ -57,12 +60,11 @@ help me keep track of my backlog. This app will be built using Tauri, Vue, and R
 
 ## Getting Started
 ### Running Application (Non Development)
-Running the application for yourself, you can download the assets for your \ 
-appropriate platform (mac/linux/windows) from the releases page. It is currently not signed \ 
-so run at your own risk. You will also need to follow the setup for IGDB and acquiring a token \ 
-for the application to work properly. It can be found [here](https://api-docs.igdb.com/#getting-started)
+Running the application for yourself, you can download the assets for your 
+appropriate platform (mac/linux/windows) from the releases page. It is currently not signed 
+so run at your own risk. You will also need to follow the setup for IGDB and acquiring a token for the application to work properly. It can be found [here](https://api-docs.igdb.com/#getting-started)
 
-## Recommended Dev Setup
+### Recommended Dev Setup
 - [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
 - Requirements:
   - [Bun](https://bun.sh/docs/installation)
