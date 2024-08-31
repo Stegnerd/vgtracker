@@ -1,4 +1,12 @@
+import Lara from "@/presets/lara";
+import PrimeVue from "primevue/config";
 import { createApp } from "vue";
 import App from "./App.vue";
 
-createApp(App).mount("#app");
+const app = createApp(App);
+app.use(PrimeVue, {
+  unstyled: true,
+  pt: Lara
+});
+
+app.mount("#app");
