@@ -10,7 +10,9 @@
     "tauri": "tauri"
   },
   "dependencies": {
+    "@primevue/themes": "^4.0.5",
     "@tauri-apps/api": "^1",
+    "@types/dom-view-transitions": "^1.0.5",
     "primevue": "^4.0.5",
     "tailwindcss-primeui": "^0.3.4",
     "vue": "^3.3.4"
