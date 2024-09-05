@@ -1,10 +1,18 @@
-import { defineConfig } from "vite";
+import { PrimeVueResolver } from "@primevue/auto-import-resolver";
 import vue from "@vitejs/plugin-vue";
 import UnoCSS from "unocss/vite";
+import Components from "unplugin-vue-components/vite";
+import { defineConfig } from "vite";
 
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
-  plugins: [vue(), UnoCSS()],
+  plugins: [
+    vue(),
+    UnoCSS(),
+    Components({
+      resolvers: [PrimeVueResolver()]
+    })
+  ],
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   //
