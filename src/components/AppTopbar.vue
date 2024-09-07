@@ -1,4 +1,14 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import { ref } from "vue";
+
+  const isDarkMode = ref(true);
+
+  function toggleDarkMode() {
+    const element = document.querySelector("html");
+    element!.classList.toggle("app-dark");
+    isDarkMode.value = !isDarkMode.value;
+  }
+</script>
 <template>
   <div class="topbar-container flex flex-row justify-between items-center">
     <div class="tester"></div>
@@ -9,8 +19,11 @@
       </InputGroup>
     </div>
     <div class="flex gap-6">
-      <Button icon="i-mdi-weather-night" />
-      <Button icon="i-mdi-palette" />
+      <Button
+        :icon="isDarkMode ? 'i-mdi-weather-night' : 'i-mdi-white-balance-sunny'"
+        @click="toggleDarkMode()"
+      />
+      <Button icon="i-mdi-palette" class="m-r" />
     </div>
   </div>
 </template>

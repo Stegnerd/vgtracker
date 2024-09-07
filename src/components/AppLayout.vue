@@ -10,7 +10,7 @@
 
 <style>
   .layout-wrapper {
-    background-color: rebeccapurple;
-    height: 98vh;
+    padding: 8px;
+    height: 100dvh;
   }
 </style>
