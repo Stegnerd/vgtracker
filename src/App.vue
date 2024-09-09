@@ -18,6 +18,7 @@
   <Button label="Danger" severity="danger" />
   <Button label="Contrast" severity="contrast" /> -->
   <RouterView />
+  <DynamicDialog />
 </template>
 
 <style scoped></style>
