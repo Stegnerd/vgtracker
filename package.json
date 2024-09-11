@@ -10,14 +10,22 @@
     "tauri": "tauri"
   },
   "dependencies": {
-    "vue": "^3.3.4",
-    "@tauri-apps/api": "^1"
+    "@primevue/themes": "^4.0.5",
+    "@tauri-apps/api": "^1",
+    "primevue": "^4.0.5",
+    "vue": "^3.3.4"
   },
   "devDependencies": {
+    "@iconify-json/mdi": "^1.2.0",
+    "@primevue/auto-import-resolver": "^4.0.5",
+    "@tauri-apps/cli": "^1",
+    "@unocss/preset-icons": "^0.62.3",
     "@vitejs/plugin-vue": "^5.0.5",
     "typescript": "^5.2.2",
+    "unocss": "^0.62.3",
+    "unplugin-vue-components": "^0.27.4",
     "vite": "^5.3.1",
-    "vue-tsc": "^2.0.22",
-    "@tauri-apps/cli": "^1"
+    "vue-router": "4",
+    "vue-tsc": "^2.0.22"
   }
 }

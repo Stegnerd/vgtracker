@@ -1,0 +1,11 @@
+@import './variables/_dark.scss';
+@import './variables/_light.scss';
+
+body {
+      background-color: var(--surface-background);
+}
+
+// copying the outline styling from tailwind styling
+.outline-primary {
+      outline-color: color-mix(in srgb, var(--p-primary-color) calc(100% * 1), transparent);
+}

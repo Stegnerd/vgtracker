@@ -1,9 +1,19 @@
-import { defineConfig } from "vite";
+import { PrimeVueResolver } from "@primevue/auto-import-resolver";
 import vue from "@vitejs/plugin-vue";
+import { fileURLToPath, URL } from "node:url";
+import UnoCSS from "unocss/vite";
+import Components from "unplugin-vue-components/vite";
+import { defineConfig } from "vite";
 
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
-  plugins: [vue()],
+  plugins: [
+    vue(),
+    UnoCSS(),
+    Components({
+      resolvers: [PrimeVueResolver()]
+    })
+  ],
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   //
@@ -15,7 +25,12 @@ export default defineConfig(async () => ({
     strictPort: true,
     watch: {
       // 3. tell vite to ignore watching `src-tauri`
-      ignored: ["**/src-tauri/**"],
-    },
+      ignored: ["**/src-tauri/**"]
+    }
   },
+  resolve: {
+    alias: {
+      "@": fileURLToPath(new URL("./src", import.meta.url))
+    }
+  }
 }));
