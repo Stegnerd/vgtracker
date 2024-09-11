@@ -1,0 +1,6 @@
+@import './variables/_dark.scss';
+@import './variables/_light.scss';
+
+body {
+      background-color: var(--surface-background);
+}
