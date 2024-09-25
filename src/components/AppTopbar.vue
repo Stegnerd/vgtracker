@@ -26,8 +26,8 @@
   }
 </script>
 <template>
-  <div class="topbar-container flex flex-row justify-between items-center">
-    <div class="tester"></div>
+  <div class="topbar-container flex flex-row justify-between items-center pb-2">
+    <div></div>
     <div class="flex justify-center">
       <InputGroup class="min-w-lg">
         <InputText placeholder="Search" />

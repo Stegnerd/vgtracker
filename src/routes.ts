@@ -2,6 +2,7 @@ import AppLayout from "@/components/AppLayout.vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 const router = createRouter({
+  linkActiveClass: "active-menu-item",
   history: createWebHistory(),
   routes: [
     {

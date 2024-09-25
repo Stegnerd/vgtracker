@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AppLayout: typeof import('./src/components/AppLayout.vue')['default']
+    AppMenu: typeof import('./src/components/AppMenu.vue')['default']
     AppThemeConfigurator: typeof import('./src/components/AppThemeConfigurator.vue')['default']
     AppTopbar: typeof import('./src/components/AppTopbar.vue')['default']
     Button: typeof import('primevue/button')['default']
@@ -16,8 +17,12 @@ declare module 'vue' {
     InputGroup: typeof import('primevue/inputgroup')['default']
     InputText: typeof import('primevue/inputtext')['default']
     Layout: typeof import('./src/components/Layout.vue')['default']
+    Menu: typeof import('primevue/menu')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SelectButton: typeof import('primevue/selectbutton')['default']
+  }
+  export interface ComponentCustomProperties {
+    Ripple: typeof import('primevue/ripple')['default']
   }
 }

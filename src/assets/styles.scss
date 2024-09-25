@@ -1,5 +1,6 @@
 @import './variables/_dark.scss';
 @import './variables/_light.scss';
+@import './variables/common.scss';
 
 body {
       background-color: var(--surface-background);
@@ -9,3 +10,10 @@ body {
 .outline-primary {
       outline-color: color-mix(in srgb, var(--p-primary-color) calc(100% * 1), transparent);
 }
+
+
+.active-menu-item {
+    a {
+      color: var(--primary-color);
+    }
+  }
