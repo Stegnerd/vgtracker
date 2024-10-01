@@ -18,6 +18,7 @@ import { PaletteList, SurfaceList } from "../models/theme";
   const primaryColors = ref(PaletteList);
   const surfaces = ref(SurfaceList);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function updateColors(type: string, color: any) {
     if (type === "primary") {
       setPrimary(color.name);
@@ -28,6 +29,7 @@ import { PaletteList, SurfaceList } from "../models/theme";
     applyTheme(type, color);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function applyTheme(type: string, color: any) {
     if (type === "primary") {
       updatePreset(getPresetExt());
@@ -39,6 +41,7 @@ import { PaletteList, SurfaceList } from "../models/theme";
   function onPresetChange() {
     setPreset(preset.value);
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const presetValue = (presets as any)[preset.value];
     const surfacePalette = surfaces.value.find(
       (s) => s.name === layoutConfig.surface
