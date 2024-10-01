@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "ui:lint": ""
   },
   "dependencies": {
     "@primevue/themes": "^4.0.5",
@@ -22,6 +23,10 @@
     "@unocss/preset-icons": "^0.62.3",
     "@unocss/preset-web-fonts": "^0.62.4",
     "@vitejs/plugin-vue": "^5.0.5",
+    "@vue/eslint-config-typescript": "14.0.0-rc.1",
+    "@vue/tsconfig": "^0.5.1",
+    "eslint": "^9.11.1",
+    "eslint-plugin-vue": "^9.28.0",
     "typescript": "^5.2.2",
     "unocss": "^0.62.3",
     "unplugin-vue-components": "^0.27.4",

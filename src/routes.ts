@@ -16,12 +16,12 @@ const router = createRouter({
         {
           path: "/settings",
           name: "settings",
-          component: () => import("@/pages/Settings.vue")
+          component: () => import("@/pages/AppSettings.vue")
         },
         {
           path: "/dashboard",
           name: "dashboard",
-          component: () => import("@/pages/Dashboard.vue")
+          component: () => import("@/pages/AppDashboard.vue")
         }
       ]
     }
