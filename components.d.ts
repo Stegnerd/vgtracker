@@ -20,6 +20,7 @@ declare module 'vue' {
     Menu: typeof import('primevue/menu')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SampleGreet: typeof import('./src/components/SampleGreet.vue')['default']
     SelectButton: typeof import('primevue/selectbutton')['default']
   }
   export interface ComponentCustomProperties {
