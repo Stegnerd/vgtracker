@@ -1,16 +1,51 @@
-# Tauri + Vue + TypeScript
+# VGTracker
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+[![Rust Version](https://img.shields.io/badge/rust-1.82.0-orange.svg?logo=rust)](https://www.rust-lang.org)
+[![Vue Version](https://img.shields.io/badge/vue-3.3.4-green.svg?logo=vuedotjs)](https://vuejs.org)
+[![Bun Version](https://img.shields.io/badge/bun-1.1.29-pink.svg?logo=bun)](https://bun.sh)
 
-## Recommended IDE Setup
+This is a project to learn rust and other tools that I do not use at the moment like vue and unocss.
+Also creating a tool that I will use to keep track of my games
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+## Table of Contents
 
-## Type Support For `.vue` Imports in TS
+- [RoadMap](https://github.com/Stegnerd/vgtracker#roadmap)
+- [Development](https://github.com/Stegnerd/vgtracker#technology)
+- [Sources](https://github.com/Stegnerd/vgtracker#sources)
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's Take Over mode by following these steps:
+### RoadMap
 
-1. Run `Extensions: Show Built-in Extensions` from VS Code's command palette, look for `TypeScript and JavaScript Language Features`, then right click and select `Disable (Workspace)`. By default, Take Over mode will enable itself if the default TypeScript extension is disabled.
-2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
+These are goals for this project:
 
-You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
+- [ ] search games from IGDB
+- [ ] persist profile
+  - [ ] inventory
+  - [ ] wishlist
+  - [ ] stats
+- [ ] set up some kind of build
+- [ ] make some kind of logo
+  
+#### v2
+
+- [ ] include DLC
+- [ ] auto sync from profiles (psn/steam/etc)
+- [ ] notifications of sales from inventory
+
+## Development
+
+### Setup
+
+- Install [Rust](https://www.rust-lang.org/)
+- Install [Bun](https://bun.sh)
+- run `bun install` at root of prject
+- cd into src-tauri and run `cargo install`
+- run `bun run tauri dev` at root and it should be running
+
+### Testing
+
+- Backend -
+- UI - Vitest -
+
+## Sources
+
+- [Tauri](https://tauri.app/v1/guides/development/development-cycle) - application framework built with rust
