@@ -2,6 +2,7 @@
 
 [![Rust Version](https://img.shields.io/badge/rust-1.82.0-orange.svg?logo=rust)](https://www.rust-lang.org)
 [![Vue Version](https://img.shields.io/badge/vue-3.3.4-green.svg?logo=vuedotjs)](https://vuejs.org)
+[![Tauri Version](https://img.shields.io/badge/tauri-2.0.0-orange.svg?logo=tauri)](https://vuejs.org)
 [![Bun Version](https://img.shields.io/badge/bun-1.1.29-pink.svg?logo=bun)](https://bun.sh)
 
 This is a project to learn rust and other tools that I do not use at the moment like vue and unocss.
