@@ -1,10 +1,10 @@
 <script setup lang="ts">
   import { $t, updatePreset, updateSurfacePalette } from "@primevue/themes";
-  import Aura from "@primevue/themes/aura";
-  import Lara from "@primevue/themes/lara";
-  import { ref } from "vue";
-  import { useLayout } from "../composables/layout";
-  import { PaletteList, SurfaceList } from "../models/theme";
+import Aura from "@primevue/themes/aura";
+import Lara from "@primevue/themes/lara";
+import { ref } from "vue";
+import { useLayout } from "../composables/layout";
+import { PaletteList, SurfaceList } from "../models/theme";
 
   const { layoutConfig, setPrimary, setSurface, setPreset, isDarkTheme } =
     useLayout();
@@ -18,6 +18,7 @@
   const primaryColors = ref(PaletteList);
   const surfaces = ref(SurfaceList);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function updateColors(type: string, color: any) {
     if (type === "primary") {
       setPrimary(color.name);
@@ -28,6 +29,7 @@
     applyTheme(type, color);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function applyTheme(type: string, color: any) {
     if (type === "primary") {
       updatePreset(getPresetExt());
@@ -39,6 +41,7 @@
   function onPresetChange() {
     setPreset(preset.value);
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const presetValue = (presets as any)[preset.value];
     const surfacePalette = surfaces.value.find(
       (s) => s.name === layoutConfig.surface
@@ -159,7 +162,6 @@
             'border-none w-5 h-5 rounded-full p-0 cursor-pointer outline-none outline-offset-1',
             { 'outline-primary': layoutConfig.primary === primaryColor.name }
           ]"
-          @click="updateColors('primary', primaryColor)"
           :style="{
             backgroundColor: `${
               primaryColor.name === 'noir'
@@ -167,7 +169,8 @@
                 : primaryColor.palette['500']
             }`
           }"
-        ></button>
+          @click="updateColors('primary', primaryColor)"
+        />
       </div>
     </div>
     <div class="pt-2">
@@ -178,19 +181,19 @@
           :key="surface.name"
           type="button"
           :title="surface.name"
-          @click="updateColors('surface', surface)"
           :class="[
             'border-none w-5 h-5 rounded-full p-0 cursor-pointer outline-none outline-offset-1',
             {
               'outline-primary': layoutConfig.surface
                 ? layoutConfig.surface === surface.name
                 : isDarkTheme
-                ? surface.name === 'zinc'
-                : surface.name === 'slate'
+                  ? surface.name === 'zinc'
+                  : surface.name === 'slate'
             }
           ]"
           :style="{ backgroundColor: `${surface.palette['500']}` }"
-        ></button>
+          @click="updateColors('surface', surface)"
+        />
       </div>
     </div>
     <div class="flex flex-col pt-2">
@@ -198,9 +201,9 @@
       <div class="pt-2">
         <SelectButton
           v-model="preset"
-          @change="onPresetChange"
           :options="presetOptions"
           :allow-empty="false"
+          @change="onPresetChange"
         />
       </div>
     </div>

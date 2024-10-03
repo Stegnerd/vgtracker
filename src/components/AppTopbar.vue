@@ -1,8 +1,8 @@
 <script setup lang="ts">
   import { useDialog } from "primevue/usedialog";
-  import { ref } from "vue";
-  import { useLayout } from "../composables/layout";
-  import AppThemeConfigurator from "./AppThemeConfigurator.vue";
+import { ref } from "vue";
+import { useLayout } from "../composables/layout";
+import AppThemeConfigurator from "./AppThemeConfigurator.vue";
 
   const { toggleDarkMode } = useLayout();
 
@@ -27,7 +27,7 @@
 </script>
 <template>
   <div class="topbar-container flex flex-row justify-between items-center pb-2">
-    <div></div>
+    <div />
     <div class="flex justify-center">
       <InputGroup class="min-w-lg">
         <InputText placeholder="Search" />
@@ -39,7 +39,11 @@
         :icon="isDarkMode ? 'i-mdi-weather-night' : 'i-mdi-white-balance-sunny'"
         @click="toggleDarkMode()"
       />
-      <Button icon="i-mdi-palette" class="m-r" @click="openThemeDialog()" />
+      <Button
+        icon="i-mdi-palette"
+        class="m-r"
+        @click="openThemeDialog()"
+      />
     </div>
   </div>
 </template>
