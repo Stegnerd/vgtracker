@@ -1,0 +1,30 @@
+@use './variables/_dark.scss';
+@use './variables/_light.scss';
+@use './variables/_common.scss';
+
+body {
+  background-color: var(--surface-background);
+}
+
+// copying the outline styling from tailwind styling
+.outline-primary {
+  outline-color: color-mix(in srgb, var(--p-primary-color) calc(100% * 1), transparent);
+}
+
+
+.active-menu-item {
+  a {
+    color: var(--primary-color);
+  }
+}
+
+.card {
+  background: var(--surface-card);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border-radius: var(--content-border-radius);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}

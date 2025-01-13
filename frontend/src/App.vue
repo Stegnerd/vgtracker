@@ -1,21 +1,27 @@
-<script lang="ts" setup>
-import HelloWorld from './components/HelloWorld.vue'</script>
+<script setup lang="ts">
+  // This starter template is using Vue 3 <script setup> SFCs
+  // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
+  //import Greet from "./components/Greet.vue";
+  // function toggleDark() {
+  //   const element = document.querySelector("html");
+  //   element.classList.toggle("app-dark");
+  // }
+</script>
 
 <template>
-  <img id="logo" alt="Wails logo" src="./assets/images/logo-universal.png"/>
-  <HelloWorld/>
+  <!-- <Button label="Primary" />
+  <Button label="Secondary" severity="secondary" />
+  <Button label="Success" severity="success" />
+  <Button label="Info" severity="info" />
+  <Button label="Warn" severity="warn" />
+  <Button label="Help" severity="help" />
+  <Button label="Danger" severity="danger" />
+  <Button label="Contrast" severity="contrast" /> -->
+  <RouterView />
+  <DynamicDialog />
+  <Toast />
+  <Toast position="bottom-left" group="bl" />
+  <Toast position="bottom-right" group="br" />
 </template>
 
-<style>
-#logo {
-  display: block;
-  width: 50%;
-  height: 50%;
-  margin: auto;
-  padding: 10% 0 0;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  background-origin: content-box;
-}
-</style>
+<style scoped></style>
