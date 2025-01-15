@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<!-- <script lang="ts" setup>
 import {reactive} from 'vue'
 import {Greet} from '../../wailsjs/go/main/App'
 
@@ -8,7 +8,7 @@ const data = reactive({
 })
 
 function greet() {
-  Greet(data.name).then(result => {
+  Gr  eet(data.name).then(result => {
     data.resultText = result
   })
 }
@@ -68,4 +68,4 @@ function greet() {
   border: none;
   background-color: rgba(255, 255, 255, 1);
 }
-</style>
+</style> -->

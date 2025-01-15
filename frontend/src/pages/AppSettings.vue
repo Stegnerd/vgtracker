@@ -5,6 +5,8 @@
   import { onMounted } from "vue";
   import * as yup from "yup";
   import { VGConfig } from "../models/api";
+  import { GetConfig } from "../../wailsjs/go/backend/ConfigController";
+  import { config } from "../../wailsjs/go/models";
 
   const toast = useToast();
 
@@ -25,9 +27,11 @@
       twitchClientId: "cats",
       twitchClientSecret: "dogs"
     }; // await invoke("read_config");
+    GetConfig().then((result: config) => {
+      twitchClientID.value = result.twitchClientId;
+      twitchClientSecret.value = result.twitchClientSecret;
+    });
     console.warn("result", t);
-    twitchClientID.value = t.twitchClientId;
-    twitchClientSecret.value = t.twitchClientSecret;
   });
 
   const onSubmit = handleSubmit((values) => {
