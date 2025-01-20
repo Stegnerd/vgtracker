@@ -3,7 +3,7 @@ package utils
 import "os"
 
 func GetConfigDirectory() (string, error) {
-	appConfigDir, err := os.UserConfigDir()
+	appConfigDir, err := os.UserHomeDir()
 	if err != nil {
 		panic("could not get user config directory")
 	}

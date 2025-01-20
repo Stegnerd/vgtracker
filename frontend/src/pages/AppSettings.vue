@@ -4,9 +4,11 @@
   import { useForm } from "vee-validate";
   import { onMounted } from "vue";
   import * as yup from "yup";
-  import { VGConfig } from "../models/api";
-  import { GetConfig } from "../../wailsjs/go/backend/ConfigController";
-  import { config } from "../../wailsjs/go/models";
+  import {
+    GetConfig,
+    UpdateConfig
+  } from "../../wailsjs/go/backend/ConfigController";
+  import { backend } from "../../wailsjs/go/models";
 
   const toast = useToast();
 
@@ -23,24 +25,27 @@
   const [twitchClientSecret] = defineField("twitchClientSecret");
 
   onMounted(async () => {
-    const t: VGConfig = {
-      twitchClientId: "cats",
-      twitchClientSecret: "dogs"
-    }; // await invoke("read_config");
-    GetConfig().then((result: config) => {
-      twitchClientID.value = result.twitchClientId;
-      twitchClientSecret.value = result.twitchClientSecret;
+    GetConfig().then((result) => {
+      twitchClientID.value = result.twitch.clientID;
+      twitchClientSecret.value = result.twitch.clientSecret;
     });
-    console.warn("result", t);
   });
 
   const onSubmit = handleSubmit((values) => {
-    console.warn("Submitted with", values);
-    toast.add({
-      severity: "success",
-      summary: "Config Saved",
-      group: "br",
-      life: 2000
+    const input = {
+      twitch: {
+        clientID: twitchClientID.value,
+        clientSecret: twitchClientSecret.value
+      }
+    } as backend.UpdateConfigInput;
+
+    UpdateConfig(input).then((out) => {
+      toast.add({
+        severity: "success",
+        summary: "Config Saved",
+        group: "br",
+        life: 2000
+      });
     });
   });
 </script>
