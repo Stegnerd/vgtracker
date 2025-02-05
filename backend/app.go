@@ -3,6 +3,7 @@ package backend
 import (
 	"context"
 	"fmt"
+	"vgtracker/backend/controllers"
 	"vgtracker/backend/internal/config"
 	"vgtracker/backend/internal/twitch"
 	"vgtracker/backend/internal/utils"
@@ -22,8 +23,8 @@ type App struct {
 	AppFS afero.Fs
 	Cfg   *config.Config
 	// controllers
-	ConfigController ConfigControllerMethods
-	TwitchController TwitchControllerMethods
+	ConfigController controllers.ConfigControllerMethods
+	TwitchController controllers.TwitchControllerMethods
 }
 
 // NewApp creates a new App application struct
@@ -37,7 +38,7 @@ func NewApp() *App {
 
 	// config setup
 	configInternal := config.NewConfigInternal(appFS)
-	configController := NewConfigController(configInternal)
+	configController := controllers.NewConfigController(configInternal)
 	appConfig, err := configInternal.NewConfig()
 	if err != nil {
 		panic(errors.WithMessage(err, "could not create or load config"))
@@ -45,7 +46,7 @@ func NewApp() *App {
 
 	// twitch setup
 	twitchInternal := twitch.NewTwitchInternal(TwitchAuthURL)
-	twitchController := NewTwitchController(appConfig, twitchInternal)
+	twitchController := controllers.NewTwitchController(appConfig, twitchInternal)
 
 	var twitchToken *twitch.AccessTokenResponse
 	if appConfig.Twitch.ClientID != "" && appConfig.Twitch.ClientSecret != "" {
