@@ -7,8 +7,8 @@
   import {
     GetConfig,
     UpdateConfig
-  } from "../../wailsjs/go/backend/ConfigController";
-  import { backend } from "../../wailsjs/go/models";
+  } from "../../wailsjs/go/controllers/ConfigController";
+  import { controllers } from "../../wailsjs/go/models";
 
   const toast = useToast();
 
@@ -37,7 +37,7 @@
         clientID: twitchClientID.value,
         clientSecret: twitchClientSecret.value
       }
-    } as backend.UpdateConfigInput;
+    } as controllers.UpdateConfigInput;
 
     UpdateConfig(input).then((out) => {
       toast.add({
