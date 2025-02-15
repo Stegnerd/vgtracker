@@ -29,7 +29,7 @@ jobs:
         with:
           bun-version: 1.2.2
 
-      - uses: dAppServer/wails-build-action@v3
+      - uses: dAppServer/wails-build-action@main
         with:
           build-name: ${{ matrix.build.name }}
           build-platform: ${{ matrix.build.platform }}
