@@ -1,14 +1,14 @@
 name: Wails build
 
 on:
-  workflow_run:
-    workflows: ["Linting", "Testing"]
-    types:
-      - completed
-  # push:
-  #   branches: [main]
-  # pull_request:
-  #   branches: [main]
+  # workflow_run:
+  #   workflows: ["Linting", "Testing"]
+  #   types:
+  #     - completed
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   # golangci:
@@ -28,9 +28,14 @@ jobs:
 
   #         # Optional: working directory, useful for monorepos
   #         working-directory: backend
+  linting:
+    uses: ./.github/workflows/lint.yaml
+
+  testing:
+    uses: ./.github/workflows/test.yaml
 
   build:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    needs: [linting, testing]
     strategy:
       fail-fast: true
       matrix:
