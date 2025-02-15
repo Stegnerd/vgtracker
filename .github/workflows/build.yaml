@@ -18,7 +18,7 @@ jobs:
           #   platform:  'windows/amd64'
           #   os: 'windows-latest'
           - name: "VGTracker"
-            platform: "darwin/universal"
+            platform: "darwin/amd64"
             os: "macos-latest"
 
     runs-on: ${{ matrix.build.os }}
