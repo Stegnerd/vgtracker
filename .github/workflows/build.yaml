@@ -86,7 +86,6 @@ jobs:
         run: echo "$JOB_CONTEXT"
 
   tag_and_release:
-    if: github.event.pull_request.merged
     name: "Tag and Release"
     needs: build
     runs-on: "ubuntu-latest"
