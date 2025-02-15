@@ -1,0 +1,69 @@
+name: Testing
+
+on:
+  workflow_call:
+# on:
+#   push:
+# pull_request:
+#   branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test_backend:
+    name: Run Go Tests
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        # os: [ ubuntu-latest, windows-latest, macos-latest ]
+        os: [ubuntu-latest]
+        go-version: ["1.21"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Steup G
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.24"
+
+      # - name: Install Deps
+      #   run: go get .
+
+      # - name: Run Vet
+      #   run: go vet ./backend/...
+
+      - name: Get Ginkgo
+        run: go install github.com/onsi/ginkgo/v2/ginkgo@v2.22.2
+
+      - name: Run Tests
+        #run: go test -v ./backend/...
+        run: ginkgo -r
+
+  # test_frontend:
+  #   name: Run UI tests
+  #   needs: test_backend
+  #   runs-on: ${{ matrix.os }}
+  #   strategy:
+  #     matrix:
+  #       os: [ ubuntu-latest ]
+  #       node-version: [ 18.x ]
+
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
+
+  #     - name: Use Node.js ${{ matrix.node-version }}
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
+
+  #     - name: Install dependencies
+  #       run: npm install
+  #       working-directory: frontend
+
+  #     - name: Run tests
+  #       run: npm run test:unit:ci
+  #       working-directory: frontend

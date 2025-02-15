@@ -1,0 +1,79 @@
+name: Wails build
+
+on:
+  # workflow_run:
+  #   workflows: ["Linting", "Testing"]
+  #   types:
+  #     - completed
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # golangci:
+  #   name: lint
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-go@v5
+  #       with:
+  #         go-version: "1.24"
+
+  #     - name: golangci-lint
+  #       uses: golangci/golangci-lint-action@v6
+  #       with:
+  #         version: v1.64.5
+  #         args: --verbose
+
+  #         # Optional: working directory, useful for monorepos
+  #         working-directory: backend
+  linting:
+    uses: ./.github/workflows/lint.yaml
+
+  testing:
+    uses: ./.github/workflows/test.yaml
+
+  build:
+    needs: [linting, testing]
+    strategy:
+      fail-fast: true
+      matrix:
+        build:
+          - name: "VGTracker"
+            platform: "linux/amd64"
+            os: "ubuntu-latest"
+          # - name: 'App'
+          #   platform:  'windows/amd64'
+          #   os: 'windows-latest'
+          - name: "VGTracker"
+            platform: "darwin/amd64"
+            os: "macos-latest"
+
+    runs-on: ${{ matrix.build.os }}
+    steps:
+      - uses: actions/checkout@v4
+      # - uses: actions/checkout@v2
+      #   with:
+      #     submodules: recursive
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.2.2
+
+      # - uses: actions/setup-go@v5
+      #   with:
+      #     go-version: "1.24"
+
+      # - name: golangci-lint
+      #   uses: golangci/golangci-lint-action@v6
+      #   with:
+      #     version: v1.64.5
+      #     working-directory: backend
+
+      - uses: dAppServer/wails-build-action@main
+        with:
+          build-name: ${{ matrix.build.name }}
+          build-platform: ${{ matrix.build.platform }}
+          go-version: "1.24"
+          node-version: "20.x"
