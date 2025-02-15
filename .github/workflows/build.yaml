@@ -44,7 +44,7 @@ jobs:
         uses: golangci/golangci-lint-action@v6
         with:
           version: v1.60
-          working-directory: backend
+          # working-directory: backend
 
       - uses: dAppServer/wails-build-action@main
         with:
