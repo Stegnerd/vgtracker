@@ -43,6 +43,9 @@ jobs:
           package: true
           node-version: "20.x"
 
+      - name: list it all in build step
+        run: ls -la
+
   tag_and_release:
     name: "Tag and Release"
     needs: build
@@ -55,6 +58,9 @@ jobs:
         uses: mathieudutour/github-tag-action@v6.1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: list it all in UPLOAD step
+        run: ls -la
 
       - name: Create a GitHub release
         uses: ncipollo/release-action@v1
