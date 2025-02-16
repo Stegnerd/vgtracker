@@ -1,5 +1,4 @@
 <script setup lang="ts">
-  // import { invoke } from "@tauri-apps/api/core";
   import { useToast } from "primevue";
   import { useForm } from "vee-validate";
   import { onMounted } from "vue";
@@ -31,7 +30,7 @@
     });
   });
 
-  const onSubmit = handleSubmit((values) => {
+  const onSubmit = handleSubmit(() => {
     const input = {
       twitch: {
         clientID: twitchClientID.value,
@@ -39,7 +38,7 @@
       }
     } as controllers.UpdateConfigInput;
 
-    UpdateConfig(input).then((out) => {
+    UpdateConfig(input).then(() => {
       toast.add({
         severity: "success",
         summary: "Config Saved",

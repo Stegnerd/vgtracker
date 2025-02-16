@@ -20,8 +20,14 @@
   <RouterView />
   <DynamicDialog />
   <Toast />
-  <Toast position="bottom-left" group="bl" />
-  <Toast position="bottom-right" group="br" />
+  <Toast
+    position="bottom-left"
+    group="bl"
+  />
+  <Toast
+    position="bottom-right"
+    group="br"
+  />
 </template>
 
 <style scoped></style>
