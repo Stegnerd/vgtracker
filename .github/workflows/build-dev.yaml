@@ -1,33 +1,12 @@
-name: Wails build
+name: DEV Build
 
 on:
-  # workflow_run:
-  #   workflows: ["Linting", "Testing"]
-  #   types:
-  #     - completed
   push:
     branches-ignore: [main]
   pull_request:
     branches: [main]
 
 jobs:
-  # golangci:
-  #   name: lint
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: actions/setup-go@v5
-  #       with:
-  #         go-version: "1.24"
-
-  #     - name: golangci-lint
-  #       uses: golangci/golangci-lint-action@v6
-  #       with:
-  #         version: v1.64.5
-  #         args: --verbose
-
-  #         # Optional: working directory, useful for monorepos
-  #         working-directory: backend
   linting:
     uses: ./.github/workflows/lint.yaml
 
@@ -53,23 +32,10 @@ jobs:
     runs-on: ${{ matrix.build.os }}
     steps:
       - uses: actions/checkout@v4
-      # - uses: actions/checkout@v2
-      #   with:
-      #     submodules: recursive
 
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.2.2
-
-      # - uses: actions/setup-go@v5
-      #   with:
-      #     go-version: "1.24"
-
-      # - name: golangci-lint
-      #   uses: golangci/golangci-lint-action@v6
-      #   with:
-      #     version: v1.64.5
-      #     working-directory: backend
 
       - uses: dAppServer/wails-build-action@main
         with:
@@ -77,12 +43,3 @@ jobs:
           build-platform: ${{ matrix.build.platform }}
           go-version: "1.24"
           node-version: "20.x"
-
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-      - name: Dump job context
-        env:
-          JOB_CONTEXT: ${{ toJson(job) }}
-        run: echo "$JOB_CONTEXT"
