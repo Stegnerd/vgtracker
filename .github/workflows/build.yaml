@@ -64,4 +64,6 @@ jobs:
           body: ${{ steps.tag_version.outputs.changelog }}
           replacesArtifacts: false
           generateReleaseNotes: true
-          artifacts: "**/*VGTracker.zip"
+          artifacts: |
+            Wails Build macOS VGTracker.zip
+            Wails Build Linux VGTracker.zip
