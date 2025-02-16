@@ -33,21 +33,14 @@ jobs:
 
   test_frontend:
     name: Run UI tests
-    needs: test_backend
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node-version: [20.x]
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      # - name: Use Node.js ${{ matrix.node-version }}
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: ${{ matrix.node-version }}
 
       - uses: oven-sh/setup-bun@v2
         with:
