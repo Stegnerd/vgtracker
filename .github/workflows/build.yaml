@@ -74,7 +74,7 @@ jobs:
           replacesArtifacts: false
           generateReleaseNotes: true
           artifacts: |
-            artifacts_download/*.zip
+            **/artifacts_download/*.zip
 
           # Wails Build macOS VGTracker.zip
           # Wails Build Linux VGTracker.zip
