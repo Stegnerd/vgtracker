@@ -43,9 +43,6 @@ jobs:
           package: true
           node-version: "20.x"
 
-      - name: list it all in build step
-        run: ls -la
-
   tag_and_release:
     name: "Tag and Release"
     needs: build
@@ -59,8 +56,14 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: list it all in UPLOAD step
-        run: ls -la
+      # - name: list it all in UPLOAD step
+      #   run: ls -la
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts_download
+      - name: Display structure of downloaded files
+        run: ls -R
 
       - name: Create a GitHub release
         uses: ncipollo/release-action@v1
@@ -71,5 +74,7 @@ jobs:
           replacesArtifacts: false
           generateReleaseNotes: true
           artifacts: |
-            Wails Build macOS VGTracker.zip
-            Wails Build Linux VGTracker.zip
+            artifacts_download/*.zip
+
+          # Wails Build macOS VGTracker.zip
+          # Wails Build Linux VGTracker.zip
