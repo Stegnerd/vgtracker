@@ -31,5 +31,5 @@ jobs:
           bun-version: 1.2.2
 
       - name: eslint
-        run: bun run lint:ui
+        run: bun run ui:lint
         working-directory: frontend
