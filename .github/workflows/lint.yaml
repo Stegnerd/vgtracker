@@ -30,6 +30,10 @@ jobs:
         with:
           bun-version: 1.2.2
 
-      - name: eslint
-        run: bun run ui:lint
+      - name: install dependencies
         working-directory: frontend
+        run: bun install
+
+      - name: eslint
+        working-directory: frontend
+        run: bun run ui:lint
