@@ -1,13 +1,13 @@
 <script setup lang="ts">
   import { useToast } from "primevue";
-  import { useForm } from "vee-validate";
-  import { onMounted } from "vue";
-  import * as yup from "yup";
-  import {
-    GetConfig,
-    UpdateConfig
-  } from "../../wailsjs/go/controllers/ConfigController";
-  import { controllers } from "../../wailsjs/go/models";
+import { useForm } from "vee-validate";
+import { onMounted } from "vue";
+import * as yup from "yup";
+import {
+  GetConfig,
+  UpdateConfig
+} from "../../wailsjs/go/controllers/ConfigController";
+import { controllers } from "../../wailsjs/go/models";
 
   const toast = useToast();
 
@@ -51,9 +51,16 @@
 
 <template>
   <div class="h-full w-full flex flex-col card">
-    <form class="flex flex-col gap-4" @submit="onSubmit">
+    <form
+      class="flex flex-col gap-4"
+      @submit="onSubmit"
+    >
       <FloatLabel variant="on">
-        <InputText id="twitchClientID" v-model="twitchClientID" class="w-lg" />
+        <InputText
+          id="twitchClientID"
+          v-model="twitchClientID"
+          class="w-lg"
+        />
         <label for="twitchClientID">Twitch Client ID</label>
         <Message
           v-if="errors.twitchClientID"
@@ -83,7 +90,11 @@
       </FloatLabel>
 
       <div class="pt-2.5">
-        <Button :disabled="!meta.valid" label="Save" type="submit" />
+        <Button
+          :disabled="!meta.valid"
+          label="Save"
+          type="submit"
+        />
         <p>{{ meta.valid }}</p>
       </div>
     </form>

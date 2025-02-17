@@ -6,8 +6,7 @@ permissions:
   contents: read
 
 jobs:
-  golangci:
-    name: lint
+  backend_lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -21,3 +20,16 @@ jobs:
           version: v1.64.5
           args: --verbose
           working-directory: backend
+
+  frontend_lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.2.2
+
+      - name: eslint
+        run: bun run lint:ui
+        working-directory: frontend

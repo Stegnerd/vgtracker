@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "ui:lint": "eslint --fix",
+    "ui:lint": "eslint",
+    "ui:lint:fix": "eslint --fix",
     "test:unit": "vitest",
     "test:unit:ci": "vitest run",
     "test:unit:ui": "vitest --ui"
