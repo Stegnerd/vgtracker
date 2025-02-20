@@ -12,8 +12,8 @@ import { controllers } from "../../wailsjs/go/models";
   const toast = useToast();
 
   const schema = yup.object({
-    twitchClientID: yup.string().required().min(1).label("Full name"),
-    twitchClientSecret: yup.string().required().min(1).label("Password")
+    twitchClientID: yup.string().required().min(1).label("Client ID"),
+    twitchClientSecret: yup.string().required().min(1).label("Client Secret")
   });
 
   const { defineField, handleSubmit, errors, meta } = useForm({
@@ -59,6 +59,7 @@ import { controllers } from "../../wailsjs/go/models";
         <InputText
           id="twitchClientID"
           v-model="twitchClientID"
+          data-test="twitchClientID"
           class="w-lg"
         />
         <label for="twitchClientID">Twitch Client ID</label>
@@ -76,6 +77,7 @@ import { controllers } from "../../wailsjs/go/models";
         <InputText
           id="twitchClientSecret"
           v-model="twitchClientSecret"
+          data-test="twitchClientSecret"
           class="w-lg"
         />
         <Message
@@ -94,6 +96,7 @@ import { controllers } from "../../wailsjs/go/models";
           :disabled="!meta.valid"
           label="Save"
           type="submit"
+          data-test="submit-button"
         />
         <p>{{ meta.valid }}</p>
       </div>
