@@ -1,20 +1,19 @@
 <script setup lang="ts">
-  // import { invoke } from "@tauri-apps/api/core";
   import { useToast } from "primevue";
-  import { useForm } from "vee-validate";
-  import { onMounted } from "vue";
-  import * as yup from "yup";
-  import {
-    GetConfig,
-    UpdateConfig
-  } from "../../wailsjs/go/controllers/ConfigController";
-  import { controllers } from "../../wailsjs/go/models";
+import { useForm } from "vee-validate";
+import { onMounted } from "vue";
+import * as yup from "yup";
+import {
+  GetConfig,
+  UpdateConfig
+} from "../../wailsjs/go/controllers/ConfigController";
+import { controllers } from "../../wailsjs/go/models";
 
   const toast = useToast();
 
   const schema = yup.object({
-    twitchClientID: yup.string().required().min(1).label("Full name"),
-    twitchClientSecret: yup.string().required().min(1).label("Password")
+    twitchClientID: yup.string().required().min(1).label("Client ID"),
+    twitchClientSecret: yup.string().required().min(1).label("Client Secret")
   });
 
   const { defineField, handleSubmit, errors, meta } = useForm({
@@ -29,9 +28,13 @@
       twitchClientID.value = result.twitch.clientID;
       twitchClientSecret.value = result.twitch.clientSecret;
     });
+
+    // Search("Pokemon Red").then((out) => {
+    //   console.warn('search output', out)
+    // })
   });
 
-  const onSubmit = handleSubmit((values) => {
+  const onSubmit = handleSubmit(() => {
     const input = {
       twitch: {
         clientID: twitchClientID.value,
@@ -39,7 +42,7 @@
       }
     } as controllers.UpdateConfigInput;
 
-    UpdateConfig(input).then((out) => {
+    UpdateConfig(input).then(() => {
       toast.add({
         severity: "success",
         summary: "Config Saved",
@@ -52,9 +55,17 @@
 
 <template>
   <div class="h-full w-full flex flex-col card">
-    <form class="flex flex-col gap-4" @submit="onSubmit">
+    <form
+      class="flex flex-col gap-4"
+      @submit="onSubmit"
+    >
       <FloatLabel variant="on">
-        <InputText id="twitchClientID" v-model="twitchClientID" class="w-lg" />
+        <InputText
+          id="twitchClientID"
+          v-model="twitchClientID"
+          data-test="twitchClientID"
+          class="w-lg"
+        />
         <label for="twitchClientID">Twitch Client ID</label>
         <Message
           v-if="errors.twitchClientID"
@@ -70,6 +81,7 @@
         <InputText
           id="twitchClientSecret"
           v-model="twitchClientSecret"
+          data-test="twitchClientSecret"
           class="w-lg"
         />
         <Message
@@ -84,7 +96,12 @@
       </FloatLabel>
 
       <div class="pt-2.5">
-        <Button :disabled="!meta.valid" label="Save" type="submit" />
+        <Button
+          :disabled="!meta.valid"
+          label="Save"
+          type="submit"
+          data-test="submit-button"
+        />
         <p>{{ meta.valid }}</p>
       </div>
     </form>

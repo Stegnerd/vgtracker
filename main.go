@@ -29,7 +29,11 @@ func main() {
 		Bind: []interface{}{
 			app.ConfigController,
 			app.TwitchController,
+			app.IgdbController,
 		},
+		// Debug: options.Debug{
+		// 	OpenInspectorOnStartup: true,
+		// },
 	})
 
 	if err != nil {

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"vgtracker/backend/controllers"
 	"vgtracker/backend/internal/config"
+	"vgtracker/backend/internal/igdb"
 	"vgtracker/backend/internal/twitch"
 	"vgtracker/backend/internal/utils"
 
@@ -24,6 +25,7 @@ type App struct {
 	Cfg   *config.Config
 	// controllers
 	ConfigController controllers.ConfigControllerMethods
+	IgdbController   controllers.IgdbControllerMethods
 	TwitchController controllers.TwitchControllerMethods
 }
 
@@ -55,7 +57,10 @@ func NewApp() *App {
 			panic(errors.WithMessage(err, "could not get twitch token"))
 		}
 	}
-	fmt.Printf("\n twitchToken: %+v  \n", twitchToken)
+	// fmt.Printf("\n twitchToken: %+v  \n", twitchToken)
+
+	igdbClient := igdb.NewClient(twitchToken, &appConfig.Twitch.ClientID)
+	igdbController := controllers.NewIgdbController(igdbClient)
 
 	return &App{
 		Cfg: appConfig,
@@ -63,6 +68,7 @@ func NewApp() *App {
 
 		//
 		ConfigController: configController,
+		IgdbController:   igdbController,
 		TwitchController: twitchController,
 	}
 }
