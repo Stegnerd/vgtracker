@@ -7,9 +7,6 @@ import {
   GetConfig,
   UpdateConfig
 } from "../../wailsjs/go/controllers/ConfigController";
-import {
-  Search
-} from "../../wailsjs/go/controllers/IgdbController";
 import { controllers } from "../../wailsjs/go/models";
 
   const toast = useToast();
@@ -32,9 +29,9 @@ import { controllers } from "../../wailsjs/go/models";
       twitchClientSecret.value = result.twitch.clientSecret;
     });
 
-    Search("Pokemon Red").then((out) => {
-      console.warn('search output', out)
-    })
+    // Search("Pokemon Red").then((out) => {
+    //   console.warn('search output', out)
+    // })
   });
 
   const onSubmit = handleSubmit(() => {
