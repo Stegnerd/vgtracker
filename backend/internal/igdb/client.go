@@ -32,7 +32,21 @@ func (c *Client) Search(input string) (*VGTSearchResults, error) {
 	client := &http.Client{}
 
 	postURL := "https://api.igdb.com/v4/games"
-	body := []byte(`fields *;where id=5;`)
+	bodyString := fmt.Sprintf(`
+		fields id,
+		age_ratings.*,
+		artworks.*,
+		category,
+		cover.*,
+		genres.*,
+		name,
+		platforms.*,
+		storyline,
+		summary;
+		search "%s";
+		limit 30;
+	`, input)
+	body := []byte(bodyString)
 	request, err := http.NewRequest("POST", postURL, bytes.NewBuffer(body))
 	if err != nil {
 		return nil, errors.WithMessage(err, "Failed making request")
@@ -61,15 +75,17 @@ func (c *Client) Search(input string) (*VGTSearchResults, error) {
 		return nil, errors.WithMessage(derr, "Failed to unmarshall")
 	}
 
+	//fmt.Printf("data %+v", data)
+
 	for _, item := range data {
 		results.Items = append(results.Items, VGTGame{
 			Name:     item.Name,
 			GameType: item.convertGameType(item.GameType),
-			Genres:   item.convertGenre(item),
+			Genres:   item.getGenreList(item.Genres),
 		})
 	}
 
-	fmt.Printf("\n data result: %+v \n", data)
+	//fmt.Printf("\n data result: %+v \n", data)
 
 	return results, nil
 }

@@ -11,6 +11,7 @@ declare module 'vue' {
     AppMenu: typeof import('./src/components/AppMenu.vue')['default']
     AppThemeConfigurator: typeof import('./src/components/AppThemeConfigurator.vue')['default']
     AppTopbar: typeof import('./src/components/AppTopbar.vue')['default']
+    AutoComplete: typeof import('primevue/autocomplete')['default']
     Button: typeof import('primevue/button')['default']
     DynamicDialog: typeof import('primevue/dynamicdialog')['default']
     FloatLabel: typeof import('primevue/floatlabel')['default']

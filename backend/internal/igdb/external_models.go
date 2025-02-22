@@ -1,11 +1,16 @@
 package igdb
 
+import (
+	"slices"
+)
+
 // SearchResultGame - model coming from IGDB
 type IGDBSearchResultGame struct {
 	ID       int    `json:"id"`
 	Name     string `json:"name"`
 	GameType int    `json:"game_type"`
-	Genres   []int  `json:"genres"`
+	// Genres   []int  `json:"genres"`
+	Genres []IGDBGenre `json:"genres"`
 }
 
 func (IGDBSearchResultGame) convertGameType(incomingGameType int) GameType {
@@ -35,62 +40,79 @@ func (IGDBSearchResultGame) convertGameType(incomingGameType int) GameType {
 	}
 }
 
-func (IGDBSearchResultGame) convertGenre(incomingResults IGDBSearchResultGame) []Genre {
-	results := make([]Genre, len(incomingResults.Genres))
+// func (IGDBSearchResultGame) convertGenre(incomingResults IGDBSearchResultGame) []Genre {
+// 	results := make([]Genre, len(incomingResults.Genres))
 
-	for index, id := range incomingResults.Genres {
-		switch id {
-		case 2:
-			results[index] = PointAndClick
-		case 4:
-			results[index] = Fighting
-		case 5:
-			results[index] = Shooter
-		case 7:
-			results[index] = Music
-		case 8:
-			results[index] = Platform
-		case 9:
-			results[index] = Puzzle
-		case 10:
-			results[index] = Racing
-		case 11:
-			results[index] = RTS
-		case 12:
-			results[index] = RPG
-			//results[index] = RPG
-		case 13:
-			results[index] = Simulator
-		case 14:
-			results[index] = Sport
-		case 15:
-			results[index] = Strategy
-		case 16:
-			results[index] = TurnBasedStrategy
-		case 24:
-			results[index] = Tactical
-		case 25:
-			results[index] = HackNSlashBeatMUp
-		case 26:
-			results[index] = QuizTrivia
-		case 30:
-			results[index] = Pinball
-		case 31:
-			results[index] = Adventure
-		case 32:
-			results[index] = Indie
-		case 33:
-			results[index] = Arcade
-		case 34:
-			results[index] = VisualNovel
-		case 35:
-			results[index] = CardOrBordGame
-		case 36:
-			results[index] = Moba
-		default:
-			results[index] = GenreUnknown
-		}
+// 	for index, id := range incomingResults.Genres {
+// 		switch id {
+// 		case 2:
+// 			results[index] = PointAndClick
+// 		case 4:
+// 			results[index] = Fighting
+// 		case 5:
+// 			results[index] = Shooter
+// 		case 7:
+// 			results[index] = Music
+// 		case 8:
+// 			results[index] = Platform
+// 		case 9:
+// 			results[index] = Puzzle
+// 		case 10:
+// 			results[index] = Racing
+// 		case 11:
+// 			results[index] = RTS
+// 		case 12:
+// 			results[index] = RPG
+// 			//results[index] = RPG
+// 		case 13:
+// 			results[index] = Simulator
+// 		case 14:
+// 			results[index] = Sport
+// 		case 15:
+// 			results[index] = Strategy
+// 		case 16:
+// 			results[index] = TurnBasedStrategy
+// 		case 24:
+// 			results[index] = Tactical
+// 		case 25:
+// 			results[index] = HackNSlashBeatMUp
+// 		case 26:
+// 			results[index] = QuizTrivia
+// 		case 30:
+// 			results[index] = Pinball
+// 		case 31:
+// 			results[index] = Adventure
+// 		case 32:
+// 			results[index] = Indie
+// 		case 33:
+// 			results[index] = Arcade
+// 		case 34:
+// 			results[index] = VisualNovel
+// 		case 35:
+// 			results[index] = CardOrBordGame
+// 		case 36:
+// 			results[index] = Moba
+// 		default:
+// 			results[index] = GenreUnknown
+// 		}
+// 	}
+
+// 	return results
+// }
+
+func (IGDBSearchResultGame) getGenreList(genreList []IGDBGenre) []Genre {
+	var list []Genre
+
+	for _, item := range genreList {
+		list = append(list, item.Name)
 	}
 
-	return results
+	slices.Sort(list)
+
+	return list
+}
+
+type IGDBGenre struct {
+	ID   int   `json:"id"`
+	Name Genre `json:"name"`
 }
