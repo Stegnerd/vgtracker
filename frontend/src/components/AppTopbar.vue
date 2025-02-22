@@ -2,11 +2,15 @@
 import { AutoCompleteCompleteEvent, AutoCompleteOptionSelectEvent } from "primevue";
 import { useDialog } from "primevue/usedialog";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 import { Search } from "../../wailsjs/go/controllers/IgdbController";
 import { igdb } from "../../wailsjs/go/models";
+import { useIGDBSelection } from "../composables/igdbSelection";
 import { useLayout } from "../composables/layout";
 import AppThemeConfigurator from "./AppThemeConfigurator.vue";
 
+const router = useRouter();
+const { setGameSelection } = useIGDBSelection();
 const {toggleDarkMode} = useLayout();
 const dialog = useDialog();
 const isDarkMode = ref(true);
@@ -41,7 +45,10 @@ const selected = (event: AutoCompleteOptionSelectEvent) => {
   searchInput.value = ''
   const result = event.value as igdb.VGTGame
   console.warn('You picked', result)
+  setGameSelection(result)
   // todo: pinia set this in a store and navigate away
+  
+  router.push({path:'/game-details'})
 }
 
 </script>
@@ -58,8 +65,9 @@ const selected = (event: AutoCompleteOptionSelectEvent) => {
           v-model="searchInput"
           :suggestions="filterResults"
           @complete="search"
-          @item-select="selected"
+          @option-select="selected"
         >
+          <!-- @item-select="selected" -->
           <template #option="slotProps">
             <div>
               <p>{{ slotProps.option.name }}</p>
