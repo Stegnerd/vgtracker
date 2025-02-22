@@ -44,7 +44,7 @@ import AppThemeConfigurator from "./AppThemeConfigurator.vue";
       />
       <Button
         icon="i-mdi-palette"
-        class="m-r"
+        
         @click="openThemeDialog()"
       />
     </div>
