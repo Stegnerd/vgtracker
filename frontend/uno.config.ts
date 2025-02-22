@@ -32,5 +32,8 @@ export default defineConfig({
       })
     })
   ],
-  rules: [["pt-menu", { "padding-top": "5.2rem" }]]
+  rules: [
+    // custom heigh to get card to line up with menu
+    ["pt-menu", { "padding-top": "5.2rem" }]
+  ]
 });
