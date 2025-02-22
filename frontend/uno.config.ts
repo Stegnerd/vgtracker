@@ -31,5 +31,6 @@ export default defineConfig({
         fontServeBaseUrl: "/assets/fonts"
       })
     })
-  ]
+  ],
+  rules: [["pt-menu", { "padding-top": "5.2rem" }]]
 });

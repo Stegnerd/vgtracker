@@ -31,7 +31,10 @@ import AppThemeConfigurator from "./AppThemeConfigurator.vue";
     <div class="flex justify-center">
       <InputGroup class="min-w-lg">
         <InputText placeholder="Search" />
-        <Button icon="i-mdi-magnify" />
+        <InputGroupAddon>
+          <i class="i-mdi-magnify" />
+        </InputGroupAddon>
+        <!-- <Button icon="i-mdi-magnify" /> -->
       </InputGroup>
     </div>
     <div class="flex gap-6">

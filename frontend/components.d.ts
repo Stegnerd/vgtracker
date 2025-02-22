@@ -16,6 +16,7 @@ declare module 'vue' {
     FloatLabel: typeof import('primevue/floatlabel')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     InputGroup: typeof import('primevue/inputgroup')['default']
+    InputGroupAddon: typeof import('primevue/inputgroupaddon')['default']
     InputText: typeof import('primevue/inputtext')['default']
     Menu: typeof import('primevue/menu')['default']
     Message: typeof import('primevue/message')['default']
