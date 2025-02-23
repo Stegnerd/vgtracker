@@ -12,7 +12,7 @@ import (
 )
 
 type IgdbMethods interface {
-	Search(input string) (*VGTSearchResults, error)
+	SearchMainGames(input string) (*VGTSearchResults, error)
 }
 
 type Client struct {
@@ -28,24 +28,31 @@ func NewClient(token *twitch.AccessTokenResponse, clientID *string) IgdbMethods 
 }
 
 // Search implements IgdbMethods.
-func (c *Client) Search(input string) (*VGTSearchResults, error) {
+func (c *Client) SearchMainGames(input string) (*VGTSearchResults, error) {
 	client := &http.Client{}
 
 	postURL := "https://api.igdb.com/v4/games"
+	// currently searching infix naming (case insenstive contains string)
+	// and only main/remake/remaster
 	bodyString := fmt.Sprintf(`
 		fields id,
 		age_ratings.*,
 		artworks.*,
 		category,
 		cover.*,
+		game_type,
 		genres.*,
 		name,
 		platforms.*,
 		storyline,
 		summary;
-		search "%s";
+		sort name asc;
+		where
+			name ~ *"%s"*  & game_type = 0 |
+			name ~ *"%s"*  & game_type = 8 |
+			name ~ *"%s"*  & game_type = 9 ;
 		limit 30;
-	`, input)
+	`, input, input, input)
 	body := []byte(bodyString)
 	request, err := http.NewRequest("POST", postURL, bytes.NewBuffer(body))
 	if err != nil {
@@ -85,7 +92,7 @@ func (c *Client) Search(input string) (*VGTSearchResults, error) {
 		})
 	}
 
-	//fmt.Printf("\n data result: %+v \n", data)
+	// fmt.Printf("\n data result: %+v \n", results)
 
 	return results, nil
 }

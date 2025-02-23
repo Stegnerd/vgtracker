@@ -3,7 +3,7 @@ import { AutoCompleteCompleteEvent, AutoCompleteOptionSelectEvent } from "primev
 import { useDialog } from "primevue/usedialog";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { Search } from "../../wailsjs/go/controllers/IgdbController";
+import { SearchMainGames } from "../../wailsjs/go/controllers/IgdbController";
 import { igdb } from "../../wailsjs/go/models";
 import { useIGDBSelection } from "../composables/igdbSelection";
 import { useLayout } from "../composables/layout";
@@ -30,7 +30,7 @@ const search = (event: AutoCompleteCompleteEvent) => {
 
        console.warn('EVENT', event)
     if (event.query !== "") {
-      Search(event.query).then((results) => {
+      SearchMainGames(event.query).then((results) => {
         console.warn('search results', results)
         filterResults.value = results.items
       })
