@@ -15,8 +15,6 @@ const {toggleDarkMode} = useLayout();
 const dialog = useDialog();
 const isDarkMode = ref(true);
 
-
-
 function openThemeDialog() {
   dialog.open(AppThemeConfigurator, {
     props: {
@@ -28,26 +26,22 @@ function openThemeDialog() {
 
 const searchInput = ref('');
 const filterResults = ref<igdb.VGTGame[]>([]);
-
 const search = (event: AutoCompleteCompleteEvent) => {
-  setTimeout(() => {    console.warn('EVENT', event.query)
+
+       console.warn('EVENT', event)
     if (event.query !== "") {
       Search(event.query).then((results) => {
         console.warn('search results', results)
         filterResults.value = results.items
       })
     }
-  }, 500)
 }
 
 const selected = (event: AutoCompleteOptionSelectEvent) => {
-  // TODO: also figure out how to reset the input
   searchInput.value = ''
   const result = event.value as igdb.VGTGame
-  console.warn('You picked', result)
   setGameSelection(result)
-  // todo: pinia set this in a store and navigate away
-  
+  filterResults.value = [];
   router.push({path:'/game-details'})
 }
 
@@ -63,11 +57,13 @@ const selected = (event: AutoCompleteOptionSelectEvent) => {
         <!-- option-label="name" -->
         <AutoComplete
           v-model="searchInput"
+          spellcheck="false"
+          input-id="daltonfick"
           :suggestions="filterResults"
+          :delay="1000"
           @complete="search"
           @option-select="selected"
         >
-          <!-- @item-select="selected" -->
           <template #option="slotProps">
             <div>
               <p>{{ slotProps.option.name }}</p>
