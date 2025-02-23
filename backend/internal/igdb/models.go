@@ -14,6 +14,7 @@ type VGTGame struct {
 	GameType  GameType       `json:"gameType"`
 	Genres    []GenreType    `json:"genres"`
 	Platforms []PlatformType `json:"platforms"`
+	CoverURL  string         `json:"coverURL"`
 	// values populated from user data (owned/played)
 }
 

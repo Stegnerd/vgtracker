@@ -11,6 +11,7 @@ type IGDBSearchResultGame struct {
 	GameType  int            `json:"game_type"`
 	Genres    []IGDBGenre    `json:"genres"`
 	Platforms []IGDBPlatform `json:"platforms"`
+	Cover     IGDBCover      `json:"cover"`
 }
 
 func (IGDBSearchResultGame) convertGameType(incomingGameType int) GameType {
@@ -132,4 +133,9 @@ func (IGDBSearchResultGame) getPlatformList(platformList []IGDBPlatform) []Platf
 	slices.Sort(list)
 
 	return list
+}
+
+type IGDBCover struct {
+	ImageID string `json:"imageID"`
+	URL     string `json:"url"`
 }

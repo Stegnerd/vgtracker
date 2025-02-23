@@ -16,14 +16,18 @@ type IgdbMethods interface {
 }
 
 type Client struct {
-	AccessToken *twitch.AccessTokenResponse
-	ClientID    *string
+	AccessToken   *twitch.AccessTokenResponse
+	ClientID      *string
+	ImageResolver ImageResolverMethods
 }
 
 func NewClient(token *twitch.AccessTokenResponse, clientID *string) IgdbMethods {
+	newResolver := NewImageResolver()
+
 	return &Client{
-		AccessToken: token,
-		ClientID:    clientID,
+		AccessToken:   token,
+		ClientID:      clientID,
+		ImageResolver: newResolver,
 	}
 }
 
@@ -91,6 +95,7 @@ func (c *Client) SearchMainGames(input string) (*VGTSearchResults, error) {
 			GameType:  item.convertGameType(item.GameType),
 			Genres:    item.getGenreList(item.Genres),
 			Platforms: item.getPlatformList(item.Platforms),
+			CoverURL:  c.ImageResolver.GetImageURL(Thumb, item.Cover.ImageID),
 		})
 	}
 
