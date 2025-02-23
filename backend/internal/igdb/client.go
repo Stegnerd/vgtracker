@@ -86,9 +86,11 @@ func (c *Client) SearchMainGames(input string) (*VGTSearchResults, error) {
 
 	for _, item := range data {
 		results.Items = append(results.Items, VGTGame{
-			Name:     item.Name,
-			GameType: item.convertGameType(item.GameType),
-			Genres:   item.getGenreList(item.Genres),
+			GameID:    item.ID,
+			Name:      item.Name,
+			GameType:  item.convertGameType(item.GameType),
+			Genres:    item.getGenreList(item.Genres),
+			Platforms: item.getPlatformList(item.Platforms),
 		})
 	}
 

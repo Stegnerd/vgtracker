@@ -6,11 +6,11 @@ import (
 
 // SearchResultGame - model coming from IGDB
 type IGDBSearchResultGame struct {
-	ID       int    `json:"id"`
-	Name     string `json:"name"`
-	GameType int    `json:"game_type"`
-	// Genres   []int  `json:"genres"`
-	Genres []IGDBGenre `json:"genres"`
+	ID        int            `json:"id"`
+	Name      string         `json:"name"`
+	GameType  int            `json:"game_type"`
+	Genres    []IGDBGenre    `json:"genres"`
+	Platforms []IGDBPlatform `json:"platforms"`
 }
 
 func (IGDBSearchResultGame) convertGameType(incomingGameType int) GameType {
@@ -100,8 +100,13 @@ func (IGDBSearchResultGame) convertGameType(incomingGameType int) GameType {
 // 	return results
 // }
 
-func (IGDBSearchResultGame) getGenreList(genreList []IGDBGenre) []Genre {
-	var list []Genre
+type IGDBGenre struct {
+	ID   int       `json:"id"`
+	Name GenreType `json:"name"`
+}
+
+func (IGDBSearchResultGame) getGenreList(genreList []IGDBGenre) []GenreType {
+	var list []GenreType
 
 	for _, item := range genreList {
 		list = append(list, item.Name)
@@ -112,7 +117,19 @@ func (IGDBSearchResultGame) getGenreList(genreList []IGDBGenre) []Genre {
 	return list
 }
 
-type IGDBGenre struct {
-	ID   int   `json:"id"`
-	Name Genre `json:"name"`
+type IGDBPlatform struct {
+	ID   int          `json:"id"`
+	Name PlatformType `json:"name"`
+}
+
+func (IGDBSearchResultGame) getPlatformList(platformList []IGDBPlatform) []PlatformType {
+	var list []PlatformType
+
+	for _, item := range platformList {
+		list = append(list, item.Name)
+	}
+
+	slices.Sort(list)
+
+	return list
 }

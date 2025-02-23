@@ -85,9 +85,11 @@ export namespace controllers {
 export namespace igdb {
 	
 	export class VGTGame {
+	    id: number;
 	    name: string;
 	    gameType: string;
 	    genres: string[];
+	    platforms: string[];
 	
 	    static createFrom(source: any = {}) {
 	        return new VGTGame(source);
@@ -95,9 +97,11 @@ export namespace igdb {
 	
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.id = source["id"];
 	        this.name = source["name"];
 	        this.gameType = source["gameType"];
 	        this.genres = source["genres"];
+	        this.platforms = source["platforms"];
 	    }
 	}
 	export class VGTSearchResults {
