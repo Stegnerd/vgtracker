@@ -1,37 +1,91 @@
 <script setup lang="ts">
-  import { useDialog } from "primevue/usedialog";
+import { AutoCompleteCompleteEvent, AutoCompleteOptionSelectEvent } from "primevue";
+import { useDialog } from "primevue/usedialog";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { SearchMainGames } from "../../wailsjs/go/controllers/IgdbController";
+import { igdb } from "../../wailsjs/go/models";
+import { useIGDBSelection } from "../composables/igdbSelection";
 import { useLayout } from "../composables/layout";
 import AppThemeConfigurator from "./AppThemeConfigurator.vue";
 
-  const { toggleDarkMode } = useLayout();
+const router = useRouter();
+const { setGameSelection } = useIGDBSelection();
+const {toggleDarkMode} = useLayout();
+const dialog = useDialog();
+const isDarkMode = ref(true);
 
-  const dialog = useDialog();
+function openThemeDialog() {
+  dialog.open(AppThemeConfigurator, {
+    props: {
+      modal: false,
+      position: "topright"
+    }
+  });
+}
 
-  const isDarkMode = ref(true);
+const searchInput = ref('');
+const filterResults = ref<igdb.VGTGame[]>([]);
+const search = (event: AutoCompleteCompleteEvent) => {
 
-  // function toggleDarkMode() {
-  //   const element = document.querySelector("html");
-  //   element!.classList.toggle("app-dark");
-  //   isDarkMode.value = !isDarkMode.value;
-  // }
+       console.warn('EVENT', event)
+    if (event.query !== "") {
+      SearchMainGames(event.query).then((results) => {
+        console.warn('search results', results)
+        filterResults.value = results.items
+      })
+    }
+}
 
-  function openThemeDialog() {
-    dialog.open(AppThemeConfigurator, {
-      props: {
-        modal: false,
-        position: "topright"
-      }
-    });
-  }
+const selected = (event: AutoCompleteOptionSelectEvent) => {
+  searchInput.value = ''
+  const result = event.value as igdb.VGTGame
+  setGameSelection(result)
+  filterResults.value = [];
+  router.push({path:'/game-details'})
+}
+
 </script>
 <template>
   <div class="topbar-container flex flex-row justify-between items-center pb-10">
     <div />
     <div class="flex justify-center">
       <InputGroup class="min-w-lg">
-        <InputText placeholder="Search" />
-        <Button icon="i-mdi-magnify" />
+        <InputGroupAddon>
+          <i class="i-mdi-magnify" />
+        </InputGroupAddon>
+        <!-- option-label="name" -->
+        <AutoComplete
+          v-model="searchInput"
+          spellcheck="false"
+          input-id="daltonfick"
+          :suggestions="filterResults"
+          :delay="1000"
+          @complete="search"
+          @option-select="selected"
+        >
+          <template #option="slotProps">
+            <div class="flex">
+              <img
+                v-if="slotProps.option.coverURL !== ''"
+                :src="slotProps.option.coverURL"
+              >
+              <Skeleton
+                v-else
+                shape="rectangle"
+                width="90px"
+                height="90px"
+                animation="none"
+              />
+              <div class="flex flex-col justify-center pl-4">
+                <div class="flex">
+                  <span>{{ slotProps.option.name }}</span>
+                  <span class="pl-4">({{ slotProps.option.firstReleaseYear }})</span>
+                </div>
+              </div>
+            </div>
+          </template>
+        </AutoComplete>
       </InputGroup>
     </div>
     <div class="flex gap-6">
@@ -41,10 +95,12 @@ import AppThemeConfigurator from "./AppThemeConfigurator.vue";
       />
       <Button
         icon="i-mdi-palette"
-        class="m-r"
         @click="openThemeDialog()"
       />
     </div>
   </div>
 </template>
-<style></style>
+<style scoped>
+
+
+</style>

@@ -7,21 +7,25 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AppCard: typeof import('./src/components/AppCard.vue')['default']
     AppLayout: typeof import('./src/components/AppLayout.vue')['default']
     AppMenu: typeof import('./src/components/AppMenu.vue')['default']
     AppThemeConfigurator: typeof import('./src/components/AppThemeConfigurator.vue')['default']
     AppTopbar: typeof import('./src/components/AppTopbar.vue')['default']
+    AutoComplete: typeof import('primevue/autocomplete')['default']
     Button: typeof import('primevue/button')['default']
     DynamicDialog: typeof import('primevue/dynamicdialog')['default']
     FloatLabel: typeof import('primevue/floatlabel')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     InputGroup: typeof import('primevue/inputgroup')['default']
+    InputGroupAddon: typeof import('primevue/inputgroupaddon')['default']
     InputText: typeof import('primevue/inputtext')['default']
     Menu: typeof import('primevue/menu')['default']
     Message: typeof import('primevue/message')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SelectButton: typeof import('primevue/selectbutton')['default']
+    Skeleton: typeof import('primevue/skeleton')['default']
     Toast: typeof import('primevue/toast')['default']
   }
   export interface ComponentCustomProperties {

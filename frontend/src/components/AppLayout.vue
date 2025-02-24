@@ -1,9 +1,9 @@
 <script setup lang="ts"></script>
 <template>
-  <div class="layout-wrapper flex flex-col">
-    <app-topbar />
-    <div class="layout-content flex flex-row h-full">
-      <app-menu />
+  <div class="layout-wrapper flex">
+    <app-menu class="pt-menu" />
+    <div class="layout-content flex flex-col h-full w-full">
+      <app-topbar />
       <RouterView />
     </div>
   </div>

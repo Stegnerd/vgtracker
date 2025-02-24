@@ -7,7 +7,7 @@ import (
 )
 
 type IgdbControllerMethods interface {
-	Search(input string) (*igdb.VGTSearchResults, error)
+	SearchMainGames(input string) (*igdb.VGTSearchResults, error)
 }
 
 type IgdbController struct {
@@ -23,8 +23,8 @@ func NewIgdbController(
 }
 
 // Search implements IgdbControllerMethods.
-func (i *IgdbController) Search(input string) (*igdb.VGTSearchResults, error) {
-	result, err := i.client.Search(input)
+func (i *IgdbController) SearchMainGames(input string) (*igdb.VGTSearchResults, error) {
+	result, err := i.client.SearchMainGames(input)
 	if err != nil {
 		return nil, errors.WithMessage(err, "could not complete search")
 	}

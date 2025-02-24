@@ -6,33 +6,59 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"time"
 	"vgtracker/backend/internal/twitch"
 
 	"github.com/pkg/errors"
 )
 
 type IgdbMethods interface {
-	Search(input string) (*VGTSearchResults, error)
+	SearchMainGames(input string) (*VGTSearchResults, error)
 }
 
 type Client struct {
-	AccessToken *twitch.AccessTokenResponse
-	ClientID    *string
+	AccessToken   *twitch.AccessTokenResponse
+	ClientID      *string
+	ImageResolver ImageResolverMethods
 }
 
 func NewClient(token *twitch.AccessTokenResponse, clientID *string) IgdbMethods {
+	newResolver := NewImageResolver()
+
 	return &Client{
-		AccessToken: token,
-		ClientID:    clientID,
+		AccessToken:   token,
+		ClientID:      clientID,
+		ImageResolver: newResolver,
 	}
 }
 
 // Search implements IgdbMethods.
-func (c *Client) Search(input string) (*VGTSearchResults, error) {
+func (c *Client) SearchMainGames(input string) (*VGTSearchResults, error) {
 	client := &http.Client{}
 
 	postURL := "https://api.igdb.com/v4/games"
-	body := []byte(`fields *;where id=5;`)
+	// currently searching infix naming (case insenstive contains string)
+	// and only main/remake/remaster
+	bodyString := fmt.Sprintf(`
+		fields id,
+		age_ratings.*,
+		artworks.*,
+		category,
+		cover.*,
+		game_type,
+		genres.*,
+		name,
+		platforms.*,
+		storyline,
+		summary;
+		sort name asc;
+		where
+			name ~ *"%s"*  & game_type = 0 |
+			name ~ *"%s"*  & game_type = 8 |
+			name ~ *"%s"*  & game_type = 9 ;
+		limit 30;
+	`, input, input, input)
+	body := []byte(bodyString)
 	request, err := http.NewRequest("POST", postURL, bytes.NewBuffer(body))
 	if err != nil {
 		return nil, errors.WithMessage(err, "Failed making request")
@@ -61,15 +87,23 @@ func (c *Client) Search(input string) (*VGTSearchResults, error) {
 		return nil, errors.WithMessage(derr, "Failed to unmarshall")
 	}
 
+	//fmt.Printf("data %+v", data)
+
 	for _, item := range data {
+		fmt.Printf("\n cover object: %+v \n", item.Cover)
+		timeStamp := time.Unix(item.FirstReleaseDate, 0)
 		results.Items = append(results.Items, VGTGame{
-			Name:     item.Name,
-			GameType: item.convertGameType(item.GameType),
-			Genres:   item.convertGenre(item),
+			GameID:           item.ID,
+			Name:             item.Name,
+			GameType:         item.convertGameType(item.GameType),
+			Genres:           item.getGenreList(item.Genres),
+			Platforms:        item.getPlatformList(item.Platforms),
+			CoverURL:         c.ImageResolver.GetImageURL(Thumb, item.Cover.ImageID),
+			FirstReleaseYear: timeStamp.Year(),
 		})
 	}
 
-	fmt.Printf("\n data result: %+v \n", data)
+	// fmt.Printf("\n data result: %+v \n", results)
 
 	return results, nil
 }

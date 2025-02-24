@@ -14,6 +14,11 @@ const router = createRouter({
           redirect: "/settings"
         },
         {
+          path: "/game-details",
+          name: "game-details",
+          component: () => import("@/pages/AppGameDetail.vue")
+        },
+        {
           path: "/settings",
           name: "settings",
           component: () => import("@/pages/AppSettings.vue")
