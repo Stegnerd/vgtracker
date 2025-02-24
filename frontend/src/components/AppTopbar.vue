@@ -65,8 +65,24 @@ const selected = (event: AutoCompleteOptionSelectEvent) => {
           @option-select="selected"
         >
           <template #option="slotProps">
-            <div>
-              <p>{{ slotProps.option.name }}</p>
+            <div class="flex">
+              <img
+                v-if="slotProps.option.coverURL !== ''"
+                :src="slotProps.option.coverURL"
+              >
+              <Skeleton
+                v-else
+                shape="rectangle"
+                width="90px"
+                height="90px"
+                animation="none"
+              />
+              <div class="flex flex-col justify-center pl-4">
+                <div class="flex">
+                  <span>{{ slotProps.option.name }}</span>
+                  <span class="pl-4">({{ slotProps.option.firstReleaseYear }})</span>
+                </div>
+              </div>
             </div>
           </template>
         </AutoComplete>
@@ -84,4 +100,7 @@ const selected = (event: AutoCompleteOptionSelectEvent) => {
     </div>
   </div>
 </template>
-<style></style>
+<style scoped>
+
+
+</style>

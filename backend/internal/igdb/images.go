@@ -30,6 +30,10 @@ func NewImageResolver() ImageResolverMethods {
 }
 
 func (i *ImageResolver) GetImageURL(size ImageSize, imageHash string) string {
+	if imageHash == "" {
+		return ""
+	}
+
 	url := baseString
 	url = strings.Replace(url, "{size}", string(size), 1)
 	url = strings.Replace(url, "{hash}", imageHash, 1)

@@ -6,12 +6,13 @@ import (
 
 // SearchResultGame - model coming from IGDB
 type IGDBSearchResultGame struct {
-	ID        int            `json:"id"`
-	Name      string         `json:"name"`
-	GameType  int            `json:"game_type"`
-	Genres    []IGDBGenre    `json:"genres"`
-	Platforms []IGDBPlatform `json:"platforms"`
-	Cover     IGDBCover      `json:"cover"`
+	ID               int            `json:"id"`
+	Name             string         `json:"name"`
+	GameType         int            `json:"game_type"`
+	Genres           []IGDBGenre    `json:"genres"`
+	Platforms        []IGDBPlatform `json:"platforms"`
+	Cover            IGDBCover      `json:"cover"`
+	FirstReleaseDate int64          `json:"first_release_date"`
 }
 
 func (IGDBSearchResultGame) convertGameType(incomingGameType int) GameType {
@@ -136,6 +137,6 @@ func (IGDBSearchResultGame) getPlatformList(platformList []IGDBPlatform) []Platf
 }
 
 type IGDBCover struct {
-	ImageID string `json:"imageID"`
+	ImageID string `json:"image_id"`
 	URL     string `json:"url"`
 }

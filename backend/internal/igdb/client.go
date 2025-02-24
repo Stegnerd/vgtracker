@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"time"
 	"vgtracker/backend/internal/twitch"
 
 	"github.com/pkg/errors"
@@ -89,13 +90,16 @@ func (c *Client) SearchMainGames(input string) (*VGTSearchResults, error) {
 	//fmt.Printf("data %+v", data)
 
 	for _, item := range data {
+		fmt.Printf("\n cover object: %+v \n", item.Cover)
+		timeStamp := time.Unix(item.FirstReleaseDate, 0)
 		results.Items = append(results.Items, VGTGame{
-			GameID:    item.ID,
-			Name:      item.Name,
-			GameType:  item.convertGameType(item.GameType),
-			Genres:    item.getGenreList(item.Genres),
-			Platforms: item.getPlatformList(item.Platforms),
-			CoverURL:  c.ImageResolver.GetImageURL(Thumb, item.Cover.ImageID),
+			GameID:           item.ID,
+			Name:             item.Name,
+			GameType:         item.convertGameType(item.GameType),
+			Genres:           item.getGenreList(item.Genres),
+			Platforms:        item.getPlatformList(item.Platforms),
+			CoverURL:         c.ImageResolver.GetImageURL(Thumb, item.Cover.ImageID),
+			FirstReleaseYear: timeStamp.Year(),
 		})
 	}
 

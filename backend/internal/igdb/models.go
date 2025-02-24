@@ -9,12 +9,13 @@ type VGTSearchResults struct {
 }
 
 type VGTGame struct {
-	GameID    int            `json:"id"`
-	Name      string         `json:"name"`
-	GameType  GameType       `json:"gameType"`
-	Genres    []GenreType    `json:"genres"`
-	Platforms []PlatformType `json:"platforms"`
-	CoverURL  string         `json:"coverURL"`
+	GameID           int            `json:"id"`
+	Name             string         `json:"name"`
+	GameType         GameType       `json:"gameType"`
+	Genres           []GenreType    `json:"genres"`
+	Platforms        []PlatformType `json:"platforms"`
+	CoverURL         string         `json:"coverURL"`
+	FirstReleaseYear int            `json:"firstReleaseYear"`
 	// values populated from user data (owned/played)
 }
 
