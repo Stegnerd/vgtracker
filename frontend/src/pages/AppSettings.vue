@@ -8,6 +8,7 @@ import {
   UpdateConfig
 } from "../../wailsjs/go/controllers/ConfigController";
 import { controllers } from "../../wailsjs/go/models";
+import AppCard from "../components/AppCard.vue";
 
   const toast = useToast();
 
@@ -54,7 +55,7 @@ import { controllers } from "../../wailsjs/go/models";
 </script>
 
 <template>
-  <div class="h-full w-full flex flex-col card">
+  <AppCard>
     <form
       class="flex flex-col gap-4"
       @submit="onSubmit"
@@ -105,7 +106,7 @@ import { controllers } from "../../wailsjs/go/models";
         <p>{{ meta.valid }}</p>
       </div>
     </form>
-  </div>
+  </AppCard>
 </template>
 
 <style></style>

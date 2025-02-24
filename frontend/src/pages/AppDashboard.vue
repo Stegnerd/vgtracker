@@ -1,22 +1,12 @@
 <script setup lang="ts">
-  const t = false;
+import AppCard from '../components/AppCard.vue';
+
+  
 </script>
 <template>
-  Dashboard
-  <p v-if="t" />
-  <Skeleton
-    v-else
-    shape="rectangle"
-    width="90px"
-    height="90px"
-    animation="none"
-    class="thumbnail-skeleton"
-  />
+  <AppCard class="h-full w-full">
+    <p>tesing</p>
+  </AppCard>
 </template>
 <style>
-.thumbnail-skeleton {
-  width: 90px;
-  height: 90px;
-}
-
 </style>
