@@ -103,7 +103,6 @@ import AppCard from "../components/AppCard.vue";
           type="submit"
           data-test="submit-button"
         />
-        <p>{{ meta.valid }}</p>
       </div>
     </form>
   </AppCard>

@@ -14,6 +14,11 @@ import { ref } from "vue";
       route: "/dashboard"
     },
     {
+      label: "Library",
+      icon:"i-mdi-bookshelf",
+      route: "/library"
+    },
+    {
       label: "Settings",
       icon: "i-mdi-cog",
       route: "/settings"
