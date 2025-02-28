@@ -2,7 +2,6 @@ import AppLayout from "@/components/AppLayout.vue";
 import { createRouter, createWebHistory } from "vue-router";
 import AppBacklog from "./pages/AppBacklog.vue";
 import AppGameDetail from "./pages/AppGameDetail.vue";
-import AppLibrary from "./pages/AppLibrary.vue";
 
 const router = createRouter({
   linkActiveClass: "active-menu-item",
@@ -23,7 +22,7 @@ const router = createRouter({
         },
         {
           path: "/library",
-          component: AppLibrary,
+          component: () => import("@/pages/AppLibrary.vue"),
           children: [
             {
               path: "backlog",
