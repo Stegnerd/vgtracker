@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"vgtracker/backend/controllers"
 	"vgtracker/backend/internal/config"
-	"vgtracker/backend/internal/db"
 	"vgtracker/backend/internal/igdb"
 	"vgtracker/backend/internal/twitch"
 	"vgtracker/backend/internal/utils"
@@ -51,8 +50,11 @@ func NewApp() *App {
 
 	// db setup and migrate
 	// create file
-	dbClient := db.NewDBClient(appFS)
-	dbClient.NewDB()
+	// dbClient := db.NewDBClient(appFS)
+	// db, err := dbClient.NewDB()
+	// if err != nil {
+	// 	panic(errors.WithMessage(err, "could not create or load DB"))
+	// }
 
 	// open connection
 

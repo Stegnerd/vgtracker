@@ -6,6 +6,7 @@ require github.com/wailsapp/wails/v2 v2.10.0
 
 require (
 	github.com/golang-migrate/migrate/v4 v4.18.2
+	github.com/magefile/mage v1.15.0
 	github.com/onsi/ginkgo/v2 v2.22.2
 	github.com/onsi/gomega v1.36.2
 	github.com/pelletier/go-toml/v2 v2.2.3
