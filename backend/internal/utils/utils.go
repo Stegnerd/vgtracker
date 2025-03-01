@@ -1,6 +1,11 @@
 package utils
 
-import "os"
+import (
+	"errors"
+	"os"
+
+	"github.com/spf13/afero"
+)
 
 func GetConfigDirectory() (string, error) {
 	appConfigDir, err := os.UserHomeDir()
@@ -16,4 +21,17 @@ func GetConfigDirectory() (string, error) {
 	}
 
 	return appConfigDir + "/vgtracker", nil
+}
+
+func FileExists(appFS afero.Fs, nameWithPath string) bool {
+	_, err := appFS.Stat(nameWithPath)
+	if err != nil {
+		return false
+	}
+
+	if errors.Is(err, os.ErrNotExist) {
+		return false
+	}
+
+	return true
 }
