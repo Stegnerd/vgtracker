@@ -2,6 +2,10 @@ package db
 
 import (
 	"database/sql"
+	"embed"
+	"github.com/golang-migrate/migrate/v4"
+	"github.com/golang-migrate/migrate/v4/database/sqlite3"
+	"github.com/golang-migrate/migrate/v4/source/iofs"
 	"path/filepath"
 	"vgtracker/backend/internal/utils"
 
@@ -13,6 +17,9 @@ import (
 )
 
 const DbFileName = "vgtracker.db"
+
+//go:embed migrations/*.sql
+var schemaFs embed.FS
 
 type DBMethods interface {
 	NewDB() (*sql.DB, error)
@@ -32,7 +39,7 @@ func (d *DB) NewDB() (*sql.DB, error) {
 	if !utils.FileExists(d.AppFS, DbFileName) {
 		err := d.makeFileWithDirectory()
 		if err != nil {
-			return err
+			return nil, err
 		}
 	}
 
@@ -48,6 +55,11 @@ func (d *DB) NewDB() (*sql.DB, error) {
 		panic(errors.WithMessage(err, "could not create or load db"))
 	}
 
+	if err = runMigrations(db); err != nil {
+		return nil, err
+	}
+
+	return db, nil
 }
 
 func (d *DB) makeFileWithDirectory() error {
@@ -55,6 +67,30 @@ func (d *DB) makeFileWithDirectory() error {
 	_, err := d.AppFS.Create(DbFileName)
 	if err != nil {
 		return errors.WithMessage(err, "could not create app config file")
+	}
+
+	return nil
+}
+
+func runMigrations(db *sql.DB) error {
+	source, err := iofs.New(schemaFs, "migrations")
+	if err != nil {
+		panic(errors.WithMessage(err, "could not create database driver"))
+	}
+
+	instance, err := sqlite3.WithInstance(db, &sqlite3.Config{})
+	if err != nil {
+		panic(errors.WithMessage(err, "could not create database instance"))
+	}
+
+	m, err := migrate.NewWithInstance("iofs", source, "sqlite3", instance)
+	if err != nil {
+		panic(errors.WithMessage(err, "could not create database migration"))
+	}
+
+	err = m.Up()
+	if err != nil && err != migrate.ErrNoChange {
+		panic(errors.WithMessage(err, "could not run migration"))
 	}
 
 	return nil

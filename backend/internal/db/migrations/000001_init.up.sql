@@ -1,0 +1,4 @@
+CREATE TABLE game_details(
+  id INTEGER PRIMARY KEY,
+  igdb_id INT NOT NULL UNIQUE
+);
