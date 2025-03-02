@@ -42,7 +42,7 @@ const selected = (event: AutoCompleteOptionSelectEvent) => {
   const result = event.value as igdb.VGTGame
   setGameSelection(result)
   filterResults.value = [];
-  router.push({path:'/game-details'})
+  router.push({path:'/library/game-details'})
 }
 
 </script>

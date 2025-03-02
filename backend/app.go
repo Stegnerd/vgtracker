@@ -2,6 +2,7 @@ package backend
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 	"vgtracker/backend/controllers"
 	"vgtracker/backend/internal/config"
@@ -23,6 +24,7 @@ type App struct {
 	// configs
 	AppFS afero.Fs
 	Cfg   *config.Config
+	DB    *sql.DB
 	// controllers
 	ConfigController controllers.ConfigControllerMethods
 	IgdbController   controllers.IgdbControllerMethods
@@ -45,6 +47,18 @@ func NewApp() *App {
 	if err != nil {
 		panic(errors.WithMessage(err, "could not create or load config"))
 	}
+
+	// db setup and migrate
+	// create file
+	// dbClient := db.NewDBClient(appFS)
+	// db, err := dbClient.NewDB()
+	// if err != nil {
+	// 	panic(errors.WithMessage(err, "could not create or load DB"))
+	// }
+
+	// open connection
+
+	// migrate
 
 	// twitch setup
 	twitchInternal := twitch.NewTwitchInternal(TwitchAuthURL)

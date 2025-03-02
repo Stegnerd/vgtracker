@@ -1,7 +1,7 @@
 package config
 
 import (
-	"os"
+	"vgtracker/backend/internal/utils"
 
 	"github.com/pelletier/go-toml/v2"
 	"github.com/pkg/errors"
@@ -36,7 +36,7 @@ func NewConfigInternal(AppFS afero.Fs) ConfigInternalMethods {
 }
 
 func (c *ConfigInternal) NewConfig() (*Config, error) {
-	if c.fileExists(configFileName) {
+	if utils.FileExists(c.AppFS, configFileName) {
 		return c.LoadConfig()
 	} else {
 		return c.makeConfigWithDirectory()
@@ -103,17 +103,4 @@ func newDefaultConfig() *Config {
 			ClientSecret: "",
 		},
 	}
-}
-
-func (c *ConfigInternal) fileExists(nameWithPath string) bool {
-	_, err := c.AppFS.Stat(nameWithPath)
-	if err != nil {
-		return false
-	}
-
-	if errors.Is(err, os.ErrNotExist) {
-		return false
-	}
-
-	return true
 }
