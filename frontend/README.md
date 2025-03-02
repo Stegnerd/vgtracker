@@ -21,14 +21,3 @@ manual `h(...)` calls), you can enable Volar's Take Over mode by following these
 2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
 
 You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
-
-### Migrations
-
-  <!-- create_migration:
-    migrate create -ext=sql -dir=internal/database/migrations -seq init
-
-  migrate_up:
-    migrate -path=internal/database/migrations -database "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?sslmode=disable" -verbose up
-
-  migrate_down:
-    migrate -path=internal/database/migrations -database "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?sslmode=disable" -verbose down -->
