@@ -20,7 +20,7 @@ type TwitchInternalHandler struct {
 
 func NewTwitchInternal(BaseUrl string) TwitchInternalMethods {
 	return &TwitchInternalHandler{
-		BaseUrl: BaseUrl,
+		BaseUrl,
 	}
 }
 

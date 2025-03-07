@@ -45,6 +45,7 @@ func (c *Client) SearchMainGames(input string) (*VGTSearchResults, error) {
 		artworks.*,
 		category,
 		cover.*,
+		first_release_date,
 		game_type,
 		genres.*,
 		name,
@@ -90,7 +91,6 @@ func (c *Client) SearchMainGames(input string) (*VGTSearchResults, error) {
 	//fmt.Printf("data %+v", data)
 
 	for _, item := range data {
-		fmt.Printf("\n cover object: %+v \n", item.Cover)
 		timeStamp := time.Unix(item.FirstReleaseDate, 0)
 		results.Items = append(results.Items, VGTGame{
 			GameID:           item.ID,

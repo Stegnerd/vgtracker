@@ -2,10 +2,12 @@ package backend
 
 import (
 	"context"
-	"database/sql"
 	"fmt"
+
 	"vgtracker/backend/controllers"
 	"vgtracker/backend/internal/config"
+	"vgtracker/backend/internal/db"
+	"vgtracker/backend/internal/gamedetails"
 	"vgtracker/backend/internal/igdb"
 	"vgtracker/backend/internal/twitch"
 	"vgtracker/backend/internal/utils"
@@ -22,13 +24,15 @@ const (
 type App struct {
 	ctx context.Context
 	// configs
-	AppFS afero.Fs
-	Cfg   *config.Config
-	DB    *sql.DB
-	// controllers
+	// AppFS afero.Fs
+	// Cfg   *config.Config
+	// DB    *sql.DB
+	// setting controllers
 	ConfigController controllers.ConfigControllerMethods
 	IgdbController   controllers.IgdbControllerMethods
 	TwitchController controllers.TwitchControllerMethods
+	// ui controllers
+	GameDetailController controllers.GameDetailMethods
 }
 
 // NewApp creates a new App application struct
@@ -48,18 +52,6 @@ func NewApp() *App {
 		panic(errors.WithMessage(err, "could not create or load config"))
 	}
 
-	// db setup and migrate
-	// create file
-	// dbClient := db.NewDBClient(appFS)
-	// db, err := dbClient.NewDB()
-	// if err != nil {
-	// 	panic(errors.WithMessage(err, "could not create or load DB"))
-	// }
-
-	// open connection
-
-	// migrate
-
 	// twitch setup
 	twitchInternal := twitch.NewTwitchInternal(TwitchAuthURL)
 	twitchController := controllers.NewTwitchController(appConfig, twitchInternal)
@@ -76,14 +68,27 @@ func NewApp() *App {
 	igdbClient := igdb.NewClient(twitchToken, &appConfig.Twitch.ClientID)
 	igdbController := controllers.NewIgdbController(igdbClient)
 
+	// db setup and migrate
+	dbClient := db.NewDBClient(appFS)
+	db, err := dbClient.NewDB()
+	if err != nil {
+		panic(errors.WithMessage(err, "could not create or load DB"))
+	}
+
+	// ui endpoints
+	gameDetailInternal := gamedetails.NewGameDetailInternal(db)
+	gameDetailController := controllers.NewGameDetailController(gameDetailInternal)
+
 	return &App{
-		Cfg: appConfig,
+		// Cfg: appConfig,
 		//
 
-		//
+		// config endpoints
 		ConfigController: configController,
 		IgdbController:   igdbController,
 		TwitchController: twitchController,
+		// ui endpoints
+		GameDetailController: gameDetailController,
 	}
 }
 

@@ -30,6 +30,8 @@ func main() {
 			app.ConfigController,
 			app.TwitchController,
 			app.IgdbController,
+			// ui controllers
+			app.GameDetailController,
 		},
 		Debug: options.Debug{
 			OpenInspectorOnStartup: true,
