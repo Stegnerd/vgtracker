@@ -139,8 +139,10 @@ export namespace igdb {
 	    gameType: string;
 	    genres: string[];
 	    platforms: string[];
+	    thumbnailURL: string;
 	    coverURL: string;
 	    firstReleaseYear: number;
+	    summary: string;
 	
 	    static createFrom(source: any = {}) {
 	        return new VGTGame(source);
@@ -153,8 +155,10 @@ export namespace igdb {
 	        this.gameType = source["gameType"];
 	        this.genres = source["genres"];
 	        this.platforms = source["platforms"];
+	        this.thumbnailURL = source["thumbnailURL"];
 	        this.coverURL = source["coverURL"];
 	        this.firstReleaseYear = source["firstReleaseYear"];
+	        this.summary = source["summary"];
 	    }
 	}
 	export class VGTSearchResults {

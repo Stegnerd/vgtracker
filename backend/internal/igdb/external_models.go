@@ -13,6 +13,7 @@ type IGDBSearchResultGame struct {
 	Platforms        []IGDBPlatform `json:"platforms"`
 	Cover            IGDBCover      `json:"cover"`
 	FirstReleaseDate int64          `json:"first_release_date"`
+	Summary          string         `json:"summary"`
 }
 
 func (IGDBSearchResultGame) convertGameType(incomingGameType int) GameType {

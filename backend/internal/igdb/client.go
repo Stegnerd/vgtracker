@@ -50,7 +50,6 @@ func (c *Client) SearchMainGames(input string) (*VGTSearchResults, error) {
 		genres.*,
 		name,
 		platforms.*,
-		storyline,
 		summary;
 		sort name asc;
 		where
@@ -98,8 +97,10 @@ func (c *Client) SearchMainGames(input string) (*VGTSearchResults, error) {
 			GameType:         item.convertGameType(item.GameType),
 			Genres:           item.getGenreList(item.Genres),
 			Platforms:        item.getPlatformList(item.Platforms),
-			CoverURL:         c.ImageResolver.GetImageURL(Thumb, item.Cover.ImageID),
+			ThumbnailURL:     c.ImageResolver.GetImageURL(Thumb, item.Cover.ImageID),
+			CoverURL:         c.ImageResolver.GetImageURL(CoverBig, item.Cover.ImageID),
 			FirstReleaseYear: timeStamp.Year(),
+			Summary:          item.Summary,
 		})
 	}
 

@@ -4,6 +4,12 @@
     <meta charset="UTF-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>vgtracker</title>
+    <!-- Wails runtime: start -->
+     <!-- added because https://github.com/wailsapp/wails/issues/2262#issuecomment-1575613527,
+       wails isnt reloading runtime if not on root url -->
+    <script src="/wails/ipc.js"></script>
+    <script src="/wails/runtime.js"></script>
+    <!-- Wails runtime: until here -->
 </head>
 <body class="m-0 font-mono">
 <div id="app"></div>
