@@ -67,8 +67,8 @@ const selected = (event: AutoCompleteOptionSelectEvent) => {
           <template #option="slotProps">
             <div class="flex">
               <img
-                v-if="slotProps.option.coverURL !== ''"
-                :src="slotProps.option.coverURL"
+                v-if="slotProps.option.thumbnailURL !== ''"
+                :src="slotProps.option.thumbnailURL"
               >
               <Skeleton
                 v-else

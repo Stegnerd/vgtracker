@@ -45,11 +45,11 @@ func (c *Client) SearchMainGames(input string) (*VGTSearchResults, error) {
 		artworks.*,
 		category,
 		cover.*,
+		first_release_date,
 		game_type,
 		genres.*,
 		name,
 		platforms.*,
-		storyline,
 		summary;
 		sort name asc;
 		where
@@ -90,7 +90,6 @@ func (c *Client) SearchMainGames(input string) (*VGTSearchResults, error) {
 	//fmt.Printf("data %+v", data)
 
 	for _, item := range data {
-		fmt.Printf("\n cover object: %+v \n", item.Cover)
 		timeStamp := time.Unix(item.FirstReleaseDate, 0)
 		results.Items = append(results.Items, VGTGame{
 			GameID:           item.ID,
@@ -98,8 +97,10 @@ func (c *Client) SearchMainGames(input string) (*VGTSearchResults, error) {
 			GameType:         item.convertGameType(item.GameType),
 			Genres:           item.getGenreList(item.Genres),
 			Platforms:        item.getPlatformList(item.Platforms),
-			CoverURL:         c.ImageResolver.GetImageURL(Thumb, item.Cover.ImageID),
+			ThumbnailURL:     c.ImageResolver.GetImageURL(Thumb, item.Cover.ImageID),
+			CoverURL:         c.ImageResolver.GetImageURL(CoverBig, item.Cover.ImageID),
 			FirstReleaseYear: timeStamp.Year(),
+			Summary:          item.Summary,
 		})
 	}
 
