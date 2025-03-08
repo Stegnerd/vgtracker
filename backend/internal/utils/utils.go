@@ -35,3 +35,11 @@ func FileExists(appFS afero.Fs, nameWithPath string) bool {
 
 	return true
 }
+
+func Patch[T any](incoming *T, defaultValue T) *T {
+	if incoming == nil {
+		return &defaultValue
+	}
+
+	return incoming
+}

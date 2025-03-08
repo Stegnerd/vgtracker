@@ -3,12 +3,14 @@ package gamedetails
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 	"time"
+	"vgtracker/backend/internal/utils"
 )
 
 type GameDetailInternalMethods interface {
 	GetGameDetailRecord(id int) (*GetGameDetailOutput, error)
-	UpsertGameDetailRecord()
+	UpsertGameDetailRecord(input UpsertGameDetailInput) (*GetGameDetailOutput, error)
 }
 
 type GameDetailInternalHandler struct {
@@ -70,11 +72,87 @@ func (gd *GameDetailInternalHandler) GetGameDetailRecord(id int) (*GetGameDetail
 	return output, nil
 }
 
-type UpserGameDetailInput struct {
-	ID string
+type UpsertGameDetailInput struct {
+	ID           *int
+	IGDBID       *int
+	IsOwned      *bool `json:"isOwned"`
+	IsBeaten     *bool `json:"isBeaten"`
+	IsWishlisted *bool `json:"isWishlisted"`
 }
 
 // UpsertGameDetailRecord implements GameDetailInternalMethods.
-func (gd *GameDetailInternalHandler) UpsertGameDetailRecord() {
-	panic("unimplemented")
+func (gd *GameDetailInternalHandler) UpsertGameDetailRecord(input UpsertGameDetailInput) (*GetGameDetailOutput, error) {
+
+	if input.IGDBID == nil {
+		return nil, errors.New("must provide IGDBID in order to save details.")
+	}
+
+	if input.ID == nil {
+		return gd.create(input)
+	}
+
+	return gd.update(input)
+}
+
+func (gd *GameDetailInternalHandler) create(input UpsertGameDetailInput) (*GetGameDetailOutput, error) {
+	var query string
+	var args []interface{}
+	args = append(args, input.IGDBID)
+
+	query = `INSERT INTO game_detail(igdb_id, created_at, updated_at, is_owned, is_beaten, is_wishlisted)
+					 VALUES(?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, ?, ?)`
+
+	input.IsOwned = utils.Patch(input.IsOwned, false)
+	input.IsBeaten = utils.Patch(input.IsBeaten, false)
+	input.IsWishlisted = utils.Patch(input.IsWishlisted, false)
+
+	args = append(args, *input.IsOwned, *input.IsBeaten, *input.IsWishlisted)
+
+	insertResult, err := gd.DB.Exec(query, args...)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert record for game: '%d' due to %w", *input.IGDBID, err)
+	}
+
+	newID, err := insertResult.LastInsertId()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get new id after insert: %w", err)
+	}
+
+	return gd.GetGameDetailRecord(int(newID))
+}
+
+func (gd *GameDetailInternalHandler) update(input UpsertGameDetailInput) (*GetGameDetailOutput, error) {
+	var query string
+	var args []interface{}
+
+	currentModel, err := gd.GetGameDetailRecord(*input.ID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read current record for id: '%d' to update", *input.ID)
+	}
+
+	query = `UPDATE game_detail
+					 SET updated_at = CURRENT_TIMESTAMP,
+					   is_owned = ?,
+						 is_beaten = ?,
+						 is_wishlisted = ?
+					 WHERE id = ? and igdb_id = ?
+					 `
+
+	input.IsOwned = utils.Patch(input.IsOwned, currentModel.IsOwned)
+	input.IsBeaten = utils.Patch(input.IsBeaten, currentModel.IsBeaten)
+	input.IsWishlisted = utils.Patch(input.IsWishlisted, currentModel.IsWishlisted)
+
+	args = append(args, *input.IsOwned, *input.IsBeaten, *input.IsWishlisted, *input.ID, *input.IGDBID)
+
+	insertResult, err := gd.DB.Exec(query, args...)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert record for game: '%d' due to %w", *input.IGDBID, err)
+	}
+
+	newID, err := insertResult.LastInsertId()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get new id after insert: %w", err)
+	}
+
+	return gd.GetGameDetailRecord(int(newID))
 }
