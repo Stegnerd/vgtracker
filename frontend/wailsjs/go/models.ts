@@ -16,6 +16,10 @@ export namespace config {
 	}
 	export class Config {
 	    twitch: Twitch;
+	    preset: models.PresetConfig;
+	    primaryColor: models.PaletteColor;
+	    surfaceColor: models.SufaceColor;
+	    IsDarkTheme: boolean;
 	
 	    static createFrom(source: any = {}) {
 	        return new Config(source);
@@ -24,6 +28,10 @@ export namespace config {
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.twitch = this.convertValues(source["twitch"], Twitch);
+	        this.preset = source["preset"];
+	        this.primaryColor = source["primaryColor"];
+	        this.surfaceColor = source["surfaceColor"];
+	        this.IsDarkTheme = source["IsDarkTheme"];
 	    }
 	
 		convertValues(a: any, classs: any, asMap: boolean = false): any {
@@ -50,7 +58,11 @@ export namespace config {
 export namespace controllers {
 	
 	export class UpdateConfigInput {
-	    twitch: config.Twitch;
+	    twitch?: config.Twitch;
+	    preset?: models.PresetConfig;
+	    primaryColor?: models.PaletteColor;
+	    surfaceColor?: models.SufaceColor;
+	    IsDarkTheme?: boolean;
 	
 	    static createFrom(source: any = {}) {
 	        return new UpdateConfigInput(source);
@@ -59,6 +71,10 @@ export namespace controllers {
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.twitch = this.convertValues(source["twitch"], config.Twitch);
+	        this.preset = source["preset"];
+	        this.primaryColor = source["primaryColor"];
+	        this.surfaceColor = source["surfaceColor"];
+	        this.IsDarkTheme = source["IsDarkTheme"];
 	    }
 	
 		convertValues(a: any, classs: any, asMap: boolean = false): any {
@@ -190,6 +206,45 @@ export namespace igdb {
 		    }
 		    return a;
 		}
+	}
+
+}
+
+export namespace models {
+	
+	export enum PresetConfig {
+	    Aura = "Aura",
+	    Lara = "Lara",
+	    Nora = "Nora",
+	}
+	export enum PaletteColor {
+	    noir = "noir",
+	    emerald = "emerald",
+	    green = "green",
+	    lime = "lime",
+	    orange = "orange",
+	    amber = "amber",
+	    yellow = "yellow",
+	    teal = "teal",
+	    cyan = "cyan",
+	    sky = "sky",
+	    blue = "blue",
+	    indigo = "indigo",
+	    violet = "violet",
+	    purple = "purple",
+	    fuschia = "fuchsia",
+	    pink = "pink",
+	    rose = "rose",
+	}
+	export enum SufaceColor {
+	    slate = "slate",
+	    gray = "gray",
+	    zinc = "zinc",
+	    neutral = "neutral",
+	    stone = "stone",
+	    soho = "soho",
+	    viva = "viva",
+	    ocean = "ocean",
 	}
 
 }

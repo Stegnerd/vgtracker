@@ -102,6 +102,7 @@ func (gd *GameDetailInternalHandler) create(input UpsertGameDetailInput) (*GetGa
 	query = `INSERT INTO game_detail(igdb_id, created_at, updated_at, is_owned, is_beaten, is_wishlisted)
 					 VALUES(?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?, ?, ?)`
 
+	// TODO: BRING PATCHING UP TO THE CONTROLLER LEVELS
 	input.IsOwned = utils.Patch(input.IsOwned, false)
 	input.IsBeaten = utils.Patch(input.IsBeaten, false)
 	input.IsWishlisted = utils.Patch(input.IsWishlisted, false)
