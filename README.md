@@ -42,6 +42,8 @@ To build a redistributable, production mode package, use `wails build`. You can 
 and I don't support windows os. <br> I also am not signing builds, not going to pay for that but thats a talk for a different time!
 You can get around that with [here](https://support.apple.com/guide/mac-help/open-a-mac-app-from-an-unknown-developer-mh40616/mac).
 
+- [Bumping versions](https://github.com/mathieudutour/github-tag-action?tab=readme-ov-file#bumping)
+
 ### Migrations
 
 - install [Mage](https://magefile.org/) (do not need to do mage init here)
