@@ -12,16 +12,20 @@ import (
 const configFileName = "config.toml"
 
 type Config struct {
-	Twitch       Twitch              `json:"twitch"`
-	Preset       models.PresetConfig `json:"preset"`
-	PrimaryColor models.PaletteColor `json:"primaryColor"`
-	SurfaceColor models.SufaceColor  `json:"surfaceColor"`
-	IsDarkTheme  bool                `jons:"isDarkTheme"`
+	Twitch Twitch        `json:"twitch"`
+	Theme  ThemeSettings `json:"theme"`
 }
 
 type Twitch struct {
 	ClientID     string `json:"clientID"`
 	ClientSecret string `json:"clientSecret"`
+}
+
+type ThemeSettings struct {
+	Preset       models.PresetConfig `json:"preset"`
+	PrimaryColor models.PaletteColor `json:"primaryColor"`
+	SurfaceColor models.SufaceColor  `json:"surfaceColor"`
+	IsDarkTheme  bool                `jons:"isDarkTheme"`
 }
 
 type ConfigInternalMethods interface {
@@ -107,9 +111,11 @@ func newDefaultConfig() *Config {
 			ClientID:     "",
 			ClientSecret: "",
 		},
-		Preset:       models.Lara,
-		PrimaryColor: models.Emerald,
-		SurfaceColor: models.Zinc,
-		IsDarkTheme:  true,
+		Theme: ThemeSettings{
+			Preset:       models.Lara,
+			PrimaryColor: models.Emerald,
+			SurfaceColor: models.Zinc,
+			IsDarkTheme:  true,
+		},
 	}
 }

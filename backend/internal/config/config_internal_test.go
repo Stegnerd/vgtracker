@@ -2,6 +2,7 @@ package config_test
 
 import (
 	"vgtracker/backend/internal/config"
+	"vgtracker/backend/models"
 
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
@@ -52,7 +53,15 @@ var _ = Describe("ConfigInternal", func() {
 			It("creates new config and returns", func() {
 				conf, err := configInternal.NewConfig()
 				Expect(err).ToNot(HaveOccurred())
-				Expect(conf).To(Equal(&config.Config{}))
+				Expect(conf).To(Equal(&config.Config{
+					Twitch: config.Twitch{},
+					Theme: config.ThemeSettings{
+						Preset:       models.Lara,
+						PrimaryColor: models.Emerald,
+						SurfaceColor: models.Zinc,
+						IsDarkTheme:  true,
+					},
+				}))
 			})
 		})
 	})

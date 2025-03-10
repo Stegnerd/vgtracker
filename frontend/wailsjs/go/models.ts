@@ -1,5 +1,23 @@
 export namespace config {
 	
+	export class ThemeSettings {
+	    preset: models.PresetConfig;
+	    primaryColor: models.PaletteColor;
+	    surfaceColor: models.SufaceColor;
+	    IsDarkTheme: boolean;
+	
+	    static createFrom(source: any = {}) {
+	        return new ThemeSettings(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.preset = source["preset"];
+	        this.primaryColor = source["primaryColor"];
+	        this.surfaceColor = source["surfaceColor"];
+	        this.IsDarkTheme = source["IsDarkTheme"];
+	    }
+	}
 	export class Twitch {
 	    clientID: string;
 	    clientSecret: string;
@@ -16,10 +34,7 @@ export namespace config {
 	}
 	export class Config {
 	    twitch: Twitch;
-	    preset: models.PresetConfig;
-	    primaryColor: models.PaletteColor;
-	    surfaceColor: models.SufaceColor;
-	    IsDarkTheme: boolean;
+	    theme: ThemeSettings;
 	
 	    static createFrom(source: any = {}) {
 	        return new Config(source);
@@ -28,10 +43,7 @@ export namespace config {
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.twitch = this.convertValues(source["twitch"], Twitch);
-	        this.preset = source["preset"];
-	        this.primaryColor = source["primaryColor"];
-	        this.surfaceColor = source["surfaceColor"];
-	        this.IsDarkTheme = source["IsDarkTheme"];
+	        this.theme = this.convertValues(source["theme"], ThemeSettings);
 	    }
 	
 		convertValues(a: any, classs: any, asMap: boolean = false): any {
@@ -52,6 +64,7 @@ export namespace config {
 		    return a;
 		}
 	}
+	
 
 }
 

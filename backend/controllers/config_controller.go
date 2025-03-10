@@ -52,10 +52,10 @@ func (c *ConfigController) UpdateConfig(input UpdateConfigInput) (*config.Config
 	}
 
 	appConfig.Twitch = *utils.Patch(input.Twitch, appConfig.Twitch)
-	appConfig.Preset = *utils.Patch(input.Preset, appConfig.Preset)
-	appConfig.PrimaryColor = *utils.Patch(input.PrimaryColor, appConfig.PrimaryColor)
-	appConfig.SurfaceColor = *utils.Patch(input.SurfaceColor, appConfig.SurfaceColor)
-	appConfig.IsDarkTheme = *utils.Patch(input.IsDarkTheme, appConfig.IsDarkTheme)
+	appConfig.Theme.Preset = *utils.Patch(input.Preset, appConfig.Theme.Preset)
+	appConfig.Theme.PrimaryColor = *utils.Patch(input.PrimaryColor, appConfig.Theme.PrimaryColor)
+	appConfig.Theme.SurfaceColor = *utils.Patch(input.SurfaceColor, appConfig.Theme.SurfaceColor)
+	appConfig.Theme.IsDarkTheme = *utils.Patch(input.IsDarkTheme, appConfig.Theme.IsDarkTheme)
 
 	byteArr, err := toml.Marshal(appConfig)
 	if err != nil {
