@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
+import { GetConfig } from '../wailsjs/go/controllers/ConfigController';
+import { useLayout } from './composables/layout';
+
   // This starter template is using Vue 3 <script setup> SFCs
   // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
   //import Greet from "./components/Greet.vue";
@@ -6,6 +10,15 @@
   //   const element = document.querySelector("html");
   //   element.classList.toggle("app-dark");
   // }
+  const {setDefaultValues} = useLayout()
+
+  onMounted(async () => {
+    GetConfig().then((result) => {
+      console.warn('here is the config top level', result)
+      setDefaultValues(result.theme.primaryColor, result.theme.surfaceColor, result.theme.preset, result.theme.IsDarkTheme)
+    })
+  })
+
 </script>
 
 <template>
