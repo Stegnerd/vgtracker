@@ -63,12 +63,15 @@ You can get around that with [here](https://support.apple.com/guide/mac-help/ope
 ### todos
 
 - [ ] double check codegen works between time.Time and frontend
+- [ ] look into making the theme composable more stream lined/pinia?
+- [ ] more unit test coverage
 
 ### v1
 
 - [ ] able to save backlog stats
 - [ ] analytics dashboard for stats
 - [ ] wishlist/ list making
+- [ ] e2e with playwright
 
 ### cool ideas
 
@@ -80,3 +83,4 @@ You can get around that with [here](https://support.apple.com/guide/mac-help/ope
 ## Sources
 
 - [Go Embed for Migrations](https://oscarforner.com/blog/2023-10-10-go-embed-for-migrations/)
+- [Generating enums for wails](https://wails.io/docs/guides/application-development#dealing-with-context-when-binding-multiple-structs)
