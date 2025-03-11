@@ -1,7 +1,5 @@
 <script setup lang="ts">
-
-import { useLayout } from "../composables/layout";
-
+  import { useLayout } from "../composables/layout";
   const { primaryColors, surfaces,preset, presetOptions,layoutConfig, onPresetChange, updateColors, isDarkTheme } = useLayout();
 
 
@@ -62,7 +60,7 @@ import { useLayout } from "../composables/layout";
           v-model="preset"
           :options="presetOptions"
           :allow-empty="false"
-          @change="onPresetChange"
+          @change="onPresetChange()"
         />
       </div>
     </div>

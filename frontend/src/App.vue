@@ -14,7 +14,7 @@ import { useLayout } from './composables/layout';
 
   onMounted(async () => {
     GetConfig().then((result) => {
-      console.warn('here is the config top level', result)
+      // loading in the persisted theme settings for the composable
       setDefaultValues(result.theme.primaryColor, result.theme.surfaceColor, result.theme.preset, result.theme.IsDarkTheme)
     })
   })

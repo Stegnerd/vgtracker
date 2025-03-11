@@ -3,7 +3,8 @@ import Aura from "@primeuix/themes/aura";
 import Lara from "@primeuix/themes/lara";
 import Nora from "@primeuix/themes/nora";
 import { computed, reactive, readonly, ref } from "vue";
-import { models } from "../../wailsjs/go/models";
+import { UpdateConfig } from "../../wailsjs/go/controllers/ConfigController";
+import { controllers, models } from "../../wailsjs/go/models";
 import { PaletteList, SurfaceList } from "../models/theme";
 
 const layoutConfig = reactive({
@@ -38,7 +39,6 @@ const surfaces = ref(SurfaceList);
 export function useLayout() {
   const setPrimary = (value: string) => {
     layoutConfig.primary = value;
-    console.warn("layoutconfig.primary", layoutConfig.primary);
   };
 
   const setSurface = (value: string) => {
@@ -47,7 +47,6 @@ export function useLayout() {
 
   const setPreset = (value: string) => {
     layoutConfig.preset = value;
-    console.warn("layoutconfig.preset", layoutConfig.preset);
   };
 
   const setDefaultValues = (
@@ -62,14 +61,14 @@ export function useLayout() {
     layoutConfig.darkTheme = isDark;
     preset.value = layoutConfig.preset;
 
-    updateColors("primary", layoutConfig.primary);
-    updateColors("surface", layoutConfig.surface);
+    updateColors("primary", layoutConfig.primary, false);
+    updateColors("surface", layoutConfig.surface, false);
 
     if (!isDark) {
-      toggleDarkMode();
+      toggleDarkMode(false);
     }
 
-    onPresetChange();
+    onPresetChange(false);
   };
   //   const setActiveMenuItem = (item) => {
   //     layoutState.activeMenuItem = item.value || item;
@@ -117,11 +116,15 @@ export function useLayout() {
   //     () => layoutState.overlayMenuActive || layoutState.staticMenuMobileActive
   //   );
 
-  const toggleDarkMode = () => {
+  const toggleDarkMode = (save: boolean = true) => {
     const element = document.querySelector("html");
     element!.classList.toggle("app-dark");
     //isDarkMode.value = !isDarkMode.value;
     layoutConfig.darkTheme = !layoutConfig.darkTheme;
+
+    if (save) {
+      updateConfig();
+    }
   };
 
   const isDarkTheme = computed(() => layoutConfig.darkTheme);
@@ -131,18 +134,18 @@ export function useLayout() {
   //   const getSurface = computed(() => layoutConfig.surface);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  function updateColors(type: string, color: any) {
+  function updateColors(type: string, color: any, save: boolean = true) {
     if (type === "primary") {
       setPrimary(color);
     } else if (type === "surface") {
       setSurface(color);
     }
 
-    applyTheme(type, color);
+    applyTheme(type, color, save);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  function applyTheme(type: string, color: any) {
+  function applyTheme(type: string, color: any, save: boolean = true) {
     if (type === "primary") {
       updatePreset(getPresetExt());
     } else if (type === "surface") {
@@ -151,10 +154,13 @@ export function useLayout() {
       )?.palette;
       updateSurfacePalette(surfacePalette);
     }
+
+    if (save) {
+      updateConfig();
+    }
   }
 
-  function onPresetChange() {
-    console.warn("onPresetChange defualt value", preset.value);
+  function onPresetChange(save: boolean = true) {
     setPreset(preset.value);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -168,6 +174,10 @@ export function useLayout() {
       .preset(getPresetExt())
       .surfacePalette(surfacePalette)
       .use({ useDefaultOptions: true });
+
+    if (save) {
+      updateConfig();
+    }
   }
 
   function getPresetExt() {
@@ -262,6 +272,17 @@ export function useLayout() {
         }
       };
     }
+  }
+
+  function updateConfig() {
+    const input = {
+      IsDarkTheme: layoutConfig.darkTheme,
+      primaryColor: layoutConfig.primary,
+      surfaceColor: layoutConfig.surface,
+      preset: layoutConfig.preset
+    } as controllers.UpdateConfigInput;
+
+    UpdateConfig(input).then(() => {});
   }
 
   return {
