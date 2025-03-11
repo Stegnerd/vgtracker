@@ -90,7 +90,7 @@ var _ = Describe("ConfigController", func() {
 
 		It("should succeed and return updated config", func() {
 			conf, err := configController.UpdateConfig(controllers.UpdateConfigInput{
-				Twitch: config.Twitch{
+				Twitch: &config.Twitch{
 					ClientID:     "updated-clientID",
 					ClientSecret: "updated-clientSecret",
 				},

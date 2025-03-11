@@ -29,10 +29,6 @@ import AppCard from "../components/AppCard.vue";
       twitchClientID.value = result.twitch.clientID;
       twitchClientSecret.value = result.twitch.clientSecret;
     });
-
-    // Search("Pokemon Red").then((out) => {
-    //   console.warn('search output', out)
-    // })
   });
 
   const onSubmit = handleSubmit(() => {

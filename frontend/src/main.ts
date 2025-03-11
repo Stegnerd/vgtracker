@@ -1,4 +1,4 @@
-import Lara from "@primevue/themes/lara";
+import Lara from "@primeuix/themes/lara";
 import { ToastService } from "primevue";
 import PrimeVue from "primevue/config";
 import DialogService from "primevue/dialogservice";

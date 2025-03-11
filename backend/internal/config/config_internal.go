@@ -2,6 +2,7 @@ package config
 
 import (
 	"vgtracker/backend/internal/utils"
+	"vgtracker/backend/models"
 
 	"github.com/pelletier/go-toml/v2"
 	"github.com/pkg/errors"
@@ -11,12 +12,20 @@ import (
 const configFileName = "config.toml"
 
 type Config struct {
-	Twitch Twitch `json:"twitch"`
+	Twitch Twitch        `json:"twitch"`
+	Theme  ThemeSettings `json:"theme"`
 }
 
 type Twitch struct {
 	ClientID     string `json:"clientID"`
 	ClientSecret string `json:"clientSecret"`
+}
+
+type ThemeSettings struct {
+	Preset       models.PresetConfig `json:"preset"`
+	PrimaryColor models.PaletteColor `json:"primaryColor"`
+	SurfaceColor models.SufaceColor  `json:"surfaceColor"`
+	IsDarkTheme  bool                `jons:"isDarkTheme"`
 }
 
 type ConfigInternalMethods interface {
@@ -101,6 +110,12 @@ func newDefaultConfig() *Config {
 		Twitch: Twitch{
 			ClientID:     "",
 			ClientSecret: "",
+		},
+		Theme: ThemeSettings{
+			Preset:       models.Lara,
+			PrimaryColor: models.Emerald,
+			SurfaceColor: models.Zinc,
+			IsDarkTheme:  true,
 		},
 	}
 }

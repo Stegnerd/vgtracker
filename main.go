@@ -3,6 +3,7 @@ package main
 import (
 	"embed"
 	"vgtracker/backend"
+	"vgtracker/backend/models"
 
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
@@ -32,6 +33,11 @@ func main() {
 			app.IgdbController,
 			// ui controllers
 			app.GameDetailController,
+		},
+		EnumBind: []interface{}{
+			models.AllPresetConfigs,
+			models.AllPaletteColors,
+			models.AllSurfaceColors,
 		},
 		Debug: options.Debug{
 			OpenInspectorOnStartup: true,
