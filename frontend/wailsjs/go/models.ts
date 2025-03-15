@@ -225,6 +225,16 @@ export namespace igdb {
 
 export namespace models {
 	
+	export enum SufaceColor {
+	    slate = "slate",
+	    gray = "gray",
+	    zinc = "zinc",
+	    neutral = "neutral",
+	    stone = "stone",
+	    soho = "soho",
+	    viva = "viva",
+	    ocean = "ocean",
+	}
 	export enum PresetConfig {
 	    Aura = "Aura",
 	    Lara = "Lara",
@@ -248,16 +258,6 @@ export namespace models {
 	    fuschia = "fuchsia",
 	    pink = "pink",
 	    rose = "rose",
-	}
-	export enum SufaceColor {
-	    slate = "slate",
-	    gray = "gray",
-	    zinc = "zinc",
-	    neutral = "neutral",
-	    stone = "stone",
-	    soho = "soho",
-	    viva = "viva",
-	    ocean = "ocean",
 	}
 
 }

@@ -119,10 +119,10 @@ export function useLayout() {
   const toggleDarkMode = (save: boolean = true) => {
     const element = document.querySelector("html");
     element!.classList.toggle("app-dark");
-    //isDarkMode.value = !isDarkMode.value;
-    layoutConfig.darkTheme = !layoutConfig.darkTheme;
 
     if (save) {
+      // toggle only when we are saving to avoid inverting state when loading.
+      layoutConfig.darkTheme = !layoutConfig.darkTheme;
       updateConfig();
     }
   };
@@ -275,6 +275,7 @@ export function useLayout() {
   }
 
   function updateConfig() {
+    console.warn("updateConfig", layoutConfig);
     const input = {
       IsDarkTheme: layoutConfig.darkTheme,
       primaryColor: layoutConfig.primary,
