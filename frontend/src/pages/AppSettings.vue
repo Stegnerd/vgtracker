@@ -1,41 +1,36 @@
 <script setup lang="ts">
-  import { useToast } from "primevue";
-import { useForm } from "vee-validate";
-import { onMounted } from "vue";
-import * as yup from "yup";
-import {
-  GetConfig,
-  UpdateConfig
-} from "../../wailsjs/go/controllers/ConfigController";
+import { Form, FormSubmitEvent, } from "@primevue/forms";
+import { zodResolver } from "@primevue/forms/resolvers/zod";
+import { useToast } from "primevue";
+import { onMounted, reactive, ref } from "vue";
+import { z } from "zod";
+import { GetConfig, UpdateConfig } from "../../wailsjs/go/controllers/ConfigController";
 import { controllers } from "../../wailsjs/go/models";
 import AppCard from "../components/AppCard.vue";
 
-  const toast = useToast();
+const toast = useToast();
 
-  const schema = yup.object({
-    twitchClientID: yup.string().required().min(1).label("Client ID"),
-    twitchClientSecret: yup.string().required().min(1).label("Client Secret")
-  });
+const formReady = ref(false);
 
-  const { defineField, handleSubmit, errors, meta } = useForm({
-    validationSchema: schema
-  });
+type FormData = {
+  twitchClientID: string;
+  twitchClientSecret: string;
+}
 
-  const [twitchClientID] = defineField("twitchClientID");
-  const [twitchClientSecret] = defineField("twitchClientSecret");
+const initialValues = reactive<FormData>({
+  twitchClientID: '',
+  twitchClientSecret: ''
+});
 
-  onMounted(async () => {
-    GetConfig().then((result) => {
-      twitchClientID.value = result.twitch.clientID;
-      twitchClientSecret.value = result.twitch.clientSecret;
-    });
-  });
 
-  const onSubmit = handleSubmit(() => {
+const onFormSubmit = (e: FormSubmitEvent) => {
+  const values = e.values as FormData
+  console.warn('form casted', values)
+  if (e.valid) {
     const input = {
       twitch: {
-        clientID: twitchClientID.value,
-        clientSecret: twitchClientSecret.value
+        clientID: values.twitchClientID,
+        clientSecret: values.twitchClientSecret
       }
     } as controllers.UpdateConfigInput;
 
@@ -47,60 +42,90 @@ import AppCard from "../components/AppCard.vue";
         life: 2000
       });
     });
+  }
+}
+
+
+onMounted(async () => {
+  GetConfig().then((result) => {
+    console.warn('inbound results', result)
+    initialValues.twitchClientID = result.twitch.clientID;
+    initialValues.twitchClientSecret = result.twitch.clientSecret
+
+    formReady.value = true;
   });
+
+});
+
+const resolver = zodResolver(
+    z.object({
+      twitchClientID: z.string().min(1, {message: "Twitch Client ID is required."}),
+      twitchClientSecret: z.string().min(1, {message: "Twitch Client Secret is required."})
+    })
+)
 </script>
 
 <template>
   <AppCard>
-    <form
+    <Form
+      v-if="formReady"
+      :resolver
+      :initial-values
+      :validate-on-mount="true"
+      :validate-on-value-update="true"
       class="flex flex-col gap-4"
-      @submit="onSubmit"
+      @submit="onFormSubmit"
     >
-      <FloatLabel variant="on">
-        <InputText
-          id="twitchClientID"
-          v-model="twitchClientID"
-          data-test="twitchClientID"
-          class="w-lg"
-        />
-        <label for="twitchClientID">Twitch Client ID</label>
+      <FormField
+        v-slot="$field"
+        name="twitchClientID"
+      >
+        <FloatLabel variant="on">
+          <InputText
+            type="text"
+            class="w-lg"
+            data-test="twitchClientID"
+          />
+          <label for="twitchClientID">Twitch Client ID</label>
+        </FloatLabel>
         <Message
-          v-if="errors.twitchClientID"
+          v-if="$field?.invalid"
           severity="error"
           size="small"
-          variant="simple"
         >
-          {{ errors.twitchClientID }}
+          {{ $field.error?.message }}
         </Message>
-      </FloatLabel>
+      </FormField>
+      <FormField
+        v-slot="$field"
+        name="twitchClientSecret"
+      >
+        <FloatLabel variant="on">
+          <InputText
+            type="text"
+            class="w-lg"
+            data-test="twitchClientSecret"
+          />
 
-      <FloatLabel variant="on">
-        <InputText
-          id="twitchClientSecret"
-          v-model="twitchClientSecret"
-          data-test="twitchClientSecret"
-          class="w-lg"
-        />
+          <label for="twitchClientID">Twitch Client Secret</label>
+        </FloatLabel>
         <Message
-          v-if="errors.twitchClientSecret"
+          v-if="$field?.invalid"
           severity="error"
           size="small"
-          variant="simple"
         >
-          {{ errors.twitchClientSecret }}
+          {{ $field.error?.message }}
         </Message>
-        <label for="twitchClientSecret">Twitch Client Secret</label>
-      </FloatLabel>
-
+      </FormField>
       <div class="pt-2.5">
         <Button
-          :disabled="!meta.valid"
-          label="Save"
           type="submit"
+          severity="secondary"
+          label="Submit"
           data-test="submit-button"
         />
       </div>
-    </form>
+    </Form>
   </AppCard>
 </template>
 

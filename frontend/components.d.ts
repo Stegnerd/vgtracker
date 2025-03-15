@@ -17,6 +17,7 @@ declare module 'vue' {
     Divider: typeof import('primevue/divider')['default']
     DynamicDialog: typeof import('primevue/dynamicdialog')['default']
     FloatLabel: typeof import('primevue/floatlabel')['default']
+    FormField: typeof import('@primevue/forms/formfield')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     Image: typeof import('primevue/image')['default']
     InputGroup: typeof import('primevue/inputgroup')['default']
