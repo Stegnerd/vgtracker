@@ -157,6 +157,26 @@ export namespace gamedetails {
 		    return a;
 		}
 	}
+	export class UpsertGameDetailInput {
+	    ID?: number;
+	    IGDBID?: number;
+	    isOwned?: boolean;
+	    isBeaten?: boolean;
+	    isWishlisted?: boolean;
+	
+	    static createFrom(source: any = {}) {
+	        return new UpsertGameDetailInput(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.ID = source["ID"];
+	        this.IGDBID = source["IGDBID"];
+	        this.isOwned = source["isOwned"];
+	        this.isBeaten = source["isBeaten"];
+	        this.isWishlisted = source["isWishlisted"];
+	    }
+	}
 
 }
 
@@ -225,16 +245,6 @@ export namespace igdb {
 
 export namespace models {
 	
-	export enum SufaceColor {
-	    slate = "slate",
-	    gray = "gray",
-	    zinc = "zinc",
-	    neutral = "neutral",
-	    stone = "stone",
-	    soho = "soho",
-	    viva = "viva",
-	    ocean = "ocean",
-	}
 	export enum PresetConfig {
 	    Aura = "Aura",
 	    Lara = "Lara",
@@ -258,6 +268,16 @@ export namespace models {
 	    fuschia = "fuchsia",
 	    pink = "pink",
 	    rose = "rose",
+	}
+	export enum SufaceColor {
+	    slate = "slate",
+	    gray = "gray",
+	    zinc = "zinc",
+	    neutral = "neutral",
+	    stone = "stone",
+	    soho = "soho",
+	    viva = "viva",
+	    ocean = "ocean",
 	}
 
 }

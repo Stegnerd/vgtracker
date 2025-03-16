@@ -5,3 +5,7 @@
 export function GetGameDetails(arg1) {
   return window['go']['controllers']['GameDetailController']['GetGameDetails'](arg1);
 }
+
+export function UpsertGameDetails(arg1) {
+  return window['go']['controllers']['GameDetailController']['UpsertGameDetails'](arg1);
+}
