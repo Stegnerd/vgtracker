@@ -17,11 +17,14 @@ onMounted(async () => {
 
 const updateBacklogStats = (selectedAction: updateType) => {
   const input = {
-    ID: backlogDetails.value.id === 0 ? undefined : backlogDetails.value.id,
-    IGDBID: gameSelection.value?.id,
+    id: backlogDetails.value.id === 0 ? undefined : backlogDetails.value.id,
+    igdbID: gameSelection.value?.id,
     isWishlisted: selectedAction === 'wishlist' ? !backlogDetails.value.isWishlisted : backlogDetails.value.isWishlisted,
     isOwned: selectedAction === 'owned' ? !backlogDetails.value.isOwned : backlogDetails.value.isOwned,
-    isBeaten: selectedAction === 'beaten' ? !backlogDetails.value.isBeaten : backlogDetails.value.isBeaten
+    isBeaten: selectedAction === 'beaten' ? !backlogDetails.value.isBeaten : backlogDetails.value.isBeaten,
+    name: gameSelection.value?.name,
+    thumbnailURL: gameSelection.value?.thumbnailURL,
+    coverURL: gameSelection.value?.coverURL
   } as gamedetails.UpsertGameDetailInput
 
   UpsertGameDetails(input).then((result) => {

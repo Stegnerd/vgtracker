@@ -119,6 +119,9 @@ export namespace gamedetails {
 	    isOwned: boolean;
 	    isBeaten: boolean;
 	    isWishlisted: boolean;
+	    name: string;
+	    thumbnailURL: string;
+	    coverURL: string;
 	    // Go type: time
 	    createdAt: any;
 	    // Go type: time
@@ -135,6 +138,9 @@ export namespace gamedetails {
 	        this.isOwned = source["isOwned"];
 	        this.isBeaten = source["isBeaten"];
 	        this.isWishlisted = source["isWishlisted"];
+	        this.name = source["name"];
+	        this.thumbnailURL = source["thumbnailURL"];
+	        this.coverURL = source["coverURL"];
 	        this.createdAt = this.convertValues(source["createdAt"], null);
 	        this.updatedAt = this.convertValues(source["updatedAt"], null);
 	    }
@@ -158,11 +164,14 @@ export namespace gamedetails {
 		}
 	}
 	export class UpsertGameDetailInput {
-	    ID?: number;
-	    IGDBID?: number;
+	    id?: number;
+	    igdbID?: number;
 	    isOwned?: boolean;
 	    isBeaten?: boolean;
 	    isWishlisted?: boolean;
+	    name?: string;
+	    thumbnailURL?: string;
+	    coverURL?: string;
 	
 	    static createFrom(source: any = {}) {
 	        return new UpsertGameDetailInput(source);
@@ -170,11 +179,14 @@ export namespace gamedetails {
 	
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
-	        this.ID = source["ID"];
-	        this.IGDBID = source["IGDBID"];
+	        this.id = source["id"];
+	        this.igdbID = source["igdbID"];
 	        this.isOwned = source["isOwned"];
 	        this.isBeaten = source["isBeaten"];
 	        this.isWishlisted = source["isWishlisted"];
+	        this.name = source["name"];
+	        this.thumbnailURL = source["thumbnailURL"];
+	        this.coverURL = source["coverURL"];
 	    }
 	}
 
