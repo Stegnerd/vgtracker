@@ -119,6 +119,9 @@ export namespace gamedetails {
 	    isOwned: boolean;
 	    isBeaten: boolean;
 	    isWishlisted: boolean;
+	    name: string;
+	    thumbnailURL: string;
+	    coverURL: string;
 	    // Go type: time
 	    createdAt: any;
 	    // Go type: time
@@ -135,6 +138,9 @@ export namespace gamedetails {
 	        this.isOwned = source["isOwned"];
 	        this.isBeaten = source["isBeaten"];
 	        this.isWishlisted = source["isWishlisted"];
+	        this.name = source["name"];
+	        this.thumbnailURL = source["thumbnailURL"];
+	        this.coverURL = source["coverURL"];
 	        this.createdAt = this.convertValues(source["createdAt"], null);
 	        this.updatedAt = this.convertValues(source["updatedAt"], null);
 	    }
@@ -156,6 +162,32 @@ export namespace gamedetails {
 		    }
 		    return a;
 		}
+	}
+	export class UpsertGameDetailInput {
+	    id?: number;
+	    igdbID?: number;
+	    isOwned?: boolean;
+	    isBeaten?: boolean;
+	    isWishlisted?: boolean;
+	    name?: string;
+	    thumbnailURL?: string;
+	    coverURL?: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new UpsertGameDetailInput(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.id = source["id"];
+	        this.igdbID = source["igdbID"];
+	        this.isOwned = source["isOwned"];
+	        this.isBeaten = source["isBeaten"];
+	        this.isWishlisted = source["isWishlisted"];
+	        this.name = source["name"];
+	        this.thumbnailURL = source["thumbnailURL"];
+	        this.coverURL = source["coverURL"];
+	    }
 	}
 
 }
@@ -225,16 +257,6 @@ export namespace igdb {
 
 export namespace models {
 	
-	export enum SufaceColor {
-	    slate = "slate",
-	    gray = "gray",
-	    zinc = "zinc",
-	    neutral = "neutral",
-	    stone = "stone",
-	    soho = "soho",
-	    viva = "viva",
-	    ocean = "ocean",
-	}
 	export enum PresetConfig {
 	    Aura = "Aura",
 	    Lara = "Lara",
@@ -258,6 +280,16 @@ export namespace models {
 	    fuschia = "fuchsia",
 	    pink = "pink",
 	    rose = "rose",
+	}
+	export enum SufaceColor {
+	    slate = "slate",
+	    gray = "gray",
+	    zinc = "zinc",
+	    neutral = "neutral",
+	    stone = "stone",
+	    soho = "soho",
+	    viva = "viva",
+	    ocean = "ocean",
 	}
 
 }

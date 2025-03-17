@@ -3,3 +3,5 @@
 import {gamedetails} from '../models';
 
 export function GetGameDetails(arg1:number):Promise<gamedetails.GetGameDetailOutput>;
+
+export function UpsertGameDetails(arg1:gamedetails.UpsertGameDetailInput):Promise<gamedetails.GetGameDetailOutput>;

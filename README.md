@@ -84,3 +84,4 @@ You can get around that with [here](https://support.apple.com/guide/mac-help/ope
 
 - [Go Embed for Migrations](https://oscarforner.com/blog/2023-10-10-go-embed-for-migrations/)
 - [Generating enums for wails](https://wails.io/docs/guides/application-development#dealing-with-context-when-binding-multiple-structs)
+- [Icon look up](https://icones.js.org/)
