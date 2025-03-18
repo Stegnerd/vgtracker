@@ -39,6 +39,7 @@ func (c *ConfigController) GetConfig() (*config.Config, error) {
 
 type UpdateConfigInput struct {
 	Twitch       *config.Twitch       `json:"twitch"`
+	Steam        *config.Steam        `json:"steam"`
 	Preset       *models.PresetConfig `json:"preset"`
 	PrimaryColor *models.PaletteColor `json:"primaryColor"`
 	SurfaceColor *models.SufaceColor  `json:"surfaceColor"`
@@ -52,6 +53,7 @@ func (c *ConfigController) UpdateConfig(input UpdateConfigInput) (*config.Config
 	}
 
 	appConfig.Twitch = *utils.Patch(input.Twitch, appConfig.Twitch)
+	appConfig.Steam = *utils.Patch(input.Steam, appConfig.Steam)
 	appConfig.Theme.Preset = *utils.Patch(input.Preset, appConfig.Theme.Preset)
 	appConfig.Theme.PrimaryColor = *utils.Patch(input.PrimaryColor, appConfig.Theme.PrimaryColor)
 	appConfig.Theme.SurfaceColor = *utils.Patch(input.SurfaceColor, appConfig.Theme.SurfaceColor)

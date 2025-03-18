@@ -15,11 +15,13 @@ const formReady = ref(false);
 type FormData = {
   twitchClientID: string;
   twitchClientSecret: string;
+  steamApiKey: string;
 }
 
 const initialValues = reactive<FormData>({
   twitchClientID: '',
-  twitchClientSecret: ''
+  twitchClientSecret: '',
+  steamApiKey: ''
 });
 
 
@@ -31,6 +33,9 @@ const onFormSubmit = (e: FormSubmitEvent) => {
       twitch: {
         clientID: values.twitchClientID,
         clientSecret: values.twitchClientSecret
+      },
+      steam: {
+        apiKey: values.steamApiKey
       }
     } as controllers.UpdateConfigInput;
 
@@ -50,7 +55,8 @@ onMounted(async () => {
   GetConfig().then((result) => {
     console.warn('inbound results', result)
     initialValues.twitchClientID = result.twitch.clientID;
-    initialValues.twitchClientSecret = result.twitch.clientSecret
+    initialValues.twitchClientSecret = result.twitch.clientSecret;
+    initialValues.steamApiKey = result.steam.apiKey;
 
     formReady.value = true;
   });
@@ -60,7 +66,8 @@ onMounted(async () => {
 const resolver = zodResolver(
     z.object({
       twitchClientID: z.string().min(1, {message: "Twitch Client ID is required."}),
-      twitchClientSecret: z.string().min(1, {message: "Twitch Client Secret is required."})
+      twitchClientSecret: z.string().min(1, {message: "Twitch Client Secret is required."}),
+      steamApiKey: z.string()
     })
 )
 </script>
@@ -108,6 +115,26 @@ const resolver = zodResolver(
           />
 
           <label for="twitchClientID">Twitch Client Secret</label>
+        </FloatLabel>
+        <Message
+          v-if="$field?.invalid"
+          severity="error"
+          size="small"
+        >
+          {{ $field.error?.message }}
+        </Message>
+      </FormField>
+      <FormField
+        v-slot="$field"
+        name="steamApiKey"
+      >
+        <FloatLabel variant="on">
+          <InputText
+            type="text"
+            class="w-lg"
+            data-test="steamApiKey"
+          />
+          <label for="steamApiKey">Steam API Key</label>
         </FloatLabel>
         <Message
           v-if="$field?.invalid"
