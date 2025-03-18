@@ -5,6 +5,7 @@ go 1.23.6
 require github.com/wailsapp/wails/v2 v2.10.0
 
 require (
+	github.com/DATA-DOG/go-sqlmock v1.5.2
 	github.com/golang-migrate/migrate/v4 v4.18.2
 	github.com/magefile/mage v1.15.0
 	github.com/onsi/ginkgo/v2 v2.22.2

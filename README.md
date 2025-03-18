@@ -34,6 +34,13 @@ This is a project of mine to keep track of my video games and get some practice 
     to this in your browser, and you can call your Go code from devtools.
 - Set up your own [twitch account for igdb access](https://api-docs.igdb.com/#getting-started)
   - this is needed for igdb api access and you need to supply your own api creds, not going to share mine!
+- To enable syncing with steam you will need to sign up for a steam api key [here](https://steamcommunity.com/dev/apikey)
+  <!--
+  potentially other links?
+  - [PlayStation Network](https://www.playstation.com/en-us/develop/)
+  - [Xbox Live](https://developer.microsoft.com/en-us/games/xbox/)
+  - [Steam](https://partner.steamgames.com/)
+  - [Nintendo](https://developer.nintendo.com/) -->
 
 ### Building
 
@@ -65,13 +72,15 @@ You can get around that with [here](https://support.apple.com/guide/mac-help/ope
 - [ ] double check codegen works between time.Time and frontend
 - [ ] look into making the theme composable more stream lined/pinia?
 - [ ] more unit test coverage
+- [ ] keyboard short cuts (vueUse?)
 
 ### v1
 
-- [ ] able to save backlog stats
+- [x] able to save backlog stats
 - [ ] analytics dashboard for stats
 - [ ] wishlist/ list making
 - [ ] e2e with playwright
+- [ ] steam syncing
 
 ### cool ideas
 
@@ -82,6 +91,8 @@ You can get around that with [here](https://support.apple.com/guide/mac-help/ope
 
 ## Sources
 
+- [IGDB API](https://api-docs.igdb.com/#getting-started)
 - [Go Embed for Migrations](https://oscarforner.com/blog/2023-10-10-go-embed-for-migrations/)
 - [Generating enums for wails](https://wails.io/docs/guides/application-development#dealing-with-context-when-binding-multiple-structs)
 - [Icon look up](https://icones.js.org/)
+- [Steam Web API](https://partner.steamgames.com/doc/webapi)
