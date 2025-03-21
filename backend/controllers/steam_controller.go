@@ -2,12 +2,9 @@ package controllers
 
 import (
 	"vgtracker/backend/internal/steam"
-
-	"github.com/pkg/errors"
 )
 
 type SteamControllerMethods interface {
-	GetOwnedGames(steamID string) (*steam.OwnedGamesResponse, error)
 }
 
 type SteamController struct {
@@ -18,13 +15,4 @@ func NewSteamController(steamInternalHandler steam.SteamInternalMethods) SteamCo
 	return &SteamController{
 		steamInternalHandler: steamInternalHandler,
 	}
-}
-
-func (s *SteamController) GetOwnedGames(steamID string) (*steam.OwnedGamesResponse, error) {
-	games, err := s.steamInternalHandler.GetOwnedGames(steamID)
-	if err != nil {
-		return nil, errors.WithMessage(err, "failed to get steam owned games")
-	}
-
-	return games, nil
 }

@@ -23,7 +23,8 @@ type Twitch struct {
 }
 
 type Steam struct {
-	APIKey string `json:"apiKey"`
+	SteamID string `json:"steamID"`
+	APIKey  string `json:"apiKey"`
 }
 
 type ThemeSettings struct {
@@ -117,7 +118,8 @@ func newDefaultConfig() *Config {
 			ClientSecret: "",
 		},
 		Steam: Steam{
-			APIKey: "",
+			SteamID: "",
+			APIKey:  "",
 		},
 		Theme: ThemeSettings{
 			Preset:       models.Lara,

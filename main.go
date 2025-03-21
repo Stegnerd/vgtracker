@@ -41,7 +41,7 @@ func main() {
 			models.AllSurfaceColors,
 		},
 		Debug: options.Debug{
-			OpenInspectorOnStartup: true,
+			// OpenInspectorOnStartup: true,
 		},
 	})
 

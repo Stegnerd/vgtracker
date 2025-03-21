@@ -41,10 +41,12 @@ type GameInfo struct {
 }
 
 func (s *SteamInternalHandler) GetOwnedGames(steamID string) (*OwnedGamesResponse, error) {
-	url := fmt.Sprintf("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=%s&steamid=%s&format=json&include_appinfo=true",
+	url := fmt.Sprintf("http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=%s&steamid=%s&format=json&include_appinfo=true&include_played_free_games=true",
 		s.config.Steam.APIKey,
 		steamID,
 	)
+
+	// TODO: NEED TO ALSO MAKE SURE TO USE SEARCH BY URL AND MARRY IT UP TO IGDB AND SEARCH BY STEAM APPID TO IGDB STEAM URL
 
 	resp, err := http.Get(url)
 	if err != nil {
