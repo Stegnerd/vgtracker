@@ -9,6 +9,7 @@ import (
 	"vgtracker/backend/internal/db"
 	"vgtracker/backend/internal/gamedetails"
 	"vgtracker/backend/internal/igdb"
+	"vgtracker/backend/internal/steam"
 	"vgtracker/backend/internal/twitch"
 	"vgtracker/backend/internal/utils"
 
@@ -33,6 +34,7 @@ type App struct {
 	TwitchController controllers.TwitchControllerMethods
 	// ui controllers
 	GameDetailController controllers.GameDetailMethods
+	SteamController      controllers.SteamControllerMethods
 }
 
 // NewApp creates a new App application struct
@@ -79,6 +81,10 @@ func NewApp() *App {
 	gameDetailInternal := gamedetails.NewGameDetailInternal(db)
 	gameDetailController := controllers.NewGameDetailController(gameDetailInternal)
 
+	// Initialize Steam controller
+	steamInternal := steam.NewSteamInternal(appConfig, &igdbClient, &gameDetailInternal)
+	steamController := controllers.NewSteamController(steamInternal)
+
 	return &App{
 		// Cfg: appConfig,
 		//
@@ -89,6 +95,7 @@ func NewApp() *App {
 		TwitchController: twitchController,
 		// ui endpoints
 		GameDetailController: gameDetailController,
+		SteamController:      steamController,
 	}
 }
 

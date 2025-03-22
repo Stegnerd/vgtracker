@@ -13,12 +13,18 @@ const configFileName = "config.toml"
 
 type Config struct {
 	Twitch Twitch        `json:"twitch"`
+	Steam  Steam         `json:"steam"`
 	Theme  ThemeSettings `json:"theme"`
 }
 
 type Twitch struct {
 	ClientID     string `json:"clientID"`
 	ClientSecret string `json:"clientSecret"`
+}
+
+type Steam struct {
+	SteamID string `json:"steamID"`
+	APIKey  string `json:"apiKey"`
 }
 
 type ThemeSettings struct {
@@ -110,6 +116,10 @@ func newDefaultConfig() *Config {
 		Twitch: Twitch{
 			ClientID:     "",
 			ClientSecret: "",
+		},
+		Steam: Steam{
+			SteamID: "",
+			APIKey:  "",
 		},
 		Theme: ThemeSettings{
 			Preset:       models.Lara,

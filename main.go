@@ -31,6 +31,7 @@ func main() {
 			app.ConfigController,
 			app.TwitchController,
 			app.IgdbController,
+			app.SteamController,
 			// ui controllers
 			app.GameDetailController,
 		},

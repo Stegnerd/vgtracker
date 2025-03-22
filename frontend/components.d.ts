@@ -7,6 +7,10 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    Accordion: typeof import('primevue/accordion')['default']
+    AccordionContent: typeof import('primevue/accordioncontent')['default']
+    AccordionHeader: typeof import('primevue/accordionheader')['default']
+    AccordionPanel: typeof import('primevue/accordionpanel')['default']
     AppCard: typeof import('./src/components/AppCard.vue')['default']
     AppLayout: typeof import('./src/components/AppLayout.vue')['default']
     AppMenu: typeof import('./src/components/AppMenu.vue')['default']

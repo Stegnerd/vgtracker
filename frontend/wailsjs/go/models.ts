@@ -18,6 +18,20 @@ export namespace config {
 	        this.IsDarkTheme = source["IsDarkTheme"];
 	    }
 	}
+	export class Steam {
+	    steamID: string;
+	    apiKey: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new Steam(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.steamID = source["steamID"];
+	        this.apiKey = source["apiKey"];
+	    }
+	}
 	export class Twitch {
 	    clientID: string;
 	    clientSecret: string;
@@ -34,6 +48,7 @@ export namespace config {
 	}
 	export class Config {
 	    twitch: Twitch;
+	    steam: Steam;
 	    theme: ThemeSettings;
 	
 	    static createFrom(source: any = {}) {
@@ -43,6 +58,7 @@ export namespace config {
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.twitch = this.convertValues(source["twitch"], Twitch);
+	        this.steam = this.convertValues(source["steam"], Steam);
 	        this.theme = this.convertValues(source["theme"], ThemeSettings);
 	    }
 	
@@ -65,6 +81,7 @@ export namespace config {
 		}
 	}
 	
+	
 
 }
 
@@ -72,6 +89,7 @@ export namespace controllers {
 	
 	export class UpdateConfigInput {
 	    twitch?: config.Twitch;
+	    steam?: config.Steam;
 	    preset?: models.PresetConfig;
 	    primaryColor?: models.PaletteColor;
 	    surfaceColor?: models.SufaceColor;
@@ -84,6 +102,7 @@ export namespace controllers {
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.twitch = this.convertValues(source["twitch"], config.Twitch);
+	        this.steam = this.convertValues(source["steam"], config.Steam);
 	        this.preset = source["preset"];
 	        this.primaryColor = source["primaryColor"];
 	        this.surfaceColor = source["surfaceColor"];

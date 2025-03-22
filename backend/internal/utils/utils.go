@@ -43,3 +43,7 @@ func Patch[T any](incoming *T, defaultValue T) *T {
 
 	return incoming
 }
+
+func Ptr[T any](value T) *T {
+	return &value
+}
