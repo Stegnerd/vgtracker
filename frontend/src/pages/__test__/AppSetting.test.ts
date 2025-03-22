@@ -19,6 +19,10 @@ describe("AppSetting", () => {
       twitch: {
         clientID: "sample-id",
         clientSecret: "sample-secret"
+      },
+      steam: {
+        steamID: "sample-id",
+        apiKey: "sample-api-key"
       }
     } as config.Config);
 
@@ -38,6 +42,10 @@ describe("AppSetting", () => {
       twitch: {
         clientID: "sample-id",
         clientSecret: "sample-secret"
+      },
+      steam: {
+        steamID: "sample-id",
+        apiKey: "sample-api-key"
       }
     } as config.Config);
 

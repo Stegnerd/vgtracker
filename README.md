@@ -73,6 +73,8 @@ You can get around that with [here](https://support.apple.com/guide/mac-help/ope
 - [ ] look into making the theme composable more stream lined/pinia?
 - [ ] more unit test coverage
 - [ ] keyboard short cuts (vueUse?)
+- [ ] migrating syncing logic to pinia with eventing to show incremental updates
+      that way we can navigate to another page and still show progress
 
 ### v1
 
@@ -80,7 +82,7 @@ You can get around that with [here](https://support.apple.com/guide/mac-help/ope
 - [ ] analytics dashboard for stats
 - [ ] wishlist/ list making
 - [ ] e2e with playwright
-- [ ] steam syncing
+- [x] steam syncing
 
 ### cool ideas
 
@@ -88,6 +90,7 @@ You can get around that with [here](https://support.apple.com/guide/mac-help/ope
 - [ ] ability to sync psn/xbox/steam to pull in your digital libraries
   - not sure how to check nintendo library
 - [ ] auto updating?
+- [ ] mage commands for running lint and tests for frontend and backend
 
 ## Sources
 
