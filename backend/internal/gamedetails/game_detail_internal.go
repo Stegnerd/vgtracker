@@ -131,7 +131,6 @@ func (gd *GameDetailInternalHandler) create(input UpsertGameDetailInput) (*GetGa
 							?,
 							?, 
 							?,
-							?,
 							?
 					 )`
 
@@ -201,7 +200,7 @@ func (gd *GameDetailInternalHandler) update(input UpsertGameDetailInput) (*GetGa
 
 	_, err = gd.DB.Exec(query, args...)
 	if err != nil {
-		return nil, fmt.Errorf("failed to insert record for game: '%d' due to %w", *input.IGDBID, err)
+		return nil, fmt.Errorf("failed to update record for game: '%d' due to %w", *input.IGDBID, err)
 	}
 
 	return gd.GetGameDetailRecord(*input.IGDBID)

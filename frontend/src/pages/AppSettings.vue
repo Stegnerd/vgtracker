@@ -2,17 +2,19 @@
 import { Form, FormSubmitEvent, } from "@primevue/forms";
 import { zodResolver } from "@primevue/forms/resolvers/zod";
 import { useToast } from "primevue";
-import { onMounted, reactive, ref } from "vue";
+import { computed, onMounted, reactive, ref } from "vue";
 import { z } from "zod";
 import { GetConfig, UpdateConfig } from "../../wailsjs/go/controllers/ConfigController";
+import { SyncOwnedGames } from "../../wailsjs/go/controllers/SteamController";
 import { controllers } from "../../wailsjs/go/models";
 import AppCard from "../components/AppCard.vue";
 
 const toast = useToast();
 
 const formReady = ref(false)
+const form = ref()
 const accordionOpen = ref<number[]>([0,1]);
-
+const syncInProgress = ref(false);
 
 type FormData = {
   twitchClientID: string;
@@ -82,12 +84,33 @@ const resolver = zodResolver(
       steamApiKey: z.string()
     })
 )
+
+const steamSyncEnabled = computed<boolean>(() => {
+  if (!form.value) {
+    return false;
+  }
+  return form.value.states.steamID && form.value.states.steamApiKey;
+})
+
+const syncOwnedGames = () => {
+  syncInProgress.value = true;
+  
+  SyncOwnedGames().then(() => {
+    toast.add({severity: "success", summary: "Synced Owned Games", group: "br", life: 2000});
+    syncInProgress.value = false;
+  }).catch(() => {
+    toast.add({severity: "error", summary: "Error Syncing Owned Games", group: "br", life: 2000});
+    syncInProgress.value = false;
+  });
+
+}
 </script>
 
 <template>
   <AppCard>
     <Form
       v-if="formReady"
+      ref="form"
       :resolver
       :initial-values
       :validate-on-mount="true"
@@ -162,49 +185,55 @@ const resolver = zodResolver(
           </AccordionContent>
         </AccordionPanel>
         <AccordionPanel :value="1">
-          <AccordionHeader>Steam</AccordionHeader>
+          <AccordionHeader>
+            Steam
+          </AccordionHeader>
           <AccordionContent>
-            <span class="flex flex-col gap-4">
-              <FormField
-                name="steamID"
-              >
-                <FloatLabel variant="on">
-                  <InputText
-                    type="text"
-                    class="w-lg"
-                    data-test="steamID"
-                  />
-                  <label for="steamID">Steam ID</label>
-                </FloatLabel>
-                <!-- <Message
-          v-if="$field?.invalid"
-          severity="error"
-          size="small"
-        >
-          {{ $field.error?.message }}
-        </Message> -->
-              </FormField>
-              <FormField
-                v-slot="$field"
-                name="steamApiKey"
-              >
-                <FloatLabel variant="on">
-                  <InputText
-                    type="text"
-                    class="w-lg"
-                    data-test="steamApiKey"
-                  />
-                  <label for="steamApiKey">Steam API Key</label>
-                </FloatLabel>
-                <Message
-                  v-if="$field?.invalid"
-                  severity="error"
-                  size="small"
+            <div class="flex flex-row gap-4">
+              <span class="flex flex-col gap-4">
+                <FormField
+                  name="steamID"
                 >
-                  {{ $field.error?.message }}
-                </Message>
-              </FormField>
-            </span>
+                  <FloatLabel variant="on">
+                    <InputText
+                      type="text"
+                      class="w-lg"
+                      data-test="steamID"
+                    />
+                    <label for="steamID">Steam ID</label>
+                  </FloatLabel>
+                </FormField>
+                <FormField
+                  v-slot="$field"
+                  name="steamApiKey"
+                >
+                  <FloatLabel variant="on">
+                    <InputText
+                      type="text"
+                      class="w-lg"
+                      data-test="steamApiKey"
+                    />
+                    <label for="steamApiKey">Steam API Key</label>
+                  </FloatLabel>
+                  <Message
+                    v-if="$field?.invalid"
+                    severity="error"
+                    size="small"
+                  >
+                    {{ $field.error?.message }}
+                  </Message>
+                </FormField>
+              </span>
+              <Button
+                v-if="steamSyncEnabled"
+                type="button"
+                :disabled="syncInProgress"
+                label="Sync"
+                icon="i-mdi-update"
+                icon-pos="bottom"
+                @click="syncOwnedGames"
+              />
+            </div>
           </AccordionContent>
         </AccordionPanel>
       </Accordion>

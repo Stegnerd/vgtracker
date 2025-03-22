@@ -276,6 +276,11 @@ export namespace igdb {
 
 export namespace models {
 	
+	export enum PresetConfig {
+	    Aura = "Aura",
+	    Lara = "Lara",
+	    Nora = "Nora",
+	}
 	export enum PaletteColor {
 	    noir = "noir",
 	    emerald = "emerald",
@@ -304,11 +309,6 @@ export namespace models {
 	    soho = "soho",
 	    viva = "viva",
 	    ocean = "ocean",
-	}
-	export enum PresetConfig {
-	    Aura = "Aura",
-	    Lara = "Lara",
-	    Nora = "Nora",
 	}
 
 }

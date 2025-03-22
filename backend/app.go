@@ -82,7 +82,7 @@ func NewApp() *App {
 	gameDetailController := controllers.NewGameDetailController(gameDetailInternal)
 
 	// Initialize Steam controller
-	steamInternal := steam.NewSteamInternal(appConfig)
+	steamInternal := steam.NewSteamInternal(appConfig, &igdbClient, &gameDetailInternal)
 	steamController := controllers.NewSteamController(steamInternal)
 
 	return &App{
