@@ -2,7 +2,6 @@
   // import "../app.css";
   // import { invoke } from "@tauri-apps/api/core";
   // import ThemeSelect from "$lib/theme/theme-select.svelte";
-  import ThemeSelect from "$lib/theme/theme-select.svelte";
 
   // let name = $state("");
   // let greetMsg = $state("");
@@ -17,7 +16,6 @@
 <main class="container">
   <button class="btn btn-primary">Button</button>
   <button class="btn w-64 rounded-full">Button</button>
-  <ThemeSelect></ThemeSelect>
 </main>
 
 <style>

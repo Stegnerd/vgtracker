@@ -2,7 +2,7 @@
     import { themes } from "./themes";
 </script>
 
-<div class="dropdown mb-72">
+<div class="dropdown">
     <div tabindex="0" role="button" class="btn m-1">
         Theme
         <svg
