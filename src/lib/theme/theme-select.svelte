@@ -1,5 +1,28 @@
 <script lang="ts">
+    import { onMount } from "svelte";
     import { themes } from "./themes";
+
+    onMount(() => {
+        const localStorageValue = localStorage.getItem("theme") ?? "retro";
+
+        $inspect("localStorageValue", localStorageValue);
+        const correctInputField = document.getElementById(
+            `${localStorageValue}-theme-id`,
+        );
+        if (!!correctInputField) {
+            (correctInputField as HTMLInputElement).checked = true;
+        }
+    });
+
+    function select(value: Event) {
+        console.log(value);
+        if (!!value) {
+            localStorage.setItem(
+                "theme",
+                (value.target as HTMLInputElement).value,
+            );
+        }
+    }
 </script>
 
 <div class="dropdown">
@@ -32,11 +55,13 @@
         {#each themes as theme}
             <li>
                 <input
+                    id="{theme}-theme-id"
                     type="radio"
                     name="theme-dropdown"
                     class="theme-controller w-full btn btn-sm btn-block btn-ghost justify-start"
                     aria-label={theme}
                     value={theme}
+                    oninput={(v) => select(v)}
                 />
             </li>
         {/each}
