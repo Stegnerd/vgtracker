@@ -39,9 +39,9 @@
                     <li><a>Item 3</a></li>
                 </ul>
             </div>
-            <a class="btn btn-ghost text-xl">daisyUI</a>
+            <span class="primary text-xl">VGTracker</span>
         </div>
-        <div class="navbar-center lg:flex sm:hidden">
+        <div class="navbar-center hidden lg:flex">
             <!-- <ul class="menu menu-horizontal px-1">
                 <li><a>Item 1</a></li>
                 <li>
