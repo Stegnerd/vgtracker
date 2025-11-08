@@ -16,6 +16,8 @@
 <main class="container">
   <button class="btn btn-primary">Button</button>
   <button class="btn w-64 rounded-full">Button</button>
+
+  <p>TODO: put stats and current played here</p>
 </main>
 
 <style>
