@@ -12,7 +12,7 @@
     <div class="flex flex-col grow">
         <div class="flex flex-row m-4 h-full">
             <SideNav></SideNav>
-            <div class="flex-auto flex-col bg-base-200 p-[0.5rem]">
+            <div class="flex-auto flex-col bg-base-200 p-2">
                 {@render children()}
             </div>
         </div>

@@ -1,6 +1,9 @@
 <script lang="ts">
     import { Search, Library, Star, ChartLine } from "@lucide/svelte";
     import { page } from "$app/state";
+    // TODO: when we get to the actual game looking up,
+    // we need to make the active route be library even though the url name is different
+    // same with nav-bar
 </script>
 
 <div class="hidden lg:flex lg:w-48 lg:flex-none mr-4 size-fit">
