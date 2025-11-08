@@ -4,7 +4,7 @@
     let { children } = $props();
 </script>
 
-<div class="app">
+<div class="app h-dvh flex flex-col">
     <div class="navbar bg-base-100 shadow-sm">
         <div class="navbar-start">
             <div class="dropdown">
@@ -26,7 +26,7 @@
                 </div>
                 <ul
                     tabindex="-1"
-                    class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+                    class="menu menu-sm dropdown-content bg-base-200 rounded-box z-1 mt-3 w-52 p-2 shadow"
                 >
                     <li><a>Item 1</a></li>
                     <li>
@@ -81,7 +81,27 @@
             <ThemeSelect></ThemeSelect>
         </div>
     </div>
-    {@render children()}
+    <div class="flex flex-col grow">
+        <div class="flex flex-row m-4 h-full">
+            <div class="hidden lg:flex lg:w-48 lg:flex-none mr-4 size-fit">
+                <!-- <div class="rounded-box bg-primary text-primary-content w-64 p-4">
+                <div class="flex flex-col">
+                    <p>item 1</p>
+                    <p>item 2</p>
+                </div>
+            </div> -->
+
+                <ul class="menu bg-base-200 w-48">
+                    <li><a>Item 1</a></li>
+                    <li><a class="menu-active">Item 2</a></li>
+                    <li><a>Item 3</a></li>
+                </ul>
+            </div>
+            <div class="flex-auto flex-col bg-base-200 p-[0.5rem]">
+                {@render children()}
+            </div>
+        </div>
+    </div>
 </div>
 
 <style>
