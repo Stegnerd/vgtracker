@@ -1,6 +1,7 @@
 <script lang="ts">
     import "../app.css";
     import ThemeSelect from "$lib/theme/theme-select.svelte";
+    import { Search, Library, Star } from "@lucide/svelte";
     let { children } = $props();
 </script>
 
@@ -56,7 +57,7 @@
                 <li><a>Item 3</a></li>
             </ul> -->
             <label class="input">
-                <svg
+                <!-- <svg
                     class="h-[1em] opacity-50"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -71,7 +72,9 @@
                         <circle cx="11" cy="11" r="8"></circle>
                         <path d="m21 21-4.3-4.3"></path>
                     </g>
-                </svg>
+                </svg> -->
+
+                <Search />
                 <input type="search" class="grow" placeholder="Search" />
                 <kbd class="kbd kbd-sm">⌘</kbd>
                 <kbd class="kbd kbd-sm">K</kbd>
@@ -92,9 +95,16 @@
             </div> -->
 
                 <ul class="menu bg-base-200 w-48">
-                    <li><a>Item 1</a></li>
+                    <li>
+                        <a> <Search class=" h-4" />Search</a>
+                    </li>
+                    <li>
+                        <a> <Library class=" h-4" />Library</a>
+                    </li>
+                    <li>
+                        <a> <Star class=" h-4" />Wishlist</a>
+                    </li>
                     <li><a class="menu-active">Item 2</a></li>
-                    <li><a>Item 3</a></li>
                 </ul>
             </div>
             <div class="flex-auto flex-col bg-base-200 p-[0.5rem]">
