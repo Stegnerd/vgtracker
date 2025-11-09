@@ -1,3 +1,5 @@
+use anyhow::{Context, Result};
+use std::env;
 
 use tauri::Manager;
 
@@ -8,7 +10,13 @@ fn greet(name: &str) -> String {
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
-pub fn run() {
+pub fn run() -> Result<()> {
+    dotenvy::dotenv().with_context(|| "Failed to load .env file on start up")?;
+
+    // for (key, value) in env::vars() {
+    //     println!("{key}: {value}");
+    // }
+
     tauri::Builder::default()
         .setup(|app| {
             #[cfg(debug_assertions)]
@@ -23,4 +31,6 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![greet])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
+
+    Ok(())
 }
