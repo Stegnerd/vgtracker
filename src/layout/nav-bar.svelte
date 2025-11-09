@@ -1,7 +1,8 @@
 <script lang="ts">
-    import ThemeSelect from "$lib/theme/theme-select.svelte";
-    import { Search, Library, Star, ChartLine } from "@lucide/svelte";
-    import { page } from "$app/state";
+    import ThemeSelect from '$lib/theme/theme-select.svelte';
+    import { Search, Library, Star, ChartLine } from '@lucide/svelte';
+    import { page } from '$app/state';
+    import { resolve } from '$app/paths';
 </script>
 
 <div class="navbar-start">
@@ -28,36 +29,36 @@
         >
             <li>
                 <a
-                    href="/search"
-                    class={page.url.pathname === "/search" ? "menu-active" : ""}
+                    href={resolve('/search')}
+                    class={page.url.pathname === '/search' ? 'menu-active' : ''}
                 >
                     <Search class=" h-4" />Search</a
                 >
             </li>
             <li>
                 <a
-                    href="/"
-                    class={page.url.pathname === "/" ? "menu-active" : ""}
+                    href={resolve('/')}
+                    class={page.url.pathname === '/' ? 'menu-active' : ''}
                 >
                     <ChartLine class=" h-4" />Stats</a
                 >
             </li>
             <li>
                 <a
-                    href="/library"
-                    class={page.url.pathname === "/library"
-                        ? "menu-active"
-                        : ""}
+                    href={resolve('/library')}
+                    class={page.url.pathname === '/library'
+                        ? 'menu-active'
+                        : ''}
                 >
                     <Library class=" h-4" />Library</a
                 >
             </li>
             <li>
                 <a
-                    href="/wishlist"
-                    class={page.url.pathname === "/wishlist"
-                        ? "menu-active"
-                        : ""}
+                    href={resolve('/wishlist')}
+                    class={page.url.pathname === '/wishlist'
+                        ? 'menu-active'
+                        : ''}
                 >
                     <Star class=" h-4" />Wishlist</a
                 >

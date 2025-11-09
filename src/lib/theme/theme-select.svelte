@@ -1,24 +1,22 @@
 <script lang="ts">
-    import { onMount } from "svelte";
-    import { themes } from "./themes";
+    import { onMount } from 'svelte';
+    import { themes } from './themes';
 
     onMount(() => {
-        const localStorageValue = localStorage.getItem("theme") ?? "retro";
+        const localStorageValue = localStorage.getItem('theme') ?? 'retro';
 
-        $inspect("localStorageValue", localStorageValue);
         const correctInputField = document.getElementById(
             `${localStorageValue}-theme-id`,
         );
-        if (!!correctInputField) {
+        if (correctInputField) {
             (correctInputField as HTMLInputElement).checked = true;
         }
     });
 
     function select(value: Event) {
-        console.log(value);
-        if (!!value) {
+        if (value) {
             localStorage.setItem(
-                "theme",
+                'theme',
                 (value.target as HTMLInputElement).value,
             );
         }
@@ -52,7 +50,7 @@
                 value="default"
             />
         </li>
-        {#each themes as theme}
+        {#each themes as theme (theme)}
             <li>
                 <input
                     id="{theme}-theme-id"
